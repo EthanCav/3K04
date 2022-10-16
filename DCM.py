@@ -1,10 +1,9 @@
 #import modules
-
 from tkinter import *
+import tkinter.messagebox
 import os
 
 # Designing window for registration
-
 def register():
     global register_screen
     register_screen = Toplevel(main_screen)
@@ -32,7 +31,6 @@ def register():
     Button(register_screen, text="Register", width=10, height=1, bg="blue", command = register_user).pack()
 
 # Designing window for login
-
 def login():
     global login_screen
     login_screen = Toplevel(main_screen)
@@ -60,8 +58,42 @@ def login():
     Label(login_screen, text="").pack()
     Button(login_screen, text="Login", width=10, height=1, command = login_verify).pack()
 
-# Implementing event on register button
+# Designing window for pacing modes
+def modes():
+      
+    # create a window
+    root = tkinter.Tk()
+    root.title("Pacing Modes")
+    root.geometry('500x300')
+      
+    #define pacing modes
+    def AOO():
+        tkinter.messagebox.showinfo("Welcome to Pacemaker Pros", "AOO Selected") #can change these to show pacing modes
+      
+    def VOO():
+        tkinter.messagebox.showinfo("Welcome to Pacemaker Pros", "VOO Selected")
+      
+    def AAI():
+        tkinter.messagebox.showinfo("Welcome to Pacemaker Pros", "AAI Selected")
+      
+    def VVI():
+        tkinter.messagebox.showinfo("Welcome to Pacemaker Pros", "VVI Selected")
+      
+    # Create a Buttons
+    Button1 = Button(root, text="AOO", command=AOO, pady=10)
+    Button2 = Button(root, text="VOO", command=VOO, pady=10)
+    Button3 = Button(root, text="AAI", command=AAI, pady=10)
+    Button4 = Button(root, text="VVI", command=VVI, pady=10)
+      
+    # Set the position of buttons
+    Button1.pack(side=LEFT)
+    Button2.pack(side=RIGHT)
+    Button3.pack(side=TOP)
+    Button4.pack(side=BOTTOM)
+      
+    root.mainloop()
 
+# Implementing event on register button
 def register_user():
 
     username_info = username.get()
@@ -77,8 +109,8 @@ def register_user():
 
     Label(register_screen, text="Registration Confirmed, Please Log In", fg="green", font=("calibri", 11)).pack()
 
-# Implementing event on login button
 
+# Implementing event on login button
 def login_verify():
     username1 = username_verify.get()
     password1 = password_verify.get()
@@ -91,6 +123,7 @@ def login_verify():
         verify = file1.read().splitlines()
         if password1 in verify:
             login_sucess()
+            modes()
 
         else:
             password_not_recognised()
@@ -99,7 +132,6 @@ def login_verify():
         user_not_found()
 
 # Designing popup for login success
-
 def login_sucess():
     global login_success_screen
     login_success_screen = Toplevel(login_screen)
@@ -109,7 +141,6 @@ def login_sucess():
     Button(login_success_screen, text="OK", command=delete_login_success).pack()
 
 # Designing popup for login invalid password
-
 def password_not_recognised():
     global password_not_recog_screen
     password_not_recog_screen = Toplevel(login_screen)
@@ -119,7 +150,6 @@ def password_not_recognised():
     Button(password_not_recog_screen, text="OK", command=delete_password_not_recognised).pack()
 
 # Designing popup for user not found
-
 def user_not_found():
     global user_not_found_screen
     user_not_found_screen = Toplevel(login_screen)
@@ -129,21 +159,16 @@ def user_not_found():
     Button(user_not_found_screen, text="OK", command=delete_user_not_found_screen).pack()
 
 # Deleting popups
-
 def delete_login_success():
     login_success_screen.destroy()
-
 
 def delete_password_not_recognised():
     password_not_recog_screen.destroy()
 
-
 def delete_user_not_found_screen():
     user_not_found_screen.destroy()
 
-
 # Designing Main(first) window
-
 def main_account_screen():
     global main_screen
     main_screen = Tk()
@@ -154,7 +179,7 @@ def main_account_screen():
     Button(text="Login", height="2", width="30", command = login).pack()
     Label(text="").pack()
     Button(text="Register", height="2", width="30", command=register).pack()
-
+    
     main_screen.mainloop()
 
 main_account_screen()
