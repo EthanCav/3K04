@@ -1,19 +1,19 @@
 ert_main.o: \
- C:/Users/green/OneDrive/DOCUME~1/MECHTR~1/3K04/Pacemaker_ert_rtw/ert_main.c \
- C:/Users/green/OneDrive/DOCUME~1/MECHTR~1/3K04/Pacemaker_ert_rtw/Pacemaker.h \
- C:/Users/green/OneDrive/DOCUME~1/MECHTR~1/3K04/Pacemaker_ert_rtw/rtwtypes.h \
+ C:/Users/ethan/Documents/Github/3K04/Pacemaker_ert_rtw/ert_main.c \
+ C:/Users/ethan/Documents/Github/3K04/Pacemaker_ert_rtw/Pacemaker.h \
+ C:/Users/ethan/Documents/Github/3K04/Pacemaker_ert_rtw/rtwtypes.h \
  C:/Program\ Files/MATLAB/R2022b/extern/include/tmwtypes.h \
  C:/Program\ Files/MATLAB/R2022b/simulink/include/rtw_continuous.h \
- C:/Users/green/OneDrive/Documents/MECHTRON\ 3K04/3K04/Pacemaker_ert_rtw/rtwtypes.h \
+ C:/Users/ethan/Documents/Github/3K04/Pacemaker_ert_rtw/rtwtypes.h \
  C:/Program\ Files/MATLAB/R2022b/simulink/include/rtw_solver.h \
  C:/Program\ Files/MATLAB/R2022b/simulink/include/rtw_continuous.h \
  C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_digitalIO.h \
  C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_SVD.h \
  C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_PWM.h \
- C:/Users/green/OneDrive/DOCUME~1/MECHTR~1/3K04/Pacemaker_ert_rtw/Pacemaker_types.h \
+ C:/Users/ethan/Documents/Github/3K04/Pacemaker_ert_rtw/Pacemaker_types.h \
  C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_SVD.h \
- C:/Users/green/OneDrive/DOCUME~1/MECHTR~1/3K04/Pacemaker_ert_rtw/multiword_types.h \
- C:/Users/green/OneDrive/DOCUME~1/MECHTR~1/3K04/Pacemaker_ert_rtw/Pacemaker_private.h \
+ C:/Users/ethan/Documents/Github/3K04/Pacemaker_ert_rtw/multiword_types.h \
+ C:/Users/ethan/Documents/Github/3K04/Pacemaker_ert_rtw/Pacemaker_private.h \
  C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/board.h \
  C:/Freescale/KSDK_1.2.0/platform/devices/fsl_device_registers.h \
  C:/Freescale/KSDK_1.2.0/platform/devices/MK64F12/include/MK64F12.h \
@@ -40,17 +40,17 @@ ert_main.o: \
  C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/armcortexmbase/cmsis_rtos_rtx/include/mw_semaphore.h \
  C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/armcortexmbase/cmsis_rtos_rtx/include/mw_timer.h \
  C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/armcortexmbase/cmsis_rtos_rtx/include/mw_signal.h \
- C:/Users/green/OneDrive/Documents/MECHTRON\ 3K04/3K04/Pacemaker_ert_rtw/MW_target_hardware_resources.h
+ C:/Users/ethan/Documents/Github/3K04/Pacemaker_ert_rtw/MW_target_hardware_resources.h
 
-C:/Users/green/OneDrive/DOCUME~1/MECHTR~1/3K04/Pacemaker_ert_rtw/Pacemaker.h:
+C:/Users/ethan/Documents/Github/3K04/Pacemaker_ert_rtw/Pacemaker.h:
 
-C:/Users/green/OneDrive/DOCUME~1/MECHTR~1/3K04/Pacemaker_ert_rtw/rtwtypes.h:
+C:/Users/ethan/Documents/Github/3K04/Pacemaker_ert_rtw/rtwtypes.h:
 
 C:/Program\ Files/MATLAB/R2022b/extern/include/tmwtypes.h:
 
 C:/Program\ Files/MATLAB/R2022b/simulink/include/rtw_continuous.h:
 
-C:/Users/green/OneDrive/Documents/MECHTRON\ 3K04/3K04/Pacemaker_ert_rtw/rtwtypes.h:
+C:/Users/ethan/Documents/Github/3K04/Pacemaker_ert_rtw/rtwtypes.h:
 
 C:/Program\ Files/MATLAB/R2022b/simulink/include/rtw_solver.h:
 
@@ -62,13 +62,13 @@ C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/free
 
 C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_PWM.h:
 
-C:/Users/green/OneDrive/DOCUME~1/MECHTR~1/3K04/Pacemaker_ert_rtw/Pacemaker_types.h:
+C:/Users/ethan/Documents/Github/3K04/Pacemaker_ert_rtw/Pacemaker_types.h:
 
 C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_SVD.h:
 
-C:/Users/green/OneDrive/DOCUME~1/MECHTR~1/3K04/Pacemaker_ert_rtw/multiword_types.h:
+C:/Users/ethan/Documents/Github/3K04/Pacemaker_ert_rtw/multiword_types.h:
 
-C:/Users/green/OneDrive/DOCUME~1/MECHTR~1/3K04/Pacemaker_ert_rtw/Pacemaker_private.h:
+C:/Users/ethan/Documents/Github/3K04/Pacemaker_ert_rtw/Pacemaker_private.h:
 
 C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/board.h:
 
@@ -122,4 +122,4 @@ C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/armc
 
 C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/armcortexmbase/cmsis_rtos_rtx/include/mw_signal.h:
 
-C:/Users/green/OneDrive/Documents/MECHTRON\ 3K04/3K04/Pacemaker_ert_rtw/MW_target_hardware_resources.h:
+C:/Users/ethan/Documents/Github/3K04/Pacemaker_ert_rtw/MW_target_hardware_resources.h:

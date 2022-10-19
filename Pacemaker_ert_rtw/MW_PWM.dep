@@ -2,7 +2,7 @@ MW_PWM.o: \
  C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/MW_PWM.c \
  C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_PWM.h \
  C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_SVD.h \
- C:/Users/green/OneDrive/Documents/MECHTRON\ 3K04/3K04/Pacemaker_ert_rtw/rtwtypes.h \
+ C:/Users/ethan/Documents/Github/3K04/Pacemaker_ert_rtw/rtwtypes.h \
  C:/Program\ Files/MATLAB/R2022b/extern/include/tmwtypes.h \
  C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/mw_sdk_interface.h \
  C:/Freescale/KSDK_1.2.0/platform/drivers/inc/fsl_gpio_driver.h \
@@ -36,7 +36,7 @@ C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/free
 
 C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_SVD.h:
 
-C:/Users/green/OneDrive/Documents/MECHTRON\ 3K04/3K04/Pacemaker_ert_rtw/rtwtypes.h:
+C:/Users/ethan/Documents/Github/3K04/Pacemaker_ert_rtw/rtwtypes.h:
 
 C:/Program\ Files/MATLAB/R2022b/extern/include/tmwtypes.h:
 

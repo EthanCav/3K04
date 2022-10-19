@@ -7,9 +7,9 @@
  *
  * Code generation for model "Pacemaker".
  *
- * Model version              : 5.62
+ * Model version              : 5.65
  * Simulink Coder version : 9.8 (R2022b) 13-May-2022
- * C source code generated on : Mon Oct 17 20:30:32 2022
+ * C source code generated on : Wed Oct 19 18:48:10 2022
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -21,8 +21,8 @@
 #include "Pacemaker.h"
 #include "rtwtypes.h"
 #include "Pacemaker_types.h"
-#include <math.h>
 #include "Pacemaker_private.h"
+#include <math.h>
 #include <string.h>
 
 /* Named constants for Chart: '<Root>/PACING MODES' */
@@ -52,6 +52,7 @@ RT_MODEL_Pacemaker_T *const Pacemaker_M = &Pacemaker_M_;
 /* Forward declaration for local functions */
 static void Pac_enter_atomic_Charge_C22_AOO(void);
 static void Pac_enter_atomic_Charge_C22_VOO(void);
+static void Pacemaker_Mode_Selector(void);
 static void Pacemake_Sensing_Charge_C22_VVI(void);
 real_T sMultiWord2Double(const uint32_T u1[], int32_T n1, int32_T e1)
 {
@@ -110,29 +111,113 @@ static void Pac_enter_atomic_Charge_C22_VOO(void)
 }
 
 /* Function for Chart: '<Root>/PACING MODES' */
+static void Pacemaker_Mode_Selector(void)
+{
+  /* Constant: '<S1>/mode' */
+  if (Pacemaker_P.mode_Value == 1) {
+    Pacemaker_DW.is_c3_Pacemaker = Pacemaker_IN_Charge_C22_VOO;
+    Pacemaker_DW.temporalCounter_i1 = 0U;
+    Pac_enter_atomic_Charge_C22_VOO();
+  } else if (Pacemaker_P.mode_Value == 2) {
+    Pacemaker_DW.is_c3_Pacemaker = Pacemaker_IN_Wait_VVI;
+    Pacemaker_DW.temporalCounter_i1 = 0U;
+    Pacemaker_B.FRONTEND_CTRL = false;
+    Pacemaker_B.VENT_CMP_REF_PWM = 52.0;
+    Pacemaker_B.PACE_GND_CTRL = true;
+    Pacemaker_B.VENT_PACE_CTRL = false;
+    Pacemaker_B.Z_ATR_CTRL = false;
+    Pacemaker_B.Z_VENT_CTRL = false;
+    Pacemaker_B.ATR_PACE_CTRL = false;
+    Pacemaker_B.ATR_GND_CTRL = false;
+    Pacemaker_B.VENT_GND_CTRL = true;
+  } else if (Pacemaker_P.mode_Value == 3) {
+    Pacemaker_DW.is_c3_Pacemaker = Pacemaker_IN_Charge_C22_AOO;
+    Pacemaker_DW.temporalCounter_i1 = 0U;
+    Pac_enter_atomic_Charge_C22_AOO();
+  } else if (Pacemaker_P.mode_Value == 4) {
+    Pacemaker_DW.is_c3_Pacemaker = Pacemaker_IN_Wait_AAI;
+    Pacemaker_DW.temporalCounter_i1 = 0U;
+    Pacemaker_B.ATR_CMP_REF_PWM = 53;
+    Pacemaker_B.FRONTEND_CTRL = false;
+    Pacemaker_B.PACE_GND_CTRL = true;
+    Pacemaker_B.VENT_PACE_CTRL = false;
+    Pacemaker_B.Z_ATR_CTRL = false;
+    Pacemaker_B.Z_VENT_CTRL = false;
+    Pacemaker_B.ATR_PACE_CTRL = false;
+    Pacemaker_B.VENT_GND_CTRL = false;
+    Pacemaker_B.ATR_GND_CTRL = true;
+  }
+
+  /* End of Constant: '<S1>/mode' */
+}
+
+real_T rt_roundd_snf(real_T u)
+{
+  real_T y;
+  if (fabs(u) < 4.503599627370496E+15) {
+    if (u >= 0.5) {
+      y = floor(u + 0.5);
+    } else if (u > -0.5) {
+      y = u * 0.0;
+    } else {
+      y = ceil(u - 0.5);
+    }
+  } else {
+    y = u;
+  }
+
+  return y;
+}
+
+/* Function for Chart: '<Root>/PACING MODES' */
 static void Pacemake_Sensing_Charge_C22_VVI(void)
 {
+  real_T tmp;
+  int16_T tmp_0;
   Pacemaker_B.FRONTEND_CTRL = true;
   Pacemaker_B.PACING_REF_PWM = 40;
   Pacemaker_B.PACE_CHARGE_CTRL = true;
-  Pacemaker_B.PACE_GND_CTRL = true;
-  Pacemaker_B.Z_ATR_CTRL = false;
-  Pacemaker_B.Z_VENT_CTRL = false;
-  Pacemaker_B.ATR_GND_CTRL = false;
-  Pacemaker_B.VENT_GND_CTRL = true;
   if (Pacemaker_B.DigitalRead1) {
     Pacemaker_DW.is_c3_Pacemaker = Pacemaker_IN_Wait_VVI;
     Pacemaker_DW.temporalCounter_i1 = 0U;
-    Pacemaker_B.VENT_CMP_REF_PWM = 53.0;
     Pacemaker_B.FRONTEND_CTRL = false;
-  } else if (Pacemaker_DW.temporalCounter_i1 >= (uint32_T)ceil
-             (Pacemaker_B.Divide2 - Pacemaker_P.VRPin_Value)) {
-    Pacemaker_DW.is_c3_Pacemaker = Pacem_IN_Discharge_C22_VENT_VVI;
-    Pacemaker_DW.temporalCounter_i1 = 0U;
-    Pacemaker_B.PACE_CHARGE_CTRL = false;
+    Pacemaker_B.VENT_CMP_REF_PWM = 52.0;
+    Pacemaker_B.PACE_GND_CTRL = true;
+    Pacemaker_B.VENT_PACE_CTRL = false;
+    Pacemaker_B.Z_ATR_CTRL = false;
+    Pacemaker_B.Z_VENT_CTRL = false;
     Pacemaker_B.ATR_PACE_CTRL = false;
-    Pacemaker_B.VENT_GND_CTRL = false;
-    Pacemaker_B.VENT_PACE_CTRL = true;
+    Pacemaker_B.ATR_GND_CTRL = false;
+    Pacemaker_B.VENT_GND_CTRL = true;
+  } else {
+    /* Constant: '<S1>/VRP in' incorporates:
+     *  Constant: '<S1>/Constant2'
+     */
+    tmp = rt_roundd_snf((Pacemaker_B.Divide2 - Pacemaker_P.VRPin_Value) -
+                        (real_T)Pacemaker_P.Constant2_Value);
+    if (tmp < 32768.0) {
+      if (tmp >= -32768.0) {
+        tmp_0 = (int16_T)tmp;
+      } else {
+        tmp_0 = MIN_int16_T;
+      }
+    } else {
+      tmp_0 = MAX_int16_T;
+    }
+
+    if (Pacemaker_DW.temporalCounter_i1 >= (uint32_T)tmp_0) {
+      Pacemaker_DW.is_c3_Pacemaker = Pacem_IN_Discharge_C22_VENT_VVI;
+      Pacemaker_DW.temporalCounter_i1 = 0U;
+      Pacemaker_B.FRONTEND_CTRL = false;
+      Pacemaker_B.PACE_CHARGE_CTRL = false;
+      Pacemaker_B.PACE_GND_CTRL = true;
+      Pacemaker_B.ATR_PACE_CTRL = false;
+      Pacemaker_B.ATR_GND_CTRL = false;
+      Pacemaker_B.Z_ATR_CTRL = false;
+      Pacemaker_B.Z_VENT_CTRL = false;
+      Pacemaker_B.VENT_GND_CTRL = false;
+      Pacemaker_B.VENT_PACE_CTRL = true;
+    }
   }
 }
 
@@ -141,6 +226,7 @@ void Pacemaker_step(void)
 {
   real_T Divide;
   real_T Divide1;
+  int16_T tmp;
   boolean_T DigitalRead2;
 
   /* MATLABSystem: '<S1>/Digital Read1' */
@@ -185,7 +271,6 @@ void Pacemaker_step(void)
    *  Constant: '<S1>/ARP in'
    *  Constant: '<S1>/Constant2'
    *  Constant: '<S1>/VRP in'
-   *  Constant: '<S1>/mode'
    *  MATLABSystem: '<S1>/Digital Read2'
    */
   if (Pacemaker_DW.temporalCounter_i1 < MAX_uint32_T) {
@@ -247,8 +332,11 @@ void Pacemaker_step(void)
            Pacemaker_B.Divide2)) {
         Pacemaker_DW.is_c3_Pacemaker = Pacemaker_IN_Wait_AAI;
         Pacemaker_DW.temporalCounter_i1 = 0U;
-        Pacemaker_B.ATR_CMP_REF_PWM = 100;
+        Pacemaker_B.ATR_CMP_REF_PWM = 53;
         Pacemaker_B.FRONTEND_CTRL = false;
+        Pacemaker_B.VENT_PACE_CTRL = false;
+        Pacemaker_B.ATR_PACE_CTRL = false;
+        Pacemaker_B.ATR_GND_CTRL = true;
       }
       break;
 
@@ -283,6 +371,7 @@ void Pacemaker_step(void)
       break;
 
      case Pacem_IN_Discharge_C22_VENT_VVI:
+      Pacemaker_B.FRONTEND_CTRL = false;
       Pacemaker_B.PACE_CHARGE_CTRL = false;
       Pacemaker_B.PACE_GND_CTRL = true;
       Pacemaker_B.ATR_GND_CTRL = false;
@@ -294,55 +383,58 @@ void Pacemaker_step(void)
            Pacemaker_B.Divide2)) {
         Pacemaker_DW.is_c3_Pacemaker = Pacemaker_IN_Wait_VVI;
         Pacemaker_DW.temporalCounter_i1 = 0U;
-        Pacemaker_B.VENT_CMP_REF_PWM = 53.0;
-        Pacemaker_B.FRONTEND_CTRL = false;
+        Pacemaker_B.VENT_CMP_REF_PWM = 52.0;
+        Pacemaker_B.VENT_PACE_CTRL = false;
+        Pacemaker_B.ATR_PACE_CTRL = false;
+        Pacemaker_B.VENT_GND_CTRL = true;
       }
       break;
 
      case Pacemaker_IN_Mode_Selector:
-      if (Pacemaker_P.mode_Value == 1) {
-        Pacemaker_DW.is_c3_Pacemaker = Pacemaker_IN_Charge_C22_VOO;
-        Pacemaker_DW.temporalCounter_i1 = 0U;
-        Pac_enter_atomic_Charge_C22_VOO();
-      } else if (Pacemaker_P.mode_Value == 2) {
-        Pacemaker_DW.is_c3_Pacemaker = Pacemaker_IN_Wait_VVI;
-        Pacemaker_DW.temporalCounter_i1 = 0U;
-        Pacemaker_B.VENT_CMP_REF_PWM = 53.0;
-        Pacemaker_B.FRONTEND_CTRL = false;
-      } else if (Pacemaker_P.mode_Value == 3) {
-        Pacemaker_DW.is_c3_Pacemaker = Pacemaker_IN_Charge_C22_AOO;
-        Pacemaker_DW.temporalCounter_i1 = 0U;
-        Pac_enter_atomic_Charge_C22_AOO();
-      } else if (Pacemaker_P.mode_Value == 4) {
-        Pacemaker_DW.is_c3_Pacemaker = Pacemaker_IN_Wait_AAI;
-        Pacemaker_DW.temporalCounter_i1 = 0U;
-        Pacemaker_B.ATR_CMP_REF_PWM = 100;
-        Pacemaker_B.FRONTEND_CTRL = false;
-      }
+      Pacemaker_Mode_Selector();
       break;
 
      case Pacem_IN_Sensing_Charge_C22_AAI:
       Pacemaker_B.FRONTEND_CTRL = true;
       Pacemaker_B.PACING_REF_PWM = 40;
       Pacemaker_B.PACE_CHARGE_CTRL = true;
-      Pacemaker_B.PACE_GND_CTRL = true;
-      Pacemaker_B.Z_ATR_CTRL = false;
-      Pacemaker_B.Z_VENT_CTRL = false;
-      Pacemaker_B.VENT_GND_CTRL = false;
-      Pacemaker_B.ATR_GND_CTRL = true;
       if (DigitalRead2) {
         Pacemaker_DW.is_c3_Pacemaker = Pacemaker_IN_Wait_AAI;
         Pacemaker_DW.temporalCounter_i1 = 0U;
-        Pacemaker_B.ATR_CMP_REF_PWM = 100;
+        Pacemaker_B.ATR_CMP_REF_PWM = 53;
         Pacemaker_B.FRONTEND_CTRL = false;
-      } else if (Pacemaker_DW.temporalCounter_i1 >= (uint32_T)ceil
-                 (Pacemaker_B.Divide2 - Pacemaker_P.ARPin_Value)) {
-        Pacemaker_DW.is_c3_Pacemaker = Pacema_IN_Discharge_C22_ATR_AAI;
-        Pacemaker_DW.temporalCounter_i1 = 0U;
-        Pacemaker_B.PACE_CHARGE_CTRL = false;
+        Pacemaker_B.PACE_GND_CTRL = true;
         Pacemaker_B.VENT_PACE_CTRL = false;
-        Pacemaker_B.ATR_GND_CTRL = false;
-        Pacemaker_B.ATR_PACE_CTRL = true;
+        Pacemaker_B.Z_ATR_CTRL = false;
+        Pacemaker_B.Z_VENT_CTRL = false;
+        Pacemaker_B.ATR_PACE_CTRL = false;
+        Pacemaker_B.VENT_GND_CTRL = false;
+        Pacemaker_B.ATR_GND_CTRL = true;
+      } else {
+        Divide = rt_roundd_snf((Pacemaker_B.Divide2 - Pacemaker_P.ARPin_Value) -
+          (real_T)Pacemaker_P.Constant2_Value);
+        if (Divide < 32768.0) {
+          if (Divide >= -32768.0) {
+            tmp = (int16_T)Divide;
+          } else {
+            tmp = MIN_int16_T;
+          }
+        } else {
+          tmp = MAX_int16_T;
+        }
+
+        if (Pacemaker_DW.temporalCounter_i1 >= (uint32_T)tmp) {
+          Pacemaker_DW.is_c3_Pacemaker = Pacema_IN_Discharge_C22_ATR_AAI;
+          Pacemaker_DW.temporalCounter_i1 = 0U;
+          Pacemaker_B.PACE_CHARGE_CTRL = false;
+          Pacemaker_B.PACE_GND_CTRL = true;
+          Pacemaker_B.VENT_PACE_CTRL = false;
+          Pacemaker_B.ATR_GND_CTRL = false;
+          Pacemaker_B.Z_ATR_CTRL = false;
+          Pacemaker_B.Z_VENT_CTRL = false;
+          Pacemaker_B.VENT_GND_CTRL = false;
+          Pacemaker_B.ATR_PACE_CTRL = true;
+        }
       }
       break;
 
@@ -351,43 +443,43 @@ void Pacemaker_step(void)
       break;
 
      case Pacemaker_IN_Wait_AAI:
-      Pacemaker_B.ATR_CMP_REF_PWM = 100;
+      Pacemaker_B.ATR_CMP_REF_PWM = 53;
       Pacemaker_B.FRONTEND_CTRL = false;
+      Pacemaker_B.PACE_GND_CTRL = true;
+      Pacemaker_B.Z_ATR_CTRL = false;
+      Pacemaker_B.Z_VENT_CTRL = false;
+      Pacemaker_B.VENT_GND_CTRL = false;
+      Pacemaker_B.ATR_GND_CTRL = true;
       if (Pacemaker_DW.temporalCounter_i1 >= (uint32_T)ceil
           (Pacemaker_P.ARPin_Value)) {
         Pacemaker_DW.is_c3_Pacemaker = Pacem_IN_Sensing_Charge_C22_AAI;
         Pacemaker_DW.temporalCounter_i1 = 0U;
         Pacemaker_B.FRONTEND_CTRL = true;
+        Pacemaker_B.ATR_PACE_CTRL = false;
+        Pacemaker_B.VENT_PACE_CTRL = false;
         Pacemaker_B.PACING_REF_PWM = 40;
         Pacemaker_B.PACE_CHARGE_CTRL = true;
-        Pacemaker_B.PACE_GND_CTRL = true;
-        Pacemaker_B.VENT_PACE_CTRL = false;
-        Pacemaker_B.Z_ATR_CTRL = false;
-        Pacemaker_B.Z_VENT_CTRL = false;
-        Pacemaker_B.ATR_PACE_CTRL = false;
-        Pacemaker_B.VENT_GND_CTRL = false;
-        Pacemaker_B.ATR_GND_CTRL = true;
       }
       break;
 
      default:
       /* case IN_Wait_VVI: */
-      Pacemaker_B.VENT_CMP_REF_PWM = 53.0;
       Pacemaker_B.FRONTEND_CTRL = false;
+      Pacemaker_B.VENT_CMP_REF_PWM = 52.0;
+      Pacemaker_B.PACE_GND_CTRL = true;
+      Pacemaker_B.Z_ATR_CTRL = false;
+      Pacemaker_B.Z_VENT_CTRL = false;
+      Pacemaker_B.ATR_GND_CTRL = false;
+      Pacemaker_B.VENT_GND_CTRL = true;
       if (Pacemaker_DW.temporalCounter_i1 >= (uint32_T)ceil
           (Pacemaker_P.VRPin_Value)) {
         Pacemaker_DW.is_c3_Pacemaker = Pacem_IN_Sensing_Charge_C22_VVI;
         Pacemaker_DW.temporalCounter_i1 = 0U;
         Pacemaker_B.FRONTEND_CTRL = true;
+        Pacemaker_B.ATR_PACE_CTRL = false;
+        Pacemaker_B.VENT_PACE_CTRL = false;
         Pacemaker_B.PACING_REF_PWM = 40;
         Pacemaker_B.PACE_CHARGE_CTRL = true;
-        Pacemaker_B.PACE_GND_CTRL = true;
-        Pacemaker_B.VENT_PACE_CTRL = false;
-        Pacemaker_B.Z_ATR_CTRL = false;
-        Pacemaker_B.Z_VENT_CTRL = false;
-        Pacemaker_B.ATR_PACE_CTRL = false;
-        Pacemaker_B.ATR_GND_CTRL = false;
-        Pacemaker_B.VENT_GND_CTRL = true;
       }
       break;
     }
@@ -488,7 +580,7 @@ void Pacemaker_initialize(void)
     Pacemaker_DW.objisempty_a = true;
     obj_0 = &Pacemaker_DW.obj_d;
     Pacemaker_DW.obj_d.isInitialized = 1;
-    obj_0->MW_PWM_HANDLE = MW_PWM_Open(3U, 2000.0, 53.0);
+    obj_0->MW_PWM_HANDLE = MW_PWM_Open(3U, 2000.0, 52.0);
     MW_PWM_Start(Pacemaker_DW.obj_d.MW_PWM_HANDLE);
     Pacemaker_DW.obj_d.isSetupComplete = true;
 
@@ -578,7 +670,7 @@ void Pacemaker_initialize(void)
     Pacemaker_DW.objisempty_o = true;
     obj_0 = &Pacemaker_DW.obj_eb;
     Pacemaker_DW.obj_eb.isInitialized = 1;
-    obj_0->MW_PWM_HANDLE = MW_PWM_Open(6U, 2000.0, 100.0);
+    obj_0->MW_PWM_HANDLE = MW_PWM_Open(6U, 2000.0, 53.0);
     MW_PWM_Start(Pacemaker_DW.obj_eb.MW_PWM_HANDLE);
     Pacemaker_DW.obj_eb.isSetupComplete = true;
   }

@@ -7,9 +7,9 @@
  *
  * Code generation for model "Pacemaker".
  *
- * Model version              : 5.62
+ * Model version              : 5.65
  * Simulink Coder version : 9.8 (R2022b) 13-May-2022
- * C source code generated on : Mon Oct 17 20:30:32 2022
+ * C source code generated on : Wed Oct 19 18:48:10 2022
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -72,6 +72,7 @@ Verification pane for ERT based targets, which will disable the \
 preprocessor word size checks.
 #endif
 
+extern real_T rt_roundd_snf(real_T u);
 extern real_T sMultiWord2Double(const uint32_T u1[], int32_T n1, int32_T e1);
 
 #endif                                 /* RTW_HEADER_Pacemaker_private_h_ */

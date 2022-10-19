@@ -2,7 +2,7 @@
 ## Makefile generated for component 'Pacemaker'. 
 ## 
 ## Makefile     : Pacemaker.mk
-## Generated on : Mon Oct 17 20:30:36 2022
+## Generated on : Wed Oct 19 17:39:39 2022
 ## Final product: $(RELATIVE_PATH_TO_ANCHOR)/Pacemaker.elf
 ## Product type : executable
 ## 
@@ -23,7 +23,7 @@ MAKEFILE                  = Pacemaker.mk
 MATLAB_ROOT               = C:/PROGRA~1/MATLAB/R2022b
 MATLAB_BIN                = C:/PROGRA~1/MATLAB/R2022b/bin
 MATLAB_ARCH_BIN           = $(MATLAB_BIN)/win64
-START_DIR                 = C:/Users/green/OneDrive/DOCUME~1/MECHTR~1/3K04
+START_DIR                 = C:/Users/ethan/Documents/Github/3K04
 SOLVER                    = 
 SOLVER_OBJ                = 
 CLASSIC_INTERFACE         = 0
