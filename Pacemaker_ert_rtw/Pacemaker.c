@@ -7,9 +7,9 @@
  *
  * Code generation for model "Pacemaker".
  *
- * Model version              : 5.65
+ * Model version              : 5.75
  * Simulink Coder version : 9.8 (R2022b) 13-May-2022
- * C source code generated on : Wed Oct 19 18:48:10 2022
+ * C source code generated on : Thu Oct 20 19:01:49 2022
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -53,7 +53,6 @@ RT_MODEL_Pacemaker_T *const Pacemaker_M = &Pacemaker_M_;
 static void Pac_enter_atomic_Charge_C22_AOO(void);
 static void Pac_enter_atomic_Charge_C22_VOO(void);
 static void Pacemaker_Mode_Selector(void);
-static void Pacemake_Sensing_Charge_C22_VVI(void);
 real_T sMultiWord2Double(const uint32_T u1[], int32_T n1, int32_T e1)
 {
   real_T y;
@@ -122,7 +121,7 @@ static void Pacemaker_Mode_Selector(void)
     Pacemaker_DW.is_c3_Pacemaker = Pacemaker_IN_Wait_VVI;
     Pacemaker_DW.temporalCounter_i1 = 0U;
     Pacemaker_B.FRONTEND_CTRL = false;
-    Pacemaker_B.VENT_CMP_REF_PWM = 52.0;
+    Pacemaker_B.VENT_CMP_REF_PWM = 53.0;
     Pacemaker_B.PACE_GND_CTRL = true;
     Pacemaker_B.VENT_PACE_CTRL = false;
     Pacemaker_B.Z_ATR_CTRL = false;
@@ -169,64 +168,13 @@ real_T rt_roundd_snf(real_T u)
   return y;
 }
 
-/* Function for Chart: '<Root>/PACING MODES' */
-static void Pacemake_Sensing_Charge_C22_VVI(void)
-{
-  real_T tmp;
-  int16_T tmp_0;
-  Pacemaker_B.FRONTEND_CTRL = true;
-  Pacemaker_B.PACING_REF_PWM = 40;
-  Pacemaker_B.PACE_CHARGE_CTRL = true;
-  if (Pacemaker_B.DigitalRead1) {
-    Pacemaker_DW.is_c3_Pacemaker = Pacemaker_IN_Wait_VVI;
-    Pacemaker_DW.temporalCounter_i1 = 0U;
-    Pacemaker_B.FRONTEND_CTRL = false;
-    Pacemaker_B.VENT_CMP_REF_PWM = 52.0;
-    Pacemaker_B.PACE_GND_CTRL = true;
-    Pacemaker_B.VENT_PACE_CTRL = false;
-    Pacemaker_B.Z_ATR_CTRL = false;
-    Pacemaker_B.Z_VENT_CTRL = false;
-    Pacemaker_B.ATR_PACE_CTRL = false;
-    Pacemaker_B.ATR_GND_CTRL = false;
-    Pacemaker_B.VENT_GND_CTRL = true;
-  } else {
-    /* Constant: '<S1>/VRP in' incorporates:
-     *  Constant: '<S1>/Constant2'
-     */
-    tmp = rt_roundd_snf((Pacemaker_B.Divide2 - Pacemaker_P.VRPin_Value) -
-                        (real_T)Pacemaker_P.Constant2_Value);
-    if (tmp < 32768.0) {
-      if (tmp >= -32768.0) {
-        tmp_0 = (int16_T)tmp;
-      } else {
-        tmp_0 = MIN_int16_T;
-      }
-    } else {
-      tmp_0 = MAX_int16_T;
-    }
-
-    if (Pacemaker_DW.temporalCounter_i1 >= (uint32_T)tmp_0) {
-      Pacemaker_DW.is_c3_Pacemaker = Pacem_IN_Discharge_C22_VENT_VVI;
-      Pacemaker_DW.temporalCounter_i1 = 0U;
-      Pacemaker_B.FRONTEND_CTRL = false;
-      Pacemaker_B.PACE_CHARGE_CTRL = false;
-      Pacemaker_B.PACE_GND_CTRL = true;
-      Pacemaker_B.ATR_PACE_CTRL = false;
-      Pacemaker_B.ATR_GND_CTRL = false;
-      Pacemaker_B.Z_ATR_CTRL = false;
-      Pacemaker_B.Z_VENT_CTRL = false;
-      Pacemaker_B.VENT_GND_CTRL = false;
-      Pacemaker_B.VENT_PACE_CTRL = true;
-    }
-  }
-}
-
 /* Model step function */
 void Pacemaker_step(void)
 {
   real_T Divide;
-  real_T Divide1;
+  real_T Divide2;
   int16_T tmp;
+  boolean_T DigitalRead1;
   boolean_T DigitalRead2;
 
   /* MATLABSystem: '<S1>/Digital Read1' */
@@ -234,9 +182,7 @@ void Pacemaker_step(void)
     Pacemaker_DW.obj_a.SampleTime = Pacemaker_P.DigitalRead1_SampleTime;
   }
 
-  /* MATLABSystem: '<S1>/Digital Read1' */
-  Pacemaker_B.DigitalRead1 = MW_digitalIO_read
-    (Pacemaker_DW.obj_a.MW_DIGITALIO_HANDLE);
+  DigitalRead1 = MW_digitalIO_read(Pacemaker_DW.obj_a.MW_DIGITALIO_HANDLE);
 
   /* Product: '<S1>/Divide' incorporates:
    *  Constant: '<S1>/BPM'
@@ -245,20 +191,12 @@ void Pacemaker_step(void)
   Divide = sMultiWord2Double(&Pacemaker_P.ScaleFactor_Value.chunks[0U], 2, 0) /
     (real_T)Pacemaker_P.BPM_Value;
 
-  /* Product: '<S1>/Divide1' incorporates:
-   *  Constant: '<S1>/Scale Factor1'
-   *  Constant: '<S1>/URL'
-   */
-  Divide1 = sMultiWord2Double(&Pacemaker_P.ScaleFactor1_Value.chunks[0U], 2, 0) /
-    (real_T)Pacemaker_P.URL_Value;
-
   /* Product: '<S1>/Divide2' incorporates:
    *  Constant: '<S1>/LRL'
    *  Constant: '<S1>/Scale Factor2'
    */
-  Pacemaker_B.Divide2 = sMultiWord2Double
-    (&Pacemaker_P.ScaleFactor2_Value.chunks[0U], 2, 0) / (real_T)
-    Pacemaker_P.LRL_Value;
+  Divide2 = sMultiWord2Double(&Pacemaker_P.ScaleFactor2_Value.chunks[0U], 2, 0) /
+    (real_T)Pacemaker_P.LRL_Value;
 
   /* MATLABSystem: '<S1>/Digital Read2' */
   if (Pacemaker_DW.obj.SampleTime != Pacemaker_P.DigitalRead2_SampleTime) {
@@ -271,6 +209,7 @@ void Pacemaker_step(void)
    *  Constant: '<S1>/ARP in'
    *  Constant: '<S1>/Constant2'
    *  Constant: '<S1>/VRP in'
+   *  MATLABSystem: '<S1>/Digital Read1'
    *  MATLABSystem: '<S1>/Digital Read2'
    */
   if (Pacemaker_DW.temporalCounter_i1 < MAX_uint32_T) {
@@ -290,8 +229,7 @@ void Pacemaker_step(void)
       Pacemaker_B.Z_VENT_CTRL = false;
       Pacemaker_B.VENT_GND_CTRL = false;
       Pacemaker_B.ATR_GND_CTRL = true;
-      if ((Pacemaker_DW.temporalCounter_i1 >= (uint32_T)ceil(Divide)) && (Divide
-           >= Divide1) && (Divide <= Pacemaker_B.Divide2)) {
+      if (Pacemaker_DW.temporalCounter_i1 >= (uint32_T)ceil(Divide)) {
         Pacemaker_DW.is_c3_Pacemaker = Pacema_IN_Discharge_C22_ATR_AOO;
         Pacemaker_DW.temporalCounter_i1 = 0U;
         Pacemaker_B.PACE_CHARGE_CTRL = false;
@@ -327,9 +265,8 @@ void Pacemaker_step(void)
       Pacemaker_B.Z_ATR_CTRL = false;
       Pacemaker_B.Z_VENT_CTRL = false;
       Pacemaker_B.VENT_GND_CTRL = false;
-      if ((Pacemaker_DW.temporalCounter_i1 >= (uint32_T)
-           Pacemaker_P.Constant2_Value) && (Divide >= Divide1) && (Divide <=
-           Pacemaker_B.Divide2)) {
+      if (Pacemaker_DW.temporalCounter_i1 >= (uint32_T)
+          Pacemaker_P.Constant2_Value) {
         Pacemaker_DW.is_c3_Pacemaker = Pacemaker_IN_Wait_AAI;
         Pacemaker_DW.temporalCounter_i1 = 0U;
         Pacemaker_B.ATR_CMP_REF_PWM = 53;
@@ -362,8 +299,7 @@ void Pacemaker_step(void)
       Pacemaker_B.Z_ATR_CTRL = false;
       Pacemaker_B.Z_VENT_CTRL = false;
       Pacemaker_B.VENT_GND_CTRL = false;
-      if ((Pacemaker_DW.temporalCounter_i1 >= (uint32_T)ceil(Divide)) && (Divide
-           >= Divide1) && (Divide <= Pacemaker_B.Divide2)) {
+      if (Pacemaker_DW.temporalCounter_i1 >= (uint32_T)ceil(Divide)) {
         Pacemaker_DW.is_c3_Pacemaker = Pacemaker_IN_Charge_C22_VOO;
         Pacemaker_DW.temporalCounter_i1 = 0U;
         Pac_enter_atomic_Charge_C22_VOO();
@@ -378,12 +314,11 @@ void Pacemaker_step(void)
       Pacemaker_B.Z_ATR_CTRL = false;
       Pacemaker_B.Z_VENT_CTRL = false;
       Pacemaker_B.VENT_GND_CTRL = false;
-      if ((Pacemaker_DW.temporalCounter_i1 >= (uint32_T)
-           Pacemaker_P.Constant2_Value) && (Divide >= Divide1) && (Divide <=
-           Pacemaker_B.Divide2)) {
+      if (Pacemaker_DW.temporalCounter_i1 >= (uint32_T)
+          Pacemaker_P.Constant2_Value) {
         Pacemaker_DW.is_c3_Pacemaker = Pacemaker_IN_Wait_VVI;
         Pacemaker_DW.temporalCounter_i1 = 0U;
-        Pacemaker_B.VENT_CMP_REF_PWM = 52.0;
+        Pacemaker_B.VENT_CMP_REF_PWM = 53.0;
         Pacemaker_B.VENT_PACE_CTRL = false;
         Pacemaker_B.ATR_PACE_CTRL = false;
         Pacemaker_B.VENT_GND_CTRL = true;
@@ -411,8 +346,8 @@ void Pacemaker_step(void)
         Pacemaker_B.VENT_GND_CTRL = false;
         Pacemaker_B.ATR_GND_CTRL = true;
       } else {
-        Divide = rt_roundd_snf((Pacemaker_B.Divide2 - Pacemaker_P.ARPin_Value) -
-          (real_T)Pacemaker_P.Constant2_Value);
+        Divide = rt_roundd_snf((Divide2 - Pacemaker_P.ARPin_Value) - (real_T)
+          Pacemaker_P.Constant2_Value);
         if (Divide < 32768.0) {
           if (Divide >= -32768.0) {
             tmp = (int16_T)Divide;
@@ -439,7 +374,48 @@ void Pacemaker_step(void)
       break;
 
      case Pacem_IN_Sensing_Charge_C22_VVI:
-      Pacemake_Sensing_Charge_C22_VVI();
+      Pacemaker_B.FRONTEND_CTRL = true;
+      Pacemaker_B.PACING_REF_PWM = 40;
+      Pacemaker_B.PACE_CHARGE_CTRL = true;
+      if (DigitalRead1) {
+        Pacemaker_DW.is_c3_Pacemaker = Pacemaker_IN_Wait_VVI;
+        Pacemaker_DW.temporalCounter_i1 = 0U;
+        Pacemaker_B.FRONTEND_CTRL = false;
+        Pacemaker_B.VENT_CMP_REF_PWM = 53.0;
+        Pacemaker_B.PACE_GND_CTRL = true;
+        Pacemaker_B.VENT_PACE_CTRL = false;
+        Pacemaker_B.Z_ATR_CTRL = false;
+        Pacemaker_B.Z_VENT_CTRL = false;
+        Pacemaker_B.ATR_PACE_CTRL = false;
+        Pacemaker_B.ATR_GND_CTRL = false;
+        Pacemaker_B.VENT_GND_CTRL = true;
+      } else {
+        Divide = rt_roundd_snf((Divide2 - Pacemaker_P.VRPin_Value) - (real_T)
+          Pacemaker_P.Constant2_Value);
+        if (Divide < 32768.0) {
+          if (Divide >= -32768.0) {
+            tmp = (int16_T)Divide;
+          } else {
+            tmp = MIN_int16_T;
+          }
+        } else {
+          tmp = MAX_int16_T;
+        }
+
+        if (Pacemaker_DW.temporalCounter_i1 >= (uint32_T)tmp) {
+          Pacemaker_DW.is_c3_Pacemaker = Pacem_IN_Discharge_C22_VENT_VVI;
+          Pacemaker_DW.temporalCounter_i1 = 0U;
+          Pacemaker_B.FRONTEND_CTRL = false;
+          Pacemaker_B.PACE_CHARGE_CTRL = false;
+          Pacemaker_B.PACE_GND_CTRL = true;
+          Pacemaker_B.ATR_PACE_CTRL = false;
+          Pacemaker_B.ATR_GND_CTRL = false;
+          Pacemaker_B.Z_ATR_CTRL = false;
+          Pacemaker_B.Z_VENT_CTRL = false;
+          Pacemaker_B.VENT_GND_CTRL = false;
+          Pacemaker_B.VENT_PACE_CTRL = true;
+        }
+      }
       break;
 
      case Pacemaker_IN_Wait_AAI:
@@ -465,7 +441,7 @@ void Pacemaker_step(void)
      default:
       /* case IN_Wait_VVI: */
       Pacemaker_B.FRONTEND_CTRL = false;
-      Pacemaker_B.VENT_CMP_REF_PWM = 52.0;
+      Pacemaker_B.VENT_CMP_REF_PWM = 53.0;
       Pacemaker_B.PACE_GND_CTRL = true;
       Pacemaker_B.Z_ATR_CTRL = false;
       Pacemaker_B.Z_VENT_CTRL = false;
@@ -580,7 +556,7 @@ void Pacemaker_initialize(void)
     Pacemaker_DW.objisempty_a = true;
     obj_0 = &Pacemaker_DW.obj_d;
     Pacemaker_DW.obj_d.isInitialized = 1;
-    obj_0->MW_PWM_HANDLE = MW_PWM_Open(3U, 2000.0, 52.0);
+    obj_0->MW_PWM_HANDLE = MW_PWM_Open(3U, 2000.0, 53.0);
     MW_PWM_Start(Pacemaker_DW.obj_d.MW_PWM_HANDLE);
     Pacemaker_DW.obj_d.isSetupComplete = true;
 

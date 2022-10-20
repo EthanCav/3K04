@@ -7,9 +7,9 @@
  *
  * Code generation for model "Pacemaker".
  *
- * Model version              : 5.65
+ * Model version              : 5.75
  * Simulink Coder version : 9.8 (R2022b) 13-May-2022
- * C source code generated on : Wed Oct 19 18:48:10 2022
+ * C source code generated on : Thu Oct 20 19:01:49 2022
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -46,7 +46,6 @@
 
 /* Block signals (default storage) */
 typedef struct {
-  real_T Divide2;                      /* '<S1>/Divide2' */
   real_T VENT_CMP_REF_PWM;             /* '<Root>/PACING MODES' */
   int16_T PACING_REF_PWM;              /* '<Root>/PACING MODES' */
   int16_T ATR_CMP_REF_PWM;             /* '<Root>/PACING MODES' */
@@ -59,7 +58,6 @@ typedef struct {
   boolean_T Z_VENT_CTRL;               /* '<Root>/PACING MODES' */
   boolean_T VENT_GND_CTRL;             /* '<Root>/PACING MODES' */
   boolean_T FRONTEND_CTRL;             /* '<Root>/PACING MODES' */
-  boolean_T DigitalRead1;              /* '<S1>/Digital Read1' */
 } B_Pacemaker_T;
 
 /* Block states (default storage) for system '<Root>' */

@@ -4,7 +4,7 @@
  * Code generation for Simulink model "Pacemaker".
  *
  * Simulink Coder version                : 9.8 (R2022b) 13-May-2022
- * C source code generated on : Wed Oct 19 18:48:10 2022
+ * C source code generated on : Thu Oct 20 19:01:49 2022
  *
  * Note that the generated code is not dependent on this header file.
  * The file is used in cojuction with the automatic build procedure.
