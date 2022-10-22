@@ -103,9 +103,6 @@ def modes():
         Label(diff_device_screen, text="Warning: New pacemaker device connected.", fg="green").pack()
         Button(diff_device_screen, text="OK", command=delete_diff_device_screen).pack()
 
-    def delete_diff_device_screen():
-        diff_device_screen.destroy()
-
     #For Assignment 2, we will make adjustments to allow for serial communication between the DCM and the pacemaker
     def check_device():
         original_device = 1 #change to properties of pacemakers for assignment 2
@@ -468,7 +465,7 @@ def login_verify():
     file_exists = os.path.exists('user_registration.txt')
 
     if file_exists == False:
-        Label(login_screen, text="Please register first, then log in.").pack()
+        Label(login_screen, text="Please register first, then log in.", fg='red').pack()
     
     file1 = open('user_registration.txt', "r")
     verify = file1.read().splitlines()
@@ -528,6 +525,7 @@ def username_taken():
     username_taken_screen.geometry("250x100")
     Label(username_taken_screen, text="Username Taken").pack()
     Button(username_taken_screen, text="OK", command=delete_username_taken_screen).pack()
+
 # Designing popup for device connected     
 def device_connected():
     global device_connected_screen
@@ -536,6 +534,7 @@ def device_connected():
     device_connected_screen.geometry("250x100")
     Label(device_connected_screen, text="Device Connected", fg="green").pack()
     Button(device_connected_screen, text="OK", command=delete_device_connected_screen).pack()
+
 # Designing popup for device disconnected    
 def device_disconnected():
     global device_disconnected_screen
@@ -544,7 +543,6 @@ def device_disconnected():
     device_disconnected_screen.geometry("250x100")
     Label(device_disconnected_screen, text="Device Disconnected", fg="red").pack()
     Button(device_disconnected_screen, text="OK", command=delete_device_disconnected_screen).pack()
-    
     
 # Deleting popups
 def delete_login_success():
@@ -569,6 +567,9 @@ def delete_device_connected_screen():
     
 def delete_device_disconnected_screen():
     device_disconnected_screen.destroy()
+
+def delete_diff_device_screen():
+    diff_device_screen.destroy()
 
 # Designing Main(first) window
 def main_account_screen():
