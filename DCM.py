@@ -79,14 +79,14 @@ def modes():
     Button2.pack()
     Button3.pack()
     Button4.pack()
-
-    #Button to visually indicate when DCM and pacemaker are connected/disconnected 
-    #For Assignment 2, we will make adjustments to allow for serial communication between the DCM and the pacemaker
+'''
+    #Button to connect DCM to pacemaker & visually indicate when connected/disconnected
+    #For Assignment 2, we will make adjustments so that when you press the button, it connects or disconnects the pacemaker
     def pacemakerConnect():
 
         if(Connect['text']=='Connect Device'):
             Connect['text']='Disconnect Device'
-            device_connected();
+            check_device()
             
         elif(Connect['text']=='Disconnect Device'):
             Connect['text']='Connect Device'
@@ -95,6 +95,25 @@ def modes():
     Connect = Button(modes_screen, text = 'Connect Device', command = pacemakerConnect)
     Connect.pack()
 
+    #Screen pops up to visually indicate when a different pacemaker device is approached than when previously interrogated
+    def check_device():
+        if device == original device:
+            device_connected()
+
+        else:
+            diff_device()
+
+    def diff_device():
+        global diff_device_screen
+        diff_device_screen = Toplevel(modes_screen)
+        diff_device_screen.title("System Message")
+        diff_device_screen.geometry("250x100")
+        Label(diff_device_screen, text="Notice: New pacemaker device approached.", fg="Red").pack()
+        Button(diff_device_screen, text="OK", command=delete_diff_device_screen).pack()
+
+    def delete_diff_device_screen():
+        diff_device_screen.destroy()
+'''
 # Implementing Programmable Parameters Screens
 def AOO_param():
     global AOO_screen
@@ -506,6 +525,7 @@ def username_taken():
     username_taken_screen.geometry("250x100")
     Label(username_taken_screen, text="Username Taken").pack()
     Button(username_taken_screen, text="OK", command=delete_username_taken_screen).pack()
+
 # Designing popup for device connected     
 def device_connected():
     global device_connected_screen
@@ -514,6 +534,7 @@ def device_connected():
     device_connected_screen.geometry("250x100")
     Label(device_connected_screen, text="Device Connected", fg="green").pack()
     Button(device_connected_screen, text="OK", command=delete_device_connected_screen).pack()
+
 # Designing popup for device disconnected    
 def device_disconnected():
     global device_disconnected_screen
