@@ -83,17 +83,39 @@ def modes():
     #Button to visually indicate when DCM and pacemaker are connected/disconnected 
     #For Assignment 2, we will make adjustments to allow for serial communication between the DCM and the pacemaker
     def pacemakerConnect():
-
         if(Connect['text']=='Connect Device'):
             Connect['text']='Disconnect Device'
-            device_connected();
+            check_device()
             
         elif(Connect['text']=='Disconnect Device'):
             Connect['text']='Connect Device'
-            device_disconnected();
-
+            device_disconnected()
+                    
     Connect = Button(modes_screen, text = 'Connect Device', command = pacemakerConnect)
     Connect.pack()
+
+    #Visually indicate when a different pacemaker device is approached than when previously interrogated
+    def diff_device():
+        global diff_device_screen
+        diff_device_screen = Toplevel(modes_screen)
+        diff_device_screen.title("System Message")
+        diff_device_screen.geometry ("400x100")
+        Label(diff_device_screen, text="Warning: New pacemaker device connected.", fg="green").pack()
+        Button(diff_device_screen, text="OK", command=delete_diff_device_screen).pack()
+
+    def delete_diff_device_screen():
+        diff_device_screen.destroy()
+
+    #For Assignment 2, we will make adjustments to allow for serial communication between the DCM and the pacemaker
+    def check_device():
+        original_device = 1 #change to properties of pacemakers for assignment 2
+        new_device = 2
+        
+        if new_device == original_device:
+            device_connected()
+            
+        else:
+            diff_device()
 
 # Implementing Programmable Parameters Screens
 def AOO_param():
