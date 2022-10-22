@@ -60,161 +60,348 @@ def login():
 
 # Designing window for pacing modes
 def modes():
-      
+    global modes_screen
+
     # create a window
-    root = tkinter.Tk()
-    root.title("Pacing Modes")
-    root.geometry('400x250')
-    Label(root, text="Select a pacing mode.", bg="pink").pack()
-      
+    modes_screen = tkinter.Tk()
+    modes_screen.title("Pacing Modes")
+    modes_screen.geometry('400x350')
+    Label(modes_screen, text="Select a pacing mode.", bg="pink").pack()
+    
     # Create buttons to select pacing modes
-    Button1 = Button(root, text="AOO", command=AOO_param, height=3, width=20)
-    Button2 = Button(root, text="VOO", command=VOO_param, height=3, width=20)
-    Button3 = Button(root, text="AAI", command=AAI_param, height=3, width=20)
-    Button4 = Button(root, text="VVI", command=VVI_param, height=3, width=20)
+    Button1 = Button(modes_screen, text="AOO", command=AOO_param, height=3, width=20)
+    Button2 = Button(modes_screen, text="VOO", command=VOO_param, height=3, width=20)
+    Button3 = Button(modes_screen, text="AAI", command=AAI_param, height=3, width=20)
+    Button4 = Button(modes_screen, text="VVI", command=VVI_param, height=3, width=20)
       
     # Set the position of buttons
     Button1.pack()
     Button2.pack()
     Button3.pack()
     Button4.pack()
-      
-    root.mainloop()
+
+    #Button to connect DCM to pacemaker & visually indicate when connected/disconnected
+    #For Assignment 2, we will make adjustments so that when you press the button, it connects or disconnects the pacemaker
+    def pacemakerConnect():
+
+        if(Connect['text']=='Connect Device'):
+            Connect['text']='Disconnect Device'
+            device_connected();
+            
+        elif(Connect['text']=='Disconnect Device'):
+            Connect['text']='Connect Device'
+            device_disconnected();
+
+    Connect = Button(modes_screen, text = 'Connect Device', command = pacemakerConnect)
+    Connect.pack()
 
 # Implementing Programmable Parameters Screens
 def AOO_param():
     global AOO_screen
-    AOO_screen = Toplevel(main_screen)
+    AOO_screen = Toplevel(modes_screen)
     AOO_screen.title("AOO Programmable Parameters")
     AOO_screen.geometry("400x450")
     Label(AOO_screen, text="Review/modify pacing mode paramaters.", bg="pink").pack()
+    
+#drop down menus and sliders for value selection for programmable parameters
+    def show():
+        label.config(text = slider.get())
 
-    # define inital values
-    LRL_value = 60
-    URL_value = 120
-
-## make initial values the "Nominal" values from PACEMAKER appendix A and make them editable by the user
-    LRL_label = Label(AOO_screen, text=("Lower Rate Limit: ", LRL_value))
+    LRL_label = Label(AOO_screen, text="Lower Rate Limit  [ppm]: ")
     LRL_label.pack()
-    LRL_entry = Entry(AOO_screen, textvariable=LRL_value) #CHANGE "number" should be a variable storing the input 
-    LRL_entry.pack()
-    Button(AOO_screen, text="Update Parameter", width=15, height=2, command = update_param).pack()
+    slider = Scale(AOO_screen, from_=30, to=175, orient=HORIZONTAL)
+    slider.pack()
+    slider.set(60)
 
-    URL_label = Label(AOO_screen, text="Upper Rate Limit: ")
+    button = Button(AOO_screen, text = "Update Parameter", command = show).pack()
+    label = Label(AOO_screen, text = "")
+    label.pack()
+    
+    def show2():
+        label.config(text = clicked2.get())
+    
+    URL_label = Label(AOO_screen, text="Upper Rate Limit [ppm]: ")
     URL_label.pack()
-    URL_entry = Entry(AOO_screen, textvariable="number")
-    URL_entry.pack()
+    options2 = [50,55,60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140,145,150,155,160,165,170,175]
+    global clicked2
+    clicked2 = IntVar(AOO_screen)
+    clicked2.set(120)
+    drop2 = OptionMenu(AOO_screen, clicked2, *options2 )
+    drop2.pack()
+    button = Button(AOO_screen, text = "Update Parameter", command = show2).pack()
+    label = Label(AOO_screen, text = "")
+    label.pack()
 
-    AA_label = Label(AOO_screen, text="Atrial Amplitude: ")
+    def show3():
+        label.config(text = clicked3.get())
+        
+    AA_label = Label(AOO_screen, text="Atrial Amplitude [V]:")
     AA_label.pack()
-    AA_entry = Entry(AOO_screen, textvariable="number") 
-    AA_entry.pack()
+    options3 = [0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0]
+    global clicked3
+    clicked3 = DoubleVar(AOO_screen)
+    clicked3.set(3.5)
+    drop3 = OptionMenu(AOO_screen, clicked3, *options3 )
+    drop3.pack()
+    button = Button(AOO_screen, text = "Update Parameter", command = show3).pack()
+    label = Label(AOO_screen, text = "")
+    label.pack()
 
-    APW_label = Label(AOO_screen, text="Atrial Pulse Width: ")
+    def show4():
+        label.config(text = clicked4.get())
+    
+    
+    APW_label = Label(AOO_screen, text="Atrial Pulse Width [ms]:")
     APW_label.pack()
-    APW_entry = Entry(AOO_screen, textvariable="number") 
-    APW_entry.pack()
-
-def update_param(): #fix - should update the value displayed for the parameter
-    LRL_value = 10
-    LRL_label = Label(AOO_screen, text=("Lower Rate Limit: ", LRL_value))
+    options4 = [0.05, 0.1, 0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9]
+    global clicked4
+    clicked4 = DoubleVar(AOO_screen)
+    clicked4.set(0.4)
+    drop4 = OptionMenu(AOO_screen, clicked4, *options4 )
+    drop4.pack()
+    button = Button(AOO_screen, text = "Update Parameter", command = show4).pack()
+    label = Label(AOO_screen, text = "")
+    label.pack()
 
 
 def VOO_param():
     global VOO_screen
-    VOO_screen = Toplevel(main_screen)
+    VOO_screen = Toplevel(modes_screen)
     VOO_screen.title("VOO Programmable Parameters")
     VOO_screen.geometry("400x450")
     Label(VOO_screen, text="Review/modify pacing mode paramaters.", bg="pink").pack()
 
+    #drop down menus and sliders for value selection for programmable parameters
+    def show():
+        label.config(text = slider.get())
 
-    LRL_label = Label(VOO_screen, text="Lower Rate Limit: ")
+    LRL_label = Label(VOO_screen, text="Lower Rate Limit [ppm]: " )
     LRL_label.pack()
-    LRL_entry = Entry(VOO_screen, textvariable="number") 
-    LRL_entry.pack()
+    slider = Scale(VOO_screen, from_=30, to=175, orient=HORIZONTAL)
+    slider.pack()
+    slider.set(60)
+    button = Button(VOO_screen, text = "Update Parameter", command = show).pack()
+    label = Label(VOO_screen, text = "")
+    label.pack()
 
-    URL_label = Label(VOO_screen, text="Upper Rate Limit:")
+    
+    def show2():
+        label.config(text = clicked2.get())
+    
+    URL_label = Label(VOO_screen, text="Upper Rate Limit [ppm]: ")
     URL_label.pack()
-    URL_entry = Entry(VOO_screen, textvariable="number") 
-    URL_entry.pack()
+    options2 = [50,55,60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140,145,150,155,160,165,170,175]
+    global clicked2
+    clicked2 = IntVar(VOO_screen)
+    clicked2.set(120)
+    drop2 = OptionMenu(VOO_screen, clicked2, *options2 )
+    drop2.pack()
+    button = Button(VOO_screen, text = "Update Parameter", command = show2).pack()
+    label = Label(VOO_screen, text = "")
+    label.pack()
 
-    VA_label = Label(VOO_screen, text="Ventricular Amplitude:")
+    
+    def show3():
+        label.config(text = clicked3.get())
+    
+    VA_label = Label(VOO_screen, text="Ventricular Amplitude [V]:")
     VA_label.pack()
-    VA_entry = Entry(VOO_screen, textvariable="number") 
-    VA_entry.pack()
+    options3 = [0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0]
+    global clicked3
+    clicked3 = DoubleVar(VOO_screen)
+    clicked3.set(3.5)
+    drop3 = OptionMenu(VOO_screen, clicked3, *options3 )
+    drop3.pack()
+    button = Button(VOO_screen, text = "Update Parameter", command = show3).pack()
+    label = Label(VOO_screen, text = "")
+    label.pack()
 
-    VPW_label = Label(VOO_screen, text="Ventricular Pulse Width:")
+
+    def show4():
+        label.config(text = clicked4.get())
+    
+    VPW_label = Label(VOO_screen, text="Ventricular Pulse Width [ms]:")
     VPW_label.pack()
-    VPW_entry = Entry(VOO_screen, textvariable="number") 
-    VPW_entry.pack()
+    options4 = [0.05, 0.1, 0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9]
+    global clicked4
+    clicked4 = DoubleVar(VOO_screen)
+    clicked4.set(0.4)
+    drop4 = OptionMenu(VOO_screen, clicked4, *options4 )
+    drop4.pack()
+    button = Button(VOO_screen, text = "Update Parameter", command = show4).pack()
+    label = Label(VOO_screen, text = "")
+    label.pack()
 
 
 def AAI_param():
     global AAI_screen
-    AAI_screen = Toplevel(main_screen)
+    AAI_screen = Toplevel(modes_screen)
     AAI_screen.title("AAI Programmable Parameters")
-    AAI_screen.geometry("400x450")
+    AAI_screen.geometry("400x520")
     Label(AAI_screen, text="Review/modify pacing mode paramaters.", bg="pink").pack()
+    
+    #drop down menus and sliders for value selection for programmable parameters
+    def show():
+        label.config(text = slider.get())
 
-
-    LRL_label = Label(AAI_screen, text="Lower Rate Limit: ")
+    LRL_label = Label(AAI_screen, text="Lower Rate Limit [ppm]: " )
     LRL_label.pack()
-    LRL_entry = Entry(AAI_screen, textvariable="number") 
-    LRL_entry.pack()
+    slider = Scale(AAI_screen, from_=30, to=175, orient=HORIZONTAL)
+    slider.pack()
+    slider.set(60)
+    button = Button(AAI_screen, text = "Update Parameter", command = show).pack()
+    label = Label(AAI_screen, text = "")
+    label.pack()
 
-    URL_label = Label(AAI_screen, text="Upper Rate Limit:")
+    
+    def show2():
+        label.config(text = clicked2.get())
+    
+    URL_label = Label(AAI_screen, text="Upper Rate Limit [ppm]: ")
     URL_label.pack()
-    URL_entry = Entry(AAI_screen, textvariable="number")
-    URL_entry.pack()
+    options2 = [50,55,60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140,145,150,155,160,165,170,175]
+    global clicked2
+    clicked2 = IntVar(AAI_screen)
+    clicked2.set(120)
+    drop2 = OptionMenu(AAI_screen, clicked2, *options2 )
+    drop2.pack()
+    button = Button(AAI_screen, text = "Update Parameter", command = show2).pack()
+    label = Label(AAI_screen, text = "")
+    label.pack()
 
-    AA_label = Label(AAI_screen, text="Atrial Amplitude:")
+    
+    def show3():
+        label.config(text = clicked3.get())
+        
+    AA_label = Label(AAI_screen, text="Atrial Amplitude [V]:")
     AA_label.pack()
-    AA_entry = Entry(AAI_screen, textvariable="number") 
-    AA_entry.pack()
+    options3 = [0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0]
+    global clicked3
+    clicked3 = DoubleVar(AAI_screen)
+    clicked3.set(3.5)
+    drop3 = OptionMenu(AAI_screen, clicked3, *options3 )
+    drop3.pack()
+    button = Button(AAI_screen, text = "Update Parameter", command = show3).pack()
+    label = Label(AAI_screen, text = "")
+    label.pack()
 
-    APW_label = Label(AAI_screen, text="Atrial Pulse Width:")
+    def show4():
+        label.config(text = clicked4.get())
+    
+    
+    APW_label = Label(AAI_screen, text="Atrial Pulse Width [ms]:")
     APW_label.pack()
-    APW_entry = Entry(AAI_screen, textvariable="number") 
-    APW_entry.pack()
+    options4 = [0.05, 0.1, 0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9]
+    global clicked4
+    clicked4 = DoubleVar(AAI_screen)
+    clicked4.set(0.4)
+    drop4 = OptionMenu(AAI_screen, clicked4, *options4 )
+    drop4.pack()
+    button = Button(AAI_screen, text = "Update Parameter", command = show4).pack()
+    label = Label(AAI_screen, text = "")
+    label.pack()
 
-    ARP_label = Label(AAI_screen, text="ARP:")
+
+    def show5():
+        label.config(text = clicked5.get())
+    
+    
+    ARP_label = Label(AAI_screen, text="Atrial Refractory Period [ms]:")
     ARP_label.pack()
-    ARP_entry = Entry(AAI_screen, textvariable="number") 
-    ARP_entry.pack()
+    options5 = [150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300,310,320,330,340,350,360,370,380,390,400,410,420,430,440,450,460,470,480,490,500]
+    global clicked5
+    clicked5 = IntVar(AAI_screen)
+    clicked5.set(250)
+    drop5 = OptionMenu(AAI_screen, clicked5, *options5 )
+    drop5.pack()
+    button = Button(AAI_screen, text = "Update Parameter", command = show5).pack()
+    label = Label(AAI_screen, text = "")
+    label.pack()
 
 
 def VVI_param():
     global VVI_screen
-    VVI_screen = Toplevel(main_screen)
+    VVI_screen = Toplevel(modes_screen)
     VVI_screen.title("VVI Programmable Parameters")
-    VVI_screen.geometry("400x450")
+    VVI_screen.geometry("400x520")
     Label(VVI_screen, text="Review/modify pacing mode paramaters.", bg="pink").pack()
 
+    #drop down menus and sliders for value selection for programmable parameters
+    def show():
+        label.config(text = slider.get())
 
-    LRL_label = Label(VVI_screen, text="Lower Rate Limit: ")
+    LRL_label = Label(VVI_screen, text="Lower Rate Limit [ppm]: " )
     LRL_label.pack()
-    LRL_entry = Entry(VVI_screen, textvariable="number") 
-    LRL_entry.pack()
+    slider = Scale(VVI_screen, from_=30, to=175, orient=HORIZONTAL)
+    slider.pack()
+    slider.set(60)
+    button = Button(VVI_screen, text = "Update Parameter", command = show).pack()
+    label = Label(VVI_screen, text = "")
+    label.pack()
 
-    URL_label = Label(VVI_screen, text="Upper Rate Limit:")
+    
+    def show2():
+        label.config(text = clicked2.get())
+    
+    URL_label = Label(VVI_screen, text="Upper Rate Limit [ppm]: ")
     URL_label.pack()
-    URL_entry = Entry(VVI_screen, textvariable="number") 
-    URL_entry.pack()
+    options2 = [50,55,60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140,145,150,155,160,165,170,175]
+    global clicked2
+    clicked2 = IntVar(VVI_screen)
+    clicked2.set(120)
+    drop2 = OptionMenu(VVI_screen, clicked2, *options2 )
+    drop2.pack()
+    button = Button(VVI_screen, text = "Update Parameter", command = show2).pack()
+    label = Label(VVI_screen, text = "")
+    label.pack()
 
-    VA_label = Label(VVI_screen, text="Ventricular Amplitude:")
+    
+    def show3():
+        label.config(text = clicked3.get())
+    
+    VA_label = Label(VVI_screen, text="Ventricular Amplitude [V]:")
     VA_label.pack()
-    VA_entry = Entry(VVI_screen, textvariable="number") 
-    VA_entry.pack()
+    options3 = [0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0]
+    global clicked3
+    clicked3 = DoubleVar(VVI_screen)
+    clicked3.set(3.5)
+    drop3 = OptionMenu(VVI_screen, clicked3, *options3 )
+    drop3.pack()
+    button = Button(VVI_screen, text = "Update Parameter", command = show3).pack()
+    label = Label(VVI_screen, text = "")
+    label.pack()
 
-    VPW_label = Label(VVI_screen, text="Ventricular Pulse Width:")
+
+    def show4():
+        label.config(text = clicked4.get())
+    
+    VPW_label = Label(VVI_screen, text="Ventricular Pulse Width [ms]:")
     VPW_label.pack()
-    VPW_entry = Entry(VVI_screen, textvariable="number") 
-    VPW_entry.pack()
+    options4 = [0.05, 0.1, 0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9]
+    global clicked4
+    clicked4 = DoubleVar(VVI_screen)
+    clicked4.set(0.4)
+    drop4 = OptionMenu(VVI_screen, clicked4, *options4 )
+    drop4.pack()
+    button = Button(VVI_screen, text = "Update Parameter", command = show4).pack()
+    label = Label(VVI_screen, text = "")
+    label.pack()
 
-    VRP_label = Label(VVI_screen, text="VRP:")
+    def show5():
+        label.config(text = clicked5.get())
+    
+    
+    VRP_label = Label(VVI_screen, text="Ventricular Refractory Period [ms]:")
     VRP_label.pack()
-    VRP_entry = Entry(VVI_screen, textvariable="number") 
-    VRP_entry.pack()
+    options5 = [150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300,310,320,330,340,350,360,370,380,390,400,410,420,430,440,450,460,470,480,490,500]
+    global clicked5
+    clicked5 = IntVar(VVI_screen)
+    clicked5.set(320)
+    drop5 = OptionMenu(VVI_screen, clicked5, *options5 )
+    drop5.pack()
+    button = Button(VVI_screen, text = "Update Parameter", command = show5).pack()
+    label = Label(VVI_screen, text = "")
+    label.pack()
 
 
 # Implementing event on register button
@@ -230,7 +417,6 @@ def register_user():
     x = len(file2.readlines())/2
     
     if x < 10:
-        
         file3 = open('user_registration.txt', "r")
         verify = file3.read().splitlines()
         if username_info in verify:
@@ -274,8 +460,8 @@ def login_verify():
 
     else:
         user_not_found()
-        
-  
+
+
 # Designing popup for login success
 def login_sucess():
     global login_success_screen
@@ -311,6 +497,7 @@ def max_users():
     max_users_screen.geometry("250x100")
     Label(max_users_screen, text="Max. Number of Users Reached").pack()
     Button(max_users_screen, text="OK", command=delete_max_users_screen).pack()
+
 # Designing popup for username taken
 def username_taken():
     global username_taken_screen
@@ -319,10 +506,29 @@ def username_taken():
     username_taken_screen.geometry("250x100")
     Label(username_taken_screen, text="Username Taken").pack()
     Button(username_taken_screen, text="OK", command=delete_username_taken_screen).pack()
-
+# Designing popup for device connected     
+def device_connected():
+    global device_connected_screen
+    device_connected_screen = Toplevel(modes_screen)
+    device_connected_screen.title("Success")
+    device_connected_screen.geometry("250x100")
+    Label(device_connected_screen, text="Device Connected", fg="green").pack()
+    Button(device_connected_screen, text="OK", command=delete_device_connected_screen).pack()
+# Designing popup for device disconnected    
+def device_disconnected():
+    global device_disconnected_screen
+    device_disconnected_screen = Toplevel(modes_screen)
+    device_disconnected_screen.title("Success")
+    device_disconnected_screen.geometry("250x100")
+    Label(device_disconnected_screen, text="Device Disconnected", fg="red").pack()
+    Button(device_disconnected_screen, text="OK", command=delete_device_disconnected_screen).pack()
+    
+    
 # Deleting popups
 def delete_login_success():
     login_success_screen.destroy()
+    login_screen.destroy()
+    main_screen.destroy()
 
 def delete_password_not_recognised():
     password_not_recog_screen.destroy()
@@ -335,6 +541,12 @@ def delete_max_users_screen():
     
 def delete_username_taken_screen():
     username_taken_screen.destroy()
+    
+def delete_device_connected_screen():
+    device_connected_screen.destroy()
+    
+def delete_device_disconnected_screen():
+    device_disconnected_screen.destroy()
 
 # Designing Main(first) window
 def main_account_screen():
@@ -351,3 +563,6 @@ def main_account_screen():
     main_screen.mainloop()
 
 main_account_screen()
+
+
+
