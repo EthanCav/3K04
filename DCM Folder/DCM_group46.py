@@ -100,7 +100,7 @@ def modes():
         diff_device_screen = Toplevel(modes_screen)
         diff_device_screen.title("System Message")
         diff_device_screen.geometry ("400x100")
-        Label(diff_device_screen, text="Warning: New pacemaker device connected.", fg="green").pack()
+        Label(diff_device_screen, text="Device Connected!\n\nWarning: New pacemaker device detected.", fg="green").pack()
         Button(diff_device_screen, text="OK", command=delete_diff_device_screen).pack()
 
     #For Assignment 2, we will make adjustments to allow for serial communication between the DCM and the pacemaker
