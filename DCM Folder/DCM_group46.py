@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[7]:
-
-
 #import modules
 from tkinter import *
 import tkinter.messagebox
@@ -592,10 +586,3 @@ def main_account_screen():
     main_screen.mainloop()
 
 main_account_screen()
-
-
-# In[ ]:
-
-
-
-
