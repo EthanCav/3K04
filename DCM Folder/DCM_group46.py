@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[7]:
+
+
 #import modules
 from tkinter import *
 import tkinter.messagebox
@@ -137,7 +143,7 @@ def AOO_param():
     label.pack()
     
     def show2():
-        label.config(text = clicked2.get())
+        label2.config(text = clicked2.get())
     
     URL_label = Label(AOO_screen, text="Upper Rate Limit [ppm]: ")
     URL_label.pack()
@@ -148,11 +154,11 @@ def AOO_param():
     drop2 = OptionMenu(AOO_screen, clicked2, *options2 )
     drop2.pack()
     button = Button(AOO_screen, text = "Update Parameter", command = show2).pack()
-    label = Label(AOO_screen, text = "")
-    label.pack()
+    label2 = Label(AOO_screen, text = "")
+    label2.pack()
 
     def show3():
-        label.config(text = clicked3.get())
+        label3.config(text = clicked3.get())
         
     AA_label = Label(AOO_screen, text="Atrial Amplitude [V]:")
     AA_label.pack()
@@ -163,11 +169,11 @@ def AOO_param():
     drop3 = OptionMenu(AOO_screen, clicked3, *options3 )
     drop3.pack()
     button = Button(AOO_screen, text = "Update Parameter", command = show3).pack()
-    label = Label(AOO_screen, text = "")
-    label.pack()
+    label3 = Label(AOO_screen, text = "")
+    label3.pack()
 
     def show4():
-        label.config(text = clicked4.get())
+        label4.config(text = clicked4.get())
     
     
     APW_label = Label(AOO_screen, text="Atrial Pulse Width [ms]:")
@@ -179,8 +185,8 @@ def AOO_param():
     drop4 = OptionMenu(AOO_screen, clicked4, *options4 )
     drop4.pack()
     button = Button(AOO_screen, text = "Update Parameter", command = show4).pack()
-    label = Label(AOO_screen, text = "")
-    label.pack()
+    label4 = Label(AOO_screen, text = "")
+    label4.pack()
 
 
 def VOO_param():
@@ -205,7 +211,7 @@ def VOO_param():
 
     
     def show2():
-        label.config(text = clicked2.get())
+        label2.config(text = clicked2.get())
     
     URL_label = Label(VOO_screen, text="Upper Rate Limit [ppm]: ")
     URL_label.pack()
@@ -216,12 +222,12 @@ def VOO_param():
     drop2 = OptionMenu(VOO_screen, clicked2, *options2 )
     drop2.pack()
     button = Button(VOO_screen, text = "Update Parameter", command = show2).pack()
-    label = Label(VOO_screen, text = "")
-    label.pack()
+    label2 = Label(VOO_screen, text = "")
+    label2.pack()
 
     
     def show3():
-        label.config(text = clicked3.get())
+        label3.config(text = clicked3.get())
     
     VA_label = Label(VOO_screen, text="Ventricular Amplitude [V]:")
     VA_label.pack()
@@ -232,12 +238,12 @@ def VOO_param():
     drop3 = OptionMenu(VOO_screen, clicked3, *options3 )
     drop3.pack()
     button = Button(VOO_screen, text = "Update Parameter", command = show3).pack()
-    label = Label(VOO_screen, text = "")
-    label.pack()
+    label3 = Label(VOO_screen, text = "")
+    label3.pack()
 
 
     def show4():
-        label.config(text = clicked4.get())
+        label4.config(text = clicked4.get())
     
     VPW_label = Label(VOO_screen, text="Ventricular Pulse Width [ms]:")
     VPW_label.pack()
@@ -248,8 +254,8 @@ def VOO_param():
     drop4 = OptionMenu(VOO_screen, clicked4, *options4 )
     drop4.pack()
     button = Button(VOO_screen, text = "Update Parameter", command = show4).pack()
-    label = Label(VOO_screen, text = "")
-    label.pack()
+    label4 = Label(VOO_screen, text = "")
+    label4.pack()
 
 
 def AAI_param():
@@ -274,7 +280,7 @@ def AAI_param():
 
     
     def show2():
-        label.config(text = clicked2.get())
+        label2.config(text = clicked2.get())
     
     URL_label = Label(AAI_screen, text="Upper Rate Limit [ppm]: ")
     URL_label.pack()
@@ -285,12 +291,12 @@ def AAI_param():
     drop2 = OptionMenu(AAI_screen, clicked2, *options2 )
     drop2.pack()
     button = Button(AAI_screen, text = "Update Parameter", command = show2).pack()
-    label = Label(AAI_screen, text = "")
-    label.pack()
+    label2 = Label(AAI_screen, text = "")
+    label2.pack()
 
     
     def show3():
-        label.config(text = clicked3.get())
+        label3.config(text = clicked3.get())
         
     AA_label = Label(AAI_screen, text="Atrial Amplitude [V]:")
     AA_label.pack()
@@ -301,11 +307,11 @@ def AAI_param():
     drop3 = OptionMenu(AAI_screen, clicked3, *options3 )
     drop3.pack()
     button = Button(AAI_screen, text = "Update Parameter", command = show3).pack()
-    label = Label(AAI_screen, text = "")
-    label.pack()
+    label3 = Label(AAI_screen, text = "")
+    label3.pack()
 
     def show4():
-        label.config(text = clicked4.get())
+        label4.config(text = clicked4.get())
     
     
     APW_label = Label(AAI_screen, text="Atrial Pulse Width [ms]:")
@@ -317,12 +323,12 @@ def AAI_param():
     drop4 = OptionMenu(AAI_screen, clicked4, *options4 )
     drop4.pack()
     button = Button(AAI_screen, text = "Update Parameter", command = show4).pack()
-    label = Label(AAI_screen, text = "")
-    label.pack()
+    label4 = Label(AAI_screen, text = "")
+    label4.pack()
 
 
     def show5():
-        label.config(text = clicked5.get())
+        label5.config(text = clicked5.get())
     
     
     ARP_label = Label(AAI_screen, text="Atrial Refractory Period [ms]:")
@@ -334,8 +340,8 @@ def AAI_param():
     drop5 = OptionMenu(AAI_screen, clicked5, *options5 )
     drop5.pack()
     button = Button(AAI_screen, text = "Update Parameter", command = show5).pack()
-    label = Label(AAI_screen, text = "")
-    label.pack()
+    label5 = Label(AAI_screen, text = "")
+    label5.pack()
 
 
 def VVI_param():
@@ -360,7 +366,7 @@ def VVI_param():
 
     
     def show2():
-        label.config(text = clicked2.get())
+        label2.config(text = clicked2.get())
     
     URL_label = Label(VVI_screen, text="Upper Rate Limit [ppm]: ")
     URL_label.pack()
@@ -371,12 +377,12 @@ def VVI_param():
     drop2 = OptionMenu(VVI_screen, clicked2, *options2 )
     drop2.pack()
     button = Button(VVI_screen, text = "Update Parameter", command = show2).pack()
-    label = Label(VVI_screen, text = "")
-    label.pack()
+    label2 = Label(VVI_screen, text = "")
+    label2.pack()
 
     
     def show3():
-        label.config(text = clicked3.get())
+        label3.config(text = clicked3.get())
     
     VA_label = Label(VVI_screen, text="Ventricular Amplitude [V]:")
     VA_label.pack()
@@ -387,12 +393,12 @@ def VVI_param():
     drop3 = OptionMenu(VVI_screen, clicked3, *options3 )
     drop3.pack()
     button = Button(VVI_screen, text = "Update Parameter", command = show3).pack()
-    label = Label(VVI_screen, text = "")
-    label.pack()
+    label3 = Label(VVI_screen, text = "")
+    label3.pack()
 
 
     def show4():
-        label.config(text = clicked4.get())
+        label4.config(text = clicked4.get())
     
     VPW_label = Label(VVI_screen, text="Ventricular Pulse Width [ms]:")
     VPW_label.pack()
@@ -403,11 +409,11 @@ def VVI_param():
     drop4 = OptionMenu(VVI_screen, clicked4, *options4 )
     drop4.pack()
     button = Button(VVI_screen, text = "Update Parameter", command = show4).pack()
-    label = Label(VVI_screen, text = "")
-    label.pack()
+    label4 = Label(VVI_screen, text = "")
+    label4.pack()
 
     def show5():
-        label.config(text = clicked5.get())
+        label5.config(text = clicked5.get())
     
     
     VRP_label = Label(VVI_screen, text="Ventricular Refractory Period [ms]:")
@@ -419,8 +425,8 @@ def VVI_param():
     drop5 = OptionMenu(VVI_screen, clicked5, *options5 )
     drop5.pack()
     button = Button(VVI_screen, text = "Update Parameter", command = show5).pack()
-    label = Label(VVI_screen, text = "")
-    label.pack()
+    label5 = Label(VVI_screen, text = "")
+    label5.pack()
 
 
 # Implementing event on register button
@@ -494,7 +500,7 @@ def login_sucess():
 def password_not_recognised():
     global password_not_recog_screen
     password_not_recog_screen = Toplevel(login_screen)
-    password_not_recog_screen.title("Success")
+    password_not_recog_screen.title("Error")
     password_not_recog_screen.geometry("150x100")
     Label(password_not_recog_screen, text="Invalid Password ").pack()
     Button(password_not_recog_screen, text="OK", command=delete_password_not_recognised).pack()
@@ -503,7 +509,7 @@ def password_not_recognised():
 def user_not_found():
     global user_not_found_screen
     user_not_found_screen = Toplevel(login_screen)
-    user_not_found_screen.title("Success")
+    user_not_found_screen.title("Error")
     user_not_found_screen.geometry("150x100")
     Label(user_not_found_screen, text="User Not Found").pack()
     Button(user_not_found_screen, text="OK", command=delete_user_not_found_screen).pack()
@@ -512,7 +518,7 @@ def user_not_found():
 def max_users():
     global max_users_screen
     max_users_screen = Toplevel(register_screen)
-    max_users_screen.title("Success")
+    max_users_screen.title("Error")
     max_users_screen.geometry("250x100")
     Label(max_users_screen, text="Max. Number of Users Reached").pack()
     Button(max_users_screen, text="OK", command=delete_max_users_screen).pack()
@@ -521,7 +527,7 @@ def max_users():
 def username_taken():
     global username_taken_screen
     username_taken_screen = Toplevel(register_screen)
-    username_taken_screen.title("Success")
+    username_taken_screen.title("Error")
     username_taken_screen.geometry("250x100")
     Label(username_taken_screen, text="Username Taken").pack()
     Button(username_taken_screen, text="OK", command=delete_username_taken_screen).pack()
@@ -586,6 +592,10 @@ def main_account_screen():
     main_screen.mainloop()
 
 main_account_screen()
+
+
+# In[ ]:
+
 
 
 
