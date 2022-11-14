@@ -1,0 +1,62 @@
+simulink_group46.o: \
+ C:/Users/kavya/OneDrive/DOCUME~1/GitHub/3K04/SIMULI~1/simulink_group46_ert_rtw/simulink_group46.c \
+ C:/Users/kavya/OneDrive/DOCUME~1/GitHub/3K04/SIMULI~1/simulink_group46_ert_rtw/simulink_group46.h \
+ C:/Users/kavya/OneDrive/Documents/GitHub/3K04/Simulink\ Folder/slprj/ert/_sharedutils/rtwtypes.h \
+ C:/Program\ Files/MATLAB/R2022b/extern/include/tmwtypes.h \
+ C:/Program\ Files/MATLAB/R2022b/simulink/include/rtw_continuous.h \
+ C:/Program\ Files/MATLAB/R2022b/simulink/include/rtw_solver.h \
+ C:/Program\ Files/MATLAB/R2022b/simulink/include/rtw_continuous.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_digitalIO.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_SVD.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_PWM.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_SCI.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_AnalogIn.h \
+ C:/Users/kavya/OneDrive/DOCUME~1/GitHub/3K04/SIMULI~1/simulink_group46_ert_rtw/simulink_group46_types.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_SVD.h \
+ C:/Users/kavya/OneDrive/Documents/GitHub/3K04/Simulink\ Folder/slprj/ert/_sharedutils/multiword_types.h \
+ C:/Users/kavya/OneDrive/Documents/GitHub/3K04/Simulink\ Folder/slprj/ert/_sharedutils/rtwtypes.h \
+ C:/Users/kavya/OneDrive/Documents/GitHub/3K04/Simulink\ Folder/slprj/ert/_sharedutils/send_params.h \
+ C:/Users/kavya/OneDrive/Documents/GitHub/3K04/Simulink\ Folder/slprj/ert/_sharedutils/rt_roundd_snf.h \
+ C:/Users/kavya/OneDrive/DOCUME~1/GitHub/3K04/SIMULI~1/simulink_group46_ert_rtw/simulink_group46_private.h \
+ C:/Users/kavya/OneDrive/Documents/GitHub/3K04/Simulink\ Folder/slprj/ert/_sharedutils/sMultiWord2Double.h \
+ C:/Users/kavya/OneDrive/DOCUME~1/GitHub/3K04/SIMULI~1/simulink_group46_ert_rtw/send_params_private.h
+
+C:/Users/kavya/OneDrive/DOCUME~1/GitHub/3K04/SIMULI~1/simulink_group46_ert_rtw/simulink_group46.h:
+
+C:/Users/kavya/OneDrive/Documents/GitHub/3K04/Simulink\ Folder/slprj/ert/_sharedutils/rtwtypes.h:
+
+C:/Program\ Files/MATLAB/R2022b/extern/include/tmwtypes.h:
+
+C:/Program\ Files/MATLAB/R2022b/simulink/include/rtw_continuous.h:
+
+C:/Program\ Files/MATLAB/R2022b/simulink/include/rtw_solver.h:
+
+C:/Program\ Files/MATLAB/R2022b/simulink/include/rtw_continuous.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_digitalIO.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_SVD.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_PWM.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_SCI.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_AnalogIn.h:
+
+C:/Users/kavya/OneDrive/DOCUME~1/GitHub/3K04/SIMULI~1/simulink_group46_ert_rtw/simulink_group46_types.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_SVD.h:
+
+C:/Users/kavya/OneDrive/Documents/GitHub/3K04/Simulink\ Folder/slprj/ert/_sharedutils/multiword_types.h:
+
+C:/Users/kavya/OneDrive/Documents/GitHub/3K04/Simulink\ Folder/slprj/ert/_sharedutils/rtwtypes.h:
+
+C:/Users/kavya/OneDrive/Documents/GitHub/3K04/Simulink\ Folder/slprj/ert/_sharedutils/send_params.h:
+
+C:/Users/kavya/OneDrive/Documents/GitHub/3K04/Simulink\ Folder/slprj/ert/_sharedutils/rt_roundd_snf.h:
+
+C:/Users/kavya/OneDrive/DOCUME~1/GitHub/3K04/SIMULI~1/simulink_group46_ert_rtw/simulink_group46_private.h:
+
+C:/Users/kavya/OneDrive/Documents/GitHub/3K04/Simulink\ Folder/slprj/ert/_sharedutils/sMultiWord2Double.h:
+
+C:/Users/kavya/OneDrive/DOCUME~1/GitHub/3K04/SIMULI~1/simulink_group46_ert_rtw/send_params_private.h:
