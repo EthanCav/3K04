@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[7]:
 
 
 #import modules
 from tkinter import *
 import tkinter.messagebox
 import os
+
 
 # Designing window for registration
 def register():
@@ -148,6 +149,10 @@ def AOO_param():
         if slider.get() < clicked2.get():
             label.config(text = slider.get())
             LRL_value = slider.get()
+            file = open('AOO_values.txt',"a")
+            file.write("LRL = "+ str(LRL_value) + " " + "ppm" + "\n")
+            file.close()
+            
 
     LRL_label = Label(AOO_screen, text="Lower Rate Limit  [ppm]: ")
     LRL_label.pack()
@@ -164,6 +169,9 @@ def AOO_param():
         if clicked2.get() > slider.get():
             label2.config(text = clicked2.get())
             URL_value = clicked2.get()
+            file = open('AOO_values.txt',"a")
+            file.write("URL = "+ str(URL_value) + " " + "ppm" + "\n")
+            file.close()
         
     URL_label = Label(AOO_screen, text="Upper Rate Limit [ppm]: ")
     URL_label.pack()
@@ -181,6 +189,10 @@ def AOO_param():
 
     def show3():
         label3.config(text = clicked3.get())
+        AA_value = clicked3.get()
+        file = open('AOO_values.txt',"a")
+        file.write("Atrial Amlitude = "+ str(AA_value) + " " "V" + "\n")
+        file.close()
         
     AA_label = Label(AOO_screen, text="Atrial Amplitude [V]:")
     AA_label.pack()
@@ -196,6 +208,10 @@ def AOO_param():
 
     def show4():
         label4.config(text = clicked4.get())
+        APW_value = clicked4.get()
+        file = open('AOO_values.txt',"a")
+        file.write("Atrial Pulse Width = "+ str(APW_value) + " " + "ms" + "\n")
+        file.close()
     
     
     APW_label = Label(AOO_screen, text="Atrial Pulse Width [ms]:")
@@ -223,6 +239,9 @@ def VOO_param():
         if slider.get() < clicked2.get():
             label.config(text = slider.get())
             LRL_value = slider.get()
+            file = open('VOO_values.txt',"a")
+            file.write("LRL = "+ str(LRL_value) + " " + "ppm" + "\n")
+            file.close()
 
     LRL_label = Label(VOO_screen, text="Lower Rate Limit  [ppm]: ")
     LRL_label.pack()
@@ -239,6 +258,9 @@ def VOO_param():
         if clicked2.get() > slider.get():
             label2.config(text = clicked2.get())
             URL_value = clicked2.get()
+            file = open('VOO_values.txt',"a")
+            file.write("URL = "+ str(URL_value) + " " + "ppm" + "\n")
+            file.close()
         
     URL_label = Label(VOO_screen, text="Upper Rate Limit [ppm]: ")
     URL_label.pack()
@@ -257,6 +279,10 @@ def VOO_param():
     
     def show3():
         label3.config(text = clicked3.get())
+        AA_value = clicked3.get()
+        file = open('VOO_values.txt',"a")
+        file.write("Atrial Amlitude = "+ str(AA_value) + " " "V" + "\n")
+        file.close()
     
     VA_label = Label(VOO_screen, text="Ventricular Amplitude [V]:")
     VA_label.pack()
@@ -273,6 +299,10 @@ def VOO_param():
 
     def show4():
         label4.config(text = clicked4.get())
+        VPW_value = clicked4.get()
+        file = open('VOO_values.txt',"a")
+        file.write("Ventricular Pulse Width = "+ str(VPW_value) + " " + "ms" + "\n")
+        file.close()
     
     VPW_label = Label(VOO_screen, text="Ventricular Pulse Width [ms]:")
     VPW_label.pack()
@@ -299,6 +329,9 @@ def AAI_param():
         if slider.get() < clicked2.get():
             label.config(text = slider.get())
             LRL_value = slider.get()
+            file = open('AAI_values.txt',"a")
+            file.write("LRL = "+ str(LRL_value) + " " + "ppm" + "\n")
+            file.close()
 
     LRL_label = Label(AAI_screen, text="Lower Rate Limit  [ppm]: ")
     LRL_label.pack()
@@ -316,6 +349,9 @@ def AAI_param():
         if clicked2.get() > slider.get():
             label2.config(text = clicked2.get())
             URL_value = clicked2.get()
+            file = open('AAI_values.txt',"a")
+            file.write("URL = "+ str(URL_value) + " " + "ppm" + "\n")
+            file.close()
         
     URL_label = Label(AAI_screen, text="Upper Rate Limit [ppm]: ")
     URL_label.pack()
@@ -334,6 +370,10 @@ def AAI_param():
     
     def show3():
         label3.config(text = clicked3.get())
+        AA_value = clicked3.get()
+        file = open('AAI_values.txt',"a")
+        file.write("Atrial Amlitude = "+ str(AA_value) + " " "V" + "\n")
+        file.close()
         
     AA_label = Label(AAI_screen, text="Atrial Amplitude [V]:")
     AA_label.pack()
@@ -349,6 +389,10 @@ def AAI_param():
 
     def show4():
         label4.config(text = clicked4.get())
+        APW_value = clicked4.get()
+        file = open('AAI_values.txt',"a")
+        file.write("Atrial Pulse Width = "+ str(APW_value) + " " + "ms" + "\n")
+        file.close()
     
     
     APW_label = Label(AAI_screen, text="Atrial Pulse Width [ms]:")
@@ -366,6 +410,10 @@ def AAI_param():
 
     def show5():
         label5.config(text = clicked5.get())
+        ARP_value = clicked5.get()
+        file = open('AAI_values.txt',"a")
+        file.write("Atrial Refractory Period = "+ str(ARP_value) + " " + "ms" + "\n")
+        file.close()
     
     
     ARP_label = Label(AAI_screen, text="Atrial Refractory Period [ms]:")
@@ -393,6 +441,9 @@ def VVI_param():
         if slider.get() < clicked2.get():
             label.config(text = slider.get())
             LRL_value = slider.get()
+            file = open('VVI_values.txt',"a")
+            file.write("LRL = "+ str(LRL_value) + " " + "ppm" + "\n")
+            file.close()
 
     LRL_label = Label(VVI_screen, text="Lower Rate Limit  [ppm]: ")
     LRL_label.pack()
@@ -410,6 +461,9 @@ def VVI_param():
         if clicked2.get() > slider.get():
             label2.config(text = clicked2.get())
             URL_value = clicked2.get()
+            file = open('VVI_values.txt',"a")
+            file.write("URL = "+ str(URL_value) + " " + "ppm" + "\n")
+            file.close()
         
     URL_label = Label(VVI_screen, text="Upper Rate Limit [ppm]: ")
     URL_label.pack()
@@ -428,6 +482,10 @@ def VVI_param():
     
     def show3():
         label3.config(text = clicked3.get())
+        VA_value = clicked3.get()
+        file = open('VVI_values.txt',"a")
+        file.write("Ventricular Amlitude = "+ str(VA_value) + " " "V" + "\n")
+        file.close()
     
     VA_label = Label(VVI_screen, text="Ventricular Amplitude [V]:")
     VA_label.pack()
@@ -444,6 +502,10 @@ def VVI_param():
 
     def show4():
         label4.config(text = clicked4.get())
+        VPW_value = clicked4.get()
+        file = open('VVI_values.txt',"a")
+        file.write("Ventricular Pulse Width = "+ str(VPW_value) + " " + "ms" + "\n")
+        file.close()
     
     VPW_label = Label(VVI_screen, text="Ventricular Pulse Width [ms]:")
     VPW_label.pack()
@@ -459,6 +521,10 @@ def VVI_param():
 
     def show5():
         label5.config(text = clicked5.get())
+        VRP_value = clicked5.get()
+        file = open('VVI_values.txt',"a")
+        file.write("Ventricular Refractory Period = "+ str(VRP_value) + " " + "ms" + "\n")
+        file.close()
     
     
     VRP_label = Label(VVI_screen, text="Ventricular Refractory Period [ms]:")
@@ -486,6 +552,9 @@ def VOOR_param():
         if slider.get() < clicked2.get():
             label.config(text = slider.get())
             LRL_value = slider.get()
+            file = open('VOOR_values.txt',"a")
+            file.write("LRL = "+ str(LRL_value) + " " + "ppm" + "\n")
+            file.close()
 
     LRL_label = Label(VOOR_screen, text="Lower Rate Limit  [ppm]: ")
     LRL_label.pack()
@@ -503,6 +572,9 @@ def VOOR_param():
         if clicked2.get() > slider.get():
             label2.config(text = clicked2.get())
             URL_value = clicked2.get()
+            file = open('VOOR_values.txt',"a")
+            file.write("URL = "+ str(URL_value) + " " + "ppm" + "\n")
+            file.close()
         
     URL_label = Label(VOOR_screen, text="Upper Rate Limit [ppm]: ")
     URL_label.pack()
@@ -531,6 +603,9 @@ def AOOR_param():
         if slider.get() < clicked2.get():
             label.config(text = slider.get())
             LRL_value = slider.get()
+            file = open('AOOR_values.txt',"a")
+            file.write("LRL = "+ str(LRL_value) + " " + "ppm" + "\n")
+            file.close()
 
     LRL_label = Label(AOOR_screen, text="Lower Rate Limit  [ppm]: ")
     LRL_label.pack()
@@ -548,6 +623,9 @@ def AOOR_param():
         if clicked2.get() > slider.get():
             label2.config(text = clicked2.get())
             URL_value = clicked2.get()
+            file = open('AOOR_values.txt',"a")
+            file.write("URL = "+ str(URL_value) + " " + "ppm" + "\n")
+            file.close()
         
     URL_label = Label(AOOR_screen, text="Upper Rate Limit [ppm]: ")
     URL_label.pack()
@@ -576,6 +654,9 @@ def VVIR_param():
         if slider.get() < clicked2.get():
             label.config(text = slider.get())
             LRL_value = slider.get()
+            file = open('VVIR_values.txt',"a")
+            file.write("LRL = "+ str(LRL_value) + " " + "ppm" + "\n")
+            file.close()
 
     LRL_label = Label(VVIR_screen, text="Lower Rate Limit  [ppm]: ")
     LRL_label.pack()
@@ -593,7 +674,11 @@ def VVIR_param():
         if clicked2.get() > slider.get():
             label2.config(text = clicked2.get())
             URL_value = clicked2.get()
-        
+            file = open('VVIR_values.txt',"a")
+            file.write("URL = "+ str(URL_value) + " " + "ppm" + "\n")
+            file.close()
+            
+            
     URL_label = Label(VVIR_screen, text="Upper Rate Limit [ppm]: ")
     URL_label.pack()
     options2 = [50,55,60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140,145,150,155,160,165,170,175]
@@ -620,6 +705,9 @@ def AAIR_param():
         if slider.get() < clicked2.get():
             label.config(text = slider.get())
             LRL_value = slider.get()
+            file = open('AAIR_values.txt',"a")
+            file.write("LRL = "+ str(LRL_value) + " " + "ppm" + "\n")
+            file.close()
 
     LRL_label = Label(AAIR_screen, text="Lower Rate Limit  [ppm]: ")
     LRL_label.pack()
@@ -637,6 +725,9 @@ def AAIR_param():
         if clicked2.get() > slider.get():
             label2.config(text = clicked2.get())
             URL_value = clicked2.get()
+            file = open('AAIR_values.txt',"a")
+            file.write("URL = "+ str(URL_value) + " " + "ppm" + "\n")
+            file.close()
         
     URL_label = Label(AAIR_screen, text="Upper Rate Limit [ppm]: ")
     URL_label.pack()
