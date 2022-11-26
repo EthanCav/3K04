@@ -1,14 +1,12 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[7]:
-
-
 #import modules
 from tkinter import *
 import tkinter.messagebox
+from tkinter import messagebox
 import os
-
+import serial
+from serial.tools import list_ports
+import struct
+import tkinter as tk
 
 # Designing window for registration
 def register():
@@ -102,16 +100,50 @@ def modes():
     Logout.pack()
     Logout.place(x=400, y = 5)
 
+
+    #Connect pacemaker and DCM with serial communication
+    def serialConnect():
+        global ser #for setting up serial communication
+        global ports #for setting up the port that is connected to the device
+
+        #ports = list(list_ports.comports())
+        ser = serial.Serial('/dev/cu.usbmodem0006210000001', baudrate = 115200, timeout=None) ###figure out how to get right port every time
+    ##    ser.baudrate = 115200 #given in tutorial 3 document
+    ##    ser.port = ports[0].device
+    ##    ser.timeout = None #wait forever/until requested number of bytes are received
+##        ser.open()
+
+        if ser.is_open:
+            root = tk.Tk()
+            root.withdraw() #to get rid of empty pop-up window 
+            messagebox.showinfo("System Message", "Device connected!")
+            print("connected")
+
+        else:
+            messagebox.showerror("System Message","Device not connected.") #this doesn't seem to work and idk why
+            
+    #disconnect pacemaker and DCM
+    def serialDisconnect():
+        global ser 
+        ser.close()
+        print("disconnected")
+        messagebox.showerror("System Message","Device disconnected.")
+
     #Button to visually indicate when DCM and pacemaker are connected/disconnected 
     #For Assignment 2, we will make adjustments to allow for serial communication between the DCM and the pacemaker
     def pacemakerConnect():
         if(Connect['text']=='Connect Device'):
             Connect['text']='Disconnect Device'
-            check_device()
+            serialConnect()
+            #check_device()
+
+   ####still have some stuff to figure out here (i.e. checking when new device is approached)
+            ###also need to add messages when device isn't connected and you press connect button
             
         elif(Connect['text']=='Disconnect Device'):
             Connect['text']='Connect Device'
-            device_disconnected()
+            serialDisconnect()
+            #device_disconnected()
                     
     Connect = Button(modes_screen, text = 'Connect Device', command = pacemakerConnect)
     Connect.pack()
@@ -937,10 +969,4 @@ def main_account_screen():
     main_screen.mainloop()
 
 main_account_screen()
-
-
-# In[ ]:
-
-
-
 
