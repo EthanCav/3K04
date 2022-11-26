@@ -111,7 +111,7 @@ def modes():
     ##    ser.baudrate = 115200 #given in tutorial 3 document
     ##    ser.port = ports[0].device
     ##    ser.timeout = None #wait forever/until requested number of bytes are received
-##        ser.open()
+    ##    ser.open()
 
         if ser.is_open:
             root = tk.Tk()
@@ -137,8 +137,8 @@ def modes():
             serialConnect()
             #check_device()
 
-   ####still have some stuff to figure out here (i.e. checking when new device is approached)
-            ###also need to add messages when device isn't connected and you press connect button
+    ###still have some stuff to figure out here (i.e. checking when new device is approached)
+    ###also need to add messages when device isn't connected and you press connect button
             
         elif(Connect['text']=='Disconnect Device'):
             Connect['text']='Connect Device'
@@ -441,11 +441,12 @@ def AAI_param():
 
 
     def show5():
-        label5.config(text = clicked5.get())
-        ARP_value = clicked5.get()
-        file = open('AAI_values.txt',"a")
-        file.write("Atrial Refractory Period = "+ str(ARP_value) + " " + "ms" + "\n")
-        file.close()
+        if clicked5.get() <= (60000/slider.get()):
+            label5.config(text = clicked5.get())
+            ARP_value = clicked5.get()
+            file = open('AAI_values.txt',"a")
+            file.write("Atrial Refractory Period = "+ str(ARP_value) + " " + "ms" + "\n")
+            file.close()
     
     
     ARP_label = Label(AAI_screen, text="Atrial Refractory Period [ms]:")
@@ -454,12 +455,92 @@ def AAI_param():
     global clicked5
     clicked5 = IntVar(AAI_screen)
     clicked5.set(250)
+    ARP_value = int
+    ARP_value = 250
     drop5 = OptionMenu(AAI_screen, clicked5, *options5 )
     drop5.pack()
     button = Button(AAI_screen, text = "Update Parameter", command = show5).pack()
     label5 = Label(AAI_screen, text = "")
     label5.pack()
+    
+    def show6():
+            label6.config(text = clicked6.get())
+            AS_value = clicked6.get()
+            file = open('AAI_values.txt',"a")
+            file.write("Atrial Sensitivity = "+ str(AS_value) + " " + "mV" + "\n")
+            file.close()
+    
 
+    AS_label = Label(AAI_screen, text="Atrial Sensitivity  [mV]:")
+    AS_label.pack()
+    options6 = [0.25,0.5,0.75,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0,7.5,8.0,8.5,9.0,9.5,10.0]
+    global clicked6
+    clicked6 = DoubleVar(AAI_screen)
+    clicked6.set(0.5)
+    drop6 = OptionMenu(AAI_screen, clicked6, *options6 )
+    drop6.pack()    
+    button = Button(AAI_screen, text = "Update Parameter", command = show6).pack()
+    label6 = Label(AAI_screen, text = "")
+    label6.pack() 
+    
+    def show7():
+            label7.config(text = clicked7.get())
+            PVARP_value = clicked7.get()
+            file = open('AAI_values.txt',"a")
+            file.write("PVARP = "+ str(PVARP_value) + " " + "ms" + "\n")
+            file.close()
+    
+    
+    PVARP_label = Label(AAI_screen, text="PVARP [ms]:")
+    PVARP_label.pack()
+    options7 = [150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300,310,320,330,340,350,360,370,380,390,400,410,420,430,440,450,460,470,480,490,500]
+    global clicked7
+    clicked7 = IntVar(AAI_screen)
+    clicked7.set(250)
+    drop7 = OptionMenu(AAI_screen, clicked7, *options7 )
+    drop7.pack()
+    button = Button(AAI_screen, text = "Update Parameter", command = show7).pack()
+    label7 = Label(AAI_screen, text = "")
+    label7.pack() 
+    
+    def show8():
+            label8.config(text = clicked8.get())
+            H_value = clicked8.get()
+            file = open('AAI_values.txt',"a")
+            file.write("Hysteresis Rate Limit = "+ str(H_value) + " " + "ppm" + "\n")
+            file.close()
+    
+    H_label = Label(AAI_screen, text="Hysteresis Rate Limit [ppm]:")
+    H_label.pack()
+    options8 = [0,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140,145,150,155,160,165,170,175]
+    global clicked8
+    clicked8 = IntVar(AAI_screen)
+    clicked8.set(0)
+    drop8 = OptionMenu(AAI_screen, clicked8, *options8 )
+    drop8.pack()
+    button = Button(AAI_screen, text = "Update Parameter", command = show8).pack()
+    label8 = Label(AAI_screen, text = "")
+    label8.pack() 
+    
+    def show9():
+            label9.config(text = clicked9.get())
+            RS_value = clicked9.get()
+            file = open('AAI_values.txt',"a")
+            file.write("Rate Smoothing = "+ str(RS_value) + " " + "%" + "\n")
+            file.close()
+            
+    RS_label = Label(AAI_screen, text="Rate Smoothing [%]:")
+    RS_label.pack()
+    options9 = [0,3,6,9,12,15,18,21,25]
+    global clicked9
+    clicked9 = IntVar(AAI_screen)
+    clicked9.set(0)
+    drop9 = OptionMenu(AAI_screen, clicked9, *options9 )
+    drop9.pack()
+    button = Button(AAI_screen, text = "Update Parameter", command = show9).pack()
+    label9 = Label(AAI_screen, text = "")
+    label9.pack() 
+    
 
 def VVI_param():
     global VVI_screen
@@ -570,6 +651,67 @@ def VVI_param():
     button = Button(VVI_screen, text = "Update Parameter", command = show5).pack()
     label5 = Label(VVI_screen, text = "")
     label5.pack()
+    
+    
+    def show6():
+        label6.config(text = clicked6.get())
+        VS_value = clicked6.get()
+        file = open('VVI_values.txt',"a")
+        file.write("Ventricular Sensitivity = "+ str(VS_value) + " " + "mV" + "\n")
+        file.close()
+    
+
+    VS_label = Label(VVI_screen, text="Ventricular Sensitivity  [mV]:")
+    VS_label.pack()
+    options6 = [0.25,0.5,0.75,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0,7.5,8.0,8.5,9.0,9.5,10.0]
+    global clicked6
+    clicked6 = DoubleVar(VVI_screen)
+    clicked6.set(2.5)
+    drop6 = OptionMenu(VVI_screen, clicked6, *options6 )
+    drop6.pack()    
+    button = Button(VVI_screen, text = "Update Parameter", command = show6).pack()
+    label6 = Label(VVI_screen, text = "")
+    label6.pack() 
+
+    def show7():
+        label7.config(text = clicked7.get())
+        H_value = clicked7.get()
+        file = open('VVI_values.txt',"a")
+        file.write("Hysteresis Rate Limit = "+ str(H_value) + " " + "ppm" + "\n")
+        file.close()
+    
+    H_label = Label(VVI_screen, text="Hysteresis Rate Limit [ppm]:")
+    H_label.pack()
+    options7 = [0,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140,145,150,155,160,165,170,175]
+    global clicked7
+    clicked7 = IntVar(VVI_screen)
+    clicked7.set(0)
+    drop7 = OptionMenu(VVI_screen, clicked7, *options7 )
+    drop7.pack()
+    button = Button(VVI_screen, text = "Update Parameter", command = show7).pack()
+    label7 = Label(VVI_screen, text = "")
+    label7.pack()  
+    
+    def show8():
+            label8.config(text = clicked8.get())
+            RS_value = clicked8.get()
+            file = open('VVI_values.txt',"a")
+            file.write("Rate Smoothing = "+ str(RS_value) + " " + "%" + "\n")
+            file.close()
+            
+    RS_label = Label(VVI_screen, text="Rate Smoothing [%]:")
+    RS_label.pack()
+    options8 = [0,3,6,9,12,15,18,21,25]
+    global clicked8
+    clicked8 = IntVar(VVI_screen)
+    clicked8.set(0)
+    drop8 = OptionMenu(VVI_screen, clicked8, *options8 )
+    drop8.pack()
+    button = Button(VVI_screen, text = "Update Parameter", command = show8).pack()
+    label8 = Label(VVI_screen, text = "")
+    label8.pack()
+    
+    
 
 
 def VOOR_param():
@@ -621,6 +763,142 @@ def VOOR_param():
     button = Button(VOOR_screen, text = "Update Parameter", command = show2).pack()
     label2 = Label(VOOR_screen, text = "")
     label2.pack()
+    
+    
+    def show3():
+        label3.config(text = clicked3.get())
+        MSR_value = clicked3.get()
+        file = open('VOOR_values.txt',"a")
+        file.write("MSR = "+ str(MSR_value) + " " + "ppm" + "\n")
+        file.close()
+            
+    MSR_label = Label(VOOR_screen, text="Maximum Sensor Rate [ppm]: ")
+    MSR_label.pack()
+    options3 = [50,55,60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140,145,150,155,160,165,170,175]
+    global clicked3
+    clicked3 = IntVar(VOOR_screen)
+    clicked3.set(120)
+    drop3 = OptionMenu(VOOR_screen, clicked3, *options3 )
+    drop3.pack()
+    button = Button(VOOR_screen, text = "Update Parameter", command = show3).pack()
+    label3 = Label(VOOR_screen, text = "")
+    label3.pack()
+    
+    def show4():
+        label4.config(text = clicked4.get())
+        VA_value = clicked4.get()
+        file = open('VOOR_values.txt',"a")
+        file.write("Ventricular Amplitude = "+ str(VA_value) + " " "V" + "\n")
+        file.close()
+    
+    VA_label = Label(VOOR_screen, text="Ventricular Amplitude [V]:")
+    VA_label.pack()
+    options4 = [0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0]
+    global clicked4
+    clicked4 = DoubleVar(VOOR_screen)
+    clicked4.set(3.5)
+    drop4 = OptionMenu(VOOR_screen, clicked4, *options4 )
+    drop4.pack()
+    button = Button(VOOR_screen, text = "Update Parameter", command = show4).pack()
+    label4 = Label(VOOR_screen, text = "")
+    label4.pack()
+    
+    def show5():
+        label5.config(text = clicked5.get())
+        VPW_value = clicked5.get()
+        file = open('VOOR_values.txt',"a")
+        file.write("Ventricular Pulse Width = "+ str(VPW_value) + " " + "ms" + "\n")
+        file.close()
+    
+    VPW_label = Label(VOOR_screen, text="Ventricular Pulse Width [ms]:")
+    VPW_label.pack()
+    options5 = [0.05, 0.1, 0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9]
+    global clicked5
+    clicked5 = DoubleVar(VOOR_screen)
+    clicked5.set(0.4)
+    drop5 = OptionMenu(VOOR_screen, clicked5, *options5 )
+    drop5.pack()
+    button = Button(VOOR_screen, text = "Update Parameter", command = show5).pack()
+    label5 = Label(VOOR_screen, text = "")
+    label5.pack()
+    
+    def show6():
+        label6.config(text = clicked6.get())
+        AT_value = clicked6.get()
+        file = open('VOOR_values.txt',"a")
+        file.write("Activity Threshold = "+ (AT_value)  + "\n")
+        file.close()
+    
+    AT_label = Label(VOOR_screen, text="Activity Threshold:")
+    AT_label.pack()
+    options6 = ["V-Low","Low","Med-Low", "Med", "Med-High","High","V-High"]
+    global clicked6
+    clicked6 = StringVar(VOOR_screen)
+    clicked6.set("Med")
+    drop6 = OptionMenu(VOOR_screen, clicked6, *options6 )
+    drop6.pack()
+    button = Button(VOOR_screen, text = "Update Parameter", command = show6).pack()
+    label6 = Label(VOOR_screen, text = "")
+    label6.pack()
+     
+    def show7():
+        label7.config(text = clicked7.get())
+        RT_value = clicked7.get()
+        file = open('VOOR_values.txt',"a")
+        file.write("Reaction Time = "+ str(RT_value) + " " + "sec"+ "\n")
+        file.close()
+    
+    RT_label = Label(VOOR_screen, text="Reaction Time [sec]:")
+    RT_label.pack()
+    options7 = [10,20,30,40,50]
+    global clicked7
+    clicked7 = IntVar(VOOR_screen)
+    clicked7.set(30)
+    drop7 = OptionMenu(VOOR_screen, clicked7, *options7 )
+    drop7.pack()
+    button = Button(VOOR_screen, text = "Update Parameter", command = show7).pack()
+    label7 = Label(VOOR_screen, text = "")
+    label7.pack()
+    
+    def show8():
+        label8.config(text = clicked8.get())
+        RF_value = clicked8.get()
+        file = open('VOOR_values.txt',"a")
+        file.write("Response Factor = "+ str(RF_value) + "\n")
+        file.close()
+    
+    RF_label = Label(VOOR_screen, text="Reaction Factor:")
+    RF_label.pack()
+    options8 = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+    global clicked8
+    clicked8 = IntVar(VOOR_screen)
+    clicked8.set(8)
+    drop8 = OptionMenu(VOOR_screen, clicked8, *options8 )
+    drop8.pack()
+    button = Button(VOOR_screen, text = "Update Parameter", command = show8).pack()
+    label8 = Label(VOOR_screen, text = "")
+    label8.pack()
+    
+    def show9():
+        label9.config(text = clicked9.get())
+        RCT_value = clicked9.get()
+        file = open('VOOR_values.txt',"a")
+        file.write("Recovery Time = "+ str(RCT_value) + " " + "min"+ "\n")
+        file.close()
+    
+    RCT_label = Label(VOOR_screen, text="Recovery Time [min]:")
+    RCT_label.pack()
+    options9 = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+    global clicked9
+    clicked9 = IntVar(VOOR_screen)
+    clicked9.set(5)
+    drop9 = OptionMenu(VOOR_screen, clicked9, *options9 )
+    drop9.pack()
+    button = Button(VOOR_screen, text = "Update Parameter", command = show9).pack()
+    label9 = Label(VOOR_screen, text = "")
+    label9.pack()
+    
+
 
 
 def AOOR_param():
@@ -673,6 +951,138 @@ def AOOR_param():
     label2 = Label(AOOR_screen, text = "")
     label2.pack()
 
+    def show3():
+        label3.config(text = clicked3.get())
+        MSR_value = clicked3.get()
+        file = open('AOOR_values.txt',"a")
+        file.write("MSR = "+ str(MSR_value) + " " + "ppm" + "\n")
+        file.close()
+            
+    MSR_label = Label(AOOR_screen, text="Maximum Sensor Rate [ppm]: ")
+    MSR_label.pack()
+    options3 = [50,55,60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140,145,150,155,160,165,170,175]
+    global clicked3
+    clicked3 = IntVar(AOOR_screen)
+    clicked3.set(120)
+    drop3 = OptionMenu(AOOR_screen, clicked3, *options3 )
+    drop3.pack()
+    button = Button(AOOR_screen, text = "Update Parameter", command = show3).pack()
+    label3 = Label(AOOR_screen, text = "")
+    label3.pack()
+    
+    def show4():
+        label4.config(text = clicked4.get())
+        AA_value = clicked4.get()
+        file = open('AOOR_values.txt',"a")
+        file.write("Atrial Amlitude = "+ str(AA_value) + " " "V" + "\n")
+        file.close()
+    
+    AA_label = Label(AOOR_screen, text="Atrial Amplitude [V]:")
+    AA_label.pack()
+    options4 = [0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0]
+    global clicked4
+    clicked4 = DoubleVar(AOOR_screen)
+    clicked4.set(3.5)
+    drop4 = OptionMenu(AOOR_screen, clicked4, *options4 )
+    drop4.pack()
+    button = Button(AOOR_screen, text = "Update Parameter", command = show4).pack()
+    label4 = Label(AOOR_screen, text = "")
+    label4.pack()
+    
+    def show5():
+        label5.config(text = clicked5.get())
+        APW_value = clicked5.get()
+        file = open('AOOR_values.txt',"a")
+        file.write("Atrial Pulse Width = "+ str(APW_value) + " " + "ms" + "\n")
+        file.close()
+    
+    APW_label = Label(AOOR_screen, text="Atrial Pulse Width [ms]:")
+    APW_label.pack()
+    options5 = [0.05, 0.1, 0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9]
+    global clicked5
+    clicked5 = DoubleVar(AOOR_screen)
+    clicked5.set(0.4)
+    drop5 = OptionMenu(AOOR_screen, clicked5, *options5 )
+    drop5.pack()
+    button = Button(AOOR_screen, text = "Update Parameter", command = show5).pack()
+    label5 = Label(AOOR_screen, text = "")
+    label5.pack()
+
+    def show6():
+        label6.config(text = clicked6.get())
+        AT_value = clicked6.get()
+        file = open('AOOR_values.txt',"a")
+        file.write("Activity Threshold = "+ (AT_value)  + "\n")
+        file.close()
+    
+    AT_label = Label(AOOR_screen, text="Activity Threshold:")
+    AT_label.pack()
+    options6 = ["V-Low","Low","Med-Low", "Med", "Med-High","High","V-High"]
+    global clicked6
+    clicked6 = StringVar(AOOR_screen)
+    clicked6.set("Med")
+    drop6 = OptionMenu(AOOR_screen, clicked6, *options6 )
+    drop6.pack()
+    button = Button(AOOR_screen, text = "Update Parameter", command = show6).pack()
+    label6 = Label(AOOR_screen, text = "")
+    label6.pack()
+     
+    def show7():
+        label7.config(text = clicked7.get())
+        RT_value = clicked7.get()
+        file = open('AOOR_values.txt',"a")
+        file.write("Reaction Time = "+ str(RT_value) + " " + "sec"+ "\n")
+        file.close()
+    
+    RT_label = Label(AOOR_screen, text="Reaction Time [sec]:")
+    RT_label.pack()
+    options7 = [10,20,30,40,50]
+    global clicked7
+    clicked7 = IntVar(AOOR_screen)
+    clicked7.set(30)
+    drop7 = OptionMenu(AOOR_screen, clicked7, *options7 )
+    drop7.pack()
+    button = Button(AOOR_screen, text = "Update Parameter", command = show7).pack()
+    label7 = Label(AOOR_screen, text = "")
+    label7.pack()
+    
+    def show8():
+        label8.config(text = clicked8.get())
+        RF_value = clicked8.get()
+        file = open('AOOR_values.txt',"a")
+        file.write("Response Factor = "+ str(RF_value) + "\n")
+        file.close()
+    
+    RF_label = Label(AOOR_screen, text="Reaction Factor:")
+    RF_label.pack()
+    options8 = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+    global clicked8
+    clicked8 = IntVar(AOOR_screen)
+    clicked8.set(8)
+    drop8 = OptionMenu(AOOR_screen, clicked8, *options8 )
+    drop8.pack()
+    button = Button(AOOR_screen, text = "Update Parameter", command = show8).pack()
+    label8 = Label(AOOR_screen, text = "")
+    label8.pack()
+    
+    def show9():
+        label9.config(text = clicked9.get())
+        RCT_value = clicked9.get()
+        file = open('AOOR_values.txt',"a")
+        file.write("Recovery Time = "+ str(RCT_value) + " " + "min"+ "\n")
+        file.close()
+    
+    RCT_label = Label(AOOR_screen, text="Recovery Time [min]:")
+    RCT_label.pack()
+    options9 = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+    global clicked9
+    clicked9 = IntVar(AOOR_screen)
+    clicked9.set(5)
+    drop9 = OptionMenu(AOOR_screen, clicked9, *options9 )
+    drop9.pack()
+    button = Button(AOOR_screen, text = "Update Parameter", command = show9).pack()
+    label9 = Label(AOOR_screen, text = "")
+    label9.pack()    
 
 def VVIR_param():
     global VVIR_screen
@@ -724,6 +1134,218 @@ def VVIR_param():
     button = Button(VVIR_screen, text = "Update Parameter", command = show2).pack()
     label2 = Label(VVIR_screen, text = "")
     label2.pack()
+    
+    def show3():
+        label3.config(text = clicked3.get())
+        MSR_value = clicked3.get()
+        file = open('VVIR_values.txt',"a")
+        file.write("MSR = "+ str(MSR_value) + " " + "ppm" + "\n")
+        file.close()
+            
+    MSR_label = Label(VVIR_screen, text="Maximum Sensor Rate [ppm]: ")
+    MSR_label.pack()
+    options3 = [50,55,60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140,145,150,155,160,165,170,175]
+    global clicked3
+    clicked3 = IntVar(VVIR_screen)
+    clicked3.set(120)
+    drop3 = OptionMenu(VVIR_screen, clicked3, *options3 )
+    drop3.pack()
+    button = Button(VVIR_screen, text = "Update Parameter", command = show3).pack()
+    label3 = Label(VVIR_screen, text = "")
+    label3.pack()
+    
+    def show4():
+        label4.config(text = clicked4.get())
+        VA_value = clicked4.get()
+        file = open('VVIR_values.txt',"a")
+        file.write("Ventricular Amplitude = "+ str(VA_value) + " " "V" + "\n")
+        file.close()
+    
+    VA_label = Label(VVIR_screen, text="Ventricular Amplitude [V]:")
+    VA_label.pack()
+    options4 = [0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0]
+    global clicked4
+    clicked4 = DoubleVar(VVIR_screen)
+    clicked4.set(3.5)
+    drop4 = OptionMenu(VVIR_screen, clicked4, *options4 )
+    drop4.pack()
+    button = Button(VVIR_screen, text = "Update Parameter", command = show4).pack()
+    label4 = Label(VVIR_screen, text = "")
+    label4.pack()
+    
+    def show5():
+        label5.config(text = clicked5.get())
+        VPW_value = clicked5.get()
+        file = open('VVIR_values.txt',"a")
+        file.write("Ventricular Pulse Width = "+ str(VPW_value) + " " + "ms" + "\n")
+        file.close()
+    
+    VPW_label = Label(VVIR_screen, text="Ventricular Pulse Width [ms]:")
+    VPW_label.pack()
+    options5 = [0.05, 0.1, 0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9]
+    global clicked5
+    clicked5 = DoubleVar(VVIR_screen)
+    clicked5.set(0.4)
+    drop5 = OptionMenu(VVIR_screen, clicked5, *options5 )
+    drop5.pack()
+    button = Button(VVIR_screen, text = "Update Parameter", command = show5).pack()
+    label5 = Label(VVIR_screen, text = "")
+    label5.pack()
+    
+    def show6():
+        label6.config(text = clicked6.get())
+        VS_value = clicked6.get()
+        file = open('VVIR_values.txt',"a")
+        file.write("Ventricular Sensitivity = "+ str(VS_value) + " " + "mV" + "\n")
+        file.close()
+    
+
+    VS_label = Label(VVIR_screen, text="Ventricular Sensitivity  [mV]:")
+    VS_label.pack()
+    options6 = [0.25,0.5,0.75,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0,7.5,8.0,8.5,9.0,9.5,10.0]
+    global clicked6
+    clicked6 = DoubleVar(VVIR_screen)
+    clicked6.set(2.5)
+    drop6 = OptionMenu(VVIR_screen, clicked6, *options6 )
+    drop6.pack()    
+    button = Button(VVIR_screen, text = "Update Parameter", command = show6).pack()
+    label6 = Label(VVIR_screen, text = "")
+    label6.pack()
+    
+    def show7():
+        label7.config(text = clicked7.get())
+        VRP_value = clicked7.get()
+        file = open('VVIR_values.txt',"a")
+        file.write("Ventricular Refractory Period = "+ str(VRP_value) + " " + "ms" + "\n")
+        file.close()
+    
+    
+    VRP_label = Label(VVIR_screen, text="Ventricular Refractory Period [ms]:")
+    VRP_label.pack()
+    options7 = [150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300,310,320,330,340,350,360,370,380,390,400,410,420,430,440,450,460,470,480,490,500]
+    global clicked7
+    clicked7 = IntVar(VVIR_screen)
+    clicked7.set(320)
+    drop5 = OptionMenu(VVIR_screen, clicked7, *options7 )
+    drop5.pack()
+    button = Button(VVIR_screen, text = "Update Parameter", command = show7).pack()
+    label7 = Label(VVIR_screen, text = "")
+    label7.pack()
+    
+    def show8():
+        label8.config(text = clicked8.get())
+        H_value = clicked8.get()
+        file = open('VVIR_values.txt',"a")
+        file.write("Hysteresis Rate Limit = "+ str(H_value) + " " + "ppm" + "\n")
+        file.close()
+    
+    H_label = Label(VVIR_screen, text="Hysteresis Rate Limit [ppm]:")
+    H_label.pack()
+    options8 = [0,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140,145,150,155,160,165,170,175]
+    global clicked8
+    clicked8 = IntVar(VVIR_screen)
+    clicked8.set(0)
+    drop8 = OptionMenu(VVIR_screen, clicked8, *options8 )
+    drop8.pack()
+    button = Button(VVIR_screen, text = "Update Parameter", command = show8).pack()
+    label8 = Label(VVIR_screen, text = "")
+    label8.pack()  
+    
+    def show9():
+            label9.config(text = clicked9.get())
+            RS_value = clicked9.get()
+            file = open('VVIR_values.txt',"a")
+            file.write("Rate Smoothing = "+ str(RS_value) + " " + "%" + "\n")
+            file.close()
+            
+    RS_label = Label(VVIR_screen, text="Rate Smoothing [%]:")
+    RS_label.pack()
+    options9 = [0,3,6,9,12,15,18,21,25]
+    global clicked9
+    clicked9 = IntVar(VVIR_screen)
+    clicked9.set(0)
+    drop9 = OptionMenu(VVIR_screen, clicked9, *options9 )
+    drop9.pack()
+    button = Button(VVIR_screen, text = "Update Parameter", command = show9).pack()
+    label9 = Label(VVIR_screen, text = "")
+    label9.pack()
+    
+    def show10():
+        label10.config(text = clicked10.get())
+        AT_value = clicked10.get()
+        file = open('VVIR_values.txt',"a")
+        file.write("Activity Threshold = "+ (AT_value)  + "\n")
+        file.close()
+    
+    AT_label = Label(VVIR_screen, text="Activity Threshold:")
+    AT_label.pack()
+    options10 = ["V-Low","Low","Med-Low", "Med", "Med-High","High","V-High"]
+    global clicked10
+    clicked10 = StringVar(VVIR_screen)
+    clicked10.set("Med")
+    drop10 = OptionMenu(VVIR_screen, clicked10, *options10 )
+    drop10.pack()
+    button = Button(VVIR_screen, text = "Update Parameter", command = show10).pack()
+    label10 = Label(VVIR_screen, text = "")
+    label10.pack()
+     
+    def show11():
+        label11.config(text = clicked11.get())
+        RT_value = clicked11.get()
+        file = open('VVIR_values.txt',"a")
+        file.write("Reaction Time = "+ str(RT_value) + " " + "sec"+ "\n")
+        file.close()
+    
+    RT_label = Label(VVIR_screen, text="Reaction Time [sec]:")
+    RT_label.pack()
+    options11 = [10,20,30,40,50]
+    global clicked11
+    clicked11 = IntVar(VVIR_screen)
+    clicked11.set(30)
+    drop11 = OptionMenu(VVIR_screen, clicked11, *options11 )
+    drop11.pack()
+    button = Button(VVIR_screen, text = "Update Parameter", command = show11).pack()
+    label11 = Label(VVIR_screen, text = "")
+    label11.pack()
+    
+    def show12():
+        label12.config(text = clicked12.get())
+        RF_value = clicked12.get()
+        file = open('VVIR_values.txt',"a")
+        file.write("Response Factor = "+ str(RF_value) + "\n")
+        file.close()
+    
+    RF_label = Label(VVIR_screen, text="Reaction Factor:")
+    RF_label.pack()
+    options12 = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+    global clicked12
+    clicked12 = IntVar(VVIR_screen)
+    clicked12.set(8)
+    drop12 = OptionMenu(VVIR_screen, clicked12, *options12 )
+    drop12.pack()
+    button = Button(VVIR_screen, text = "Update Parameter", command = show12).pack()
+    label12 = Label(VVIR_screen, text = "")
+    label12.pack()
+    
+    def show13():
+        label13.config(text = clicked13.get())
+        RCT_value = clicked13.get()
+        file = open('VVIR_values.txt',"a")
+        file.write("Recovery Time = "+ str(RCT_value) + " " + "min"+ "\n")
+        file.close()
+    
+    RCT_label = Label(VVIR_screen, text="Recovery Time [min]:")
+    RCT_label.pack()
+    options13 = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+    global clicked13
+    clicked13 = IntVar(VVIR_screen)
+    clicked13.set(5)
+    drop13 = OptionMenu(VVIR_screen, clicked13, *options13 )
+    drop13.pack()
+    button = Button(VVIR_screen, text = "Update Parameter", command = show13).pack()
+    label13 = Label(VVIR_screen, text = "")
+    label13.pack()
+    
 
 def AAIR_param():
     global AAIR_screen
@@ -773,8 +1395,238 @@ def AAIR_param():
     drop2.pack()
     button = Button(AAIR_screen, text = "Update Parameter", command = show2).pack()
     label2 = Label(AAIR_screen, text = "")
-    label2.pack()  
+    label2.pack()
+    
+    def show3():
+        label3.config(text = clicked3.get())
+        MSR_value = clicked3.get()
+        file = open('AAIR_values.txt',"a")
+        file.write("MSR = "+ str(MSR_value) + " " + "ppm" + "\n")
+        file.close()
+            
+    MSR_label = Label(AAIR_screen, text="Maximum Sensor Rate [ppm]: ")
+    MSR_label.pack()
+    options3 = [50,55,60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140,145,150,155,160,165,170,175]
+    global clicked3
+    clicked3 = IntVar(AAIR_screen)
+    clicked3.set(120)
+    drop3 = OptionMenu(AAIR_screen, clicked3, *options3 )
+    drop3.pack()
+    button = Button(AAIR_screen, text = "Update Parameter", command = show3).pack()
+    label3 = Label(AAIR_screen, text = "")
+    label3.pack()
+    
+    def show4():
+        label4.config(text = clicked4.get())
+        AA_value = clicked4.get()
+        file = open('AAIR_values.txt',"a")
+        file.write("Atrial Amplitude = "+ str(AA_value) + " " "V" + "\n")
+        file.close()
+    
+    AA_label = Label(AAIR_screen, text="Atrial Amplitude [V]:")
+    AA_label.pack()
+    options4 = [0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0]
+    global clicked4
+    clicked4 = DoubleVar(AAIR_screen)
+    clicked4.set(3.5)
+    drop4 = OptionMenu(AAIR_screen, clicked4, *options4 )
+    drop4.pack()
+    button = Button(AAIR_screen, text = "Update Parameter", command = show4).pack()
+    label4 = Label(AAIR_screen, text = "")
+    label4.pack()
+    
+    def show5():
+        label5.config(text = clicked5.get())
+        APW_value = clicked5.get()
+        file = open('AAIR_values.txt',"a")
+        file.write("Atrial Pulse Width = "+ str(APW_value) + " " + "ms" + "\n")
+        file.close()
+    
+    APW_label = Label(AAIR_screen, text="Atrial Pulse Width [ms]:")
+    APW_label.pack()
+    options5 = [0.05, 0.1, 0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9]
+    global clicked5
+    clicked5 = DoubleVar(AAIR_screen)
+    clicked5.set(0.4)
+    drop5 = OptionMenu(AAIR_screen, clicked5, *options5 )
+    drop5.pack()
+    button = Button(AAIR_screen, text = "Update Parameter", command = show5).pack()
+    label5 = Label(AAIR_screen, text = "")
+    label5.pack()
+    
+    def show6():
+        label6.config(text = clicked6.get())
+        AS_value = clicked6.get()
+        file = open('AAIR_values.txt',"a")
+        file.write("Atrial Sensitivity = "+ str(AS_value) + " " + "mV" + "\n")
+        file.close()
+    
 
+    AS_label = Label(AAIR_screen, text="Atrial Sensitivity  [mV]:")
+    AS_label.pack()
+    options6 = [0.25,0.5,0.75,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0,7.5,8.0,8.5,9.0,9.5,10.0]
+    global clicked6
+    clicked6 = DoubleVar(AAIR_screen)
+    clicked6.set(0.75)
+    drop6 = OptionMenu(AAIR_screen, clicked6, *options6 )
+    drop6.pack()    
+    button = Button(AAIR_screen, text = "Update Parameter", command = show6).pack()
+    label6 = Label(AAIR_screen, text = "")
+    label6.pack()
+    
+    def show7():
+        label7.config(text = clicked7.get())
+        ARP_value = clicked7.get()
+        file = open('AAIR_values.txt',"a")
+        file.write("Atrial Refractory Period = "+ str(ARP_value) + " " + "ms" + "\n")
+        file.close()
+    
+    
+    ARP_label = Label(AAIR_screen, text="Atrial Refractory Period [ms]:")
+    ARP_label.pack()
+    options7 = [150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300,310,320,330,340,350,360,370,380,390,400,410,420,430,440,450,460,470,480,490,500]
+    global clicked7
+    clicked7 = IntVar(AAIR_screen)
+    clicked7.set(250)
+    drop5 = OptionMenu(AAIR_screen, clicked7, *options7 )
+    drop5.pack()
+    button = Button(AAIR_screen, text = "Update Parameter", command = show7).pack()
+    label7 = Label(AAIR_screen, text = "")
+    label7.pack()
+    
+    def show8():
+            label8.config(text = clicked8.get())
+            PVARP_value = clicked8.get()
+            file = open('AAIR_values.txt',"a")
+            file.write("PVARP = "+ str(PVARP_value) + " " + "ms" + "\n")
+            file.close()
+    
+    
+    PVARP_label = Label(AAIR_screen, text="PVARP [ms]:")
+    PVARP_label.pack()
+    options8 = [150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300,310,320,330,340,350,360,370,380,390,400,410,420,430,440,450,460,470,480,490,500]
+    global clicked8
+    clicked8 = IntVar(AAIR_screen)
+    clicked8.set(250)
+    drop8 = OptionMenu(AAIR_screen, clicked8, *options8 )
+    drop8.pack()
+    button = Button(AAIR_screen, text = "Update Parameter", command = show8).pack()
+    label8 = Label(AAIR_screen, text = "")
+    label8.pack() 
+    
+    def show9():
+            label9.config(text = clicked9.get())
+            H_value = clicked9.get()
+            file = open('AAIR_values.txt',"a")
+            file.write("Hysteresis Rate Limit = "+ str(H_value) + " " + "ppm" + "\n")
+            file.close()
+    
+    H_label = Label(AAIR_screen, text="Hysteresis Rate Limit [ppm]:")
+    H_label.pack()
+    options9 = [0,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140,145,150,155,160,165,170,175]
+    global clicked9
+    clicked9 = IntVar(AAIR_screen)
+    clicked9.set(0)
+    drop9 = OptionMenu(AAIR_screen, clicked9, *options9 )
+    drop9.pack()
+    button = Button(AAIR_screen, text = "Update Parameter", command = show9).pack()
+    label9 = Label(AAIR_screen, text = "")
+    label9.pack() 
+    
+    def show10():
+            label10.config(text = clicked10.get())
+            RS_value = clicked10.get()
+            file = open('AAIR_values.txt',"a")
+            file.write("Rate Smoothing = "+ str(RS_value) + " " + "%" + "\n")
+            file.close()
+            
+    RS_label = Label(AAIR_screen, text="Rate Smoothing [%]:", height = "2", width = "300")
+    RS_label.pack()
+    options10 = [0,3,6,9,12,15,18,21,25]
+    global clicked10
+    clicked10 = IntVar(AAIR_screen)
+    clicked10.set(0)
+    drop10 = OptionMenu(AAIR_screen, clicked10, *options10 )
+    drop10.pack()
+    button = Button(AAIR_screen, text = "Update Parameter", command = show10).pack()
+    label10 = Label(AAIR_screen, text = "")
+    label10.pack() 
+
+    def show11():
+        label11.config(text = clicked11.get())
+        AT_value = clicked11.get()
+        file = open('AAIR_values.txt',"a")
+        file.write("Activity Threshold = "+ (AT_value)  + "\n")
+        file.close()
+    
+    AT_label = Label(AAIR_screen, text="Activity Threshold:")
+    AT_label.pack()
+    options11 = ["V-Low","Low","Med-Low", "Med", "Med-High","High","V-High"]
+    global clicked11
+    clicked11 = StringVar(AAIR_screen)
+    clicked11.set("Med")
+    drop11 = OptionMenu(AAIR_screen, clicked11, *options11 )
+    drop11.pack()
+    button = Button(AAIR_screen, text = "Update Parameter", command = show11).pack()
+    label11 = Label(AAIR_screen, text = "")
+    label11.pack()
+     
+    def show12():
+        label12.config(text = clicked12.get())
+        RT_value = clicked12.get()
+        file = open('AAIR_values.txt',"a")
+        file.write("Reaction Time = "+ str(RT_value) + " " + "sec"+ "\n")
+        file.close()
+    
+    RT_label = Label(AAIR_screen, text="Reaction Time [sec]:")
+    RT_label.pack()
+    options12 = [10,20,30,40,50]
+    global clicked12
+    clicked12 = IntVar(AAIR_screen)
+    clicked12.set(30)
+    drop12 = OptionMenu(AAIR_screen, clicked12, *options12 )
+    drop12.pack()
+    button = Button(AAIR_screen, text = "Update Parameter", command = show12).pack()
+    label12 = Label(AAIR_screen, text = "")
+    label12.pack()
+    
+    def show13():
+        label13.config(text = clicked13.get())
+        RF_value = clicked13.get()
+        file = open('AAIR_values.txt',"a")
+        file.write("Response Factor = "+ str(RF_value) + "\n")
+        file.close()
+    
+    RF_label = Label(AAIR_screen, text="Reaction Factor:")
+    RF_label.pack()
+    options13 = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+    global clicked13
+    clicked13 = IntVar(AAIR_screen)
+    clicked13.set(8)
+    drop13 = OptionMenu(AAIR_screen, clicked13, *options13 )
+    drop13.pack()
+    button = Button(AAIR_screen, text = "Update Parameter", command = show13).pack()
+    label13 = Label(AAIR_screen, text = "")
+    label13.pack()
+    
+    def show14():
+        label14.config(text = clicked14.get())
+        RCT_value = clicked14.get()
+        file = open('AAIR_values.txt',"a")
+        file.write("Recovery Time = "+ str(RCT_value) + " " + "min"+ "\n")
+        file.close()
+    
+    RCT_label = Label(AAIR_screen, text="Recovery Time [min]:")
+    RCT_label.pack()
+    options14 = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+    global clicked14
+    clicked14 = IntVar(AAIR_screen)
+    clicked14.set(5)
+    drop14 = OptionMenu(AAIR_screen, clicked14, *options14 )
+    drop14.pack()
+    button = Button(AAIR_screen, text = "Update Parameter", command = show14).pack()
+    label14 = Label(AAIR_screen, text = "")
+    label14.pack()
 
 # Implementing event on register button
 def register_user():
@@ -969,4 +1821,3 @@ def main_account_screen():
     main_screen.mainloop()
 
 main_account_screen()
-
