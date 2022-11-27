@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[74]:
+# In[21]:
 
 
 #import modules
@@ -602,13 +602,13 @@ def VVI_param():
     label4.pack()
 
     def show5():
-        label5.config(text = clicked5.get())
-        VRP_value = clicked5.get()
-        file = open('programmable_parameters.txt',"a")
-        file.write("Ventricular Refractory Period = "+ str(VRP_value) + " " + "ms" + "\n")
-        file.close()
-    
-    
+        if clicked5.get() <= (60000/slider.get()):
+            label5.config(text = clicked5.get())
+            VRP_value = clicked5.get()
+            file = open('programmable_parameters.txt',"a")
+            file.write("Ventricular Refractory Period = "+ str(VRP_value) + " " + "ms" + "\n")
+            file.close()
+            
     VRP_label = Label(VVI_screen, text="Ventricular Refractory Period [ms]:")
     VRP_label.pack()
     options5 = [150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300,310,320,330,340,350,360,370,380,390,400,410,420,430,440,450,460,470,480,490,500]
@@ -1136,12 +1136,12 @@ def VVIR_param():
     label6.pack()
     
     def show7():
-        label7.config(text = clicked7.get())
-        VRP_value = clicked7.get()
-        file = open('programmable_parameters.txt',"a")
-        file.write("Ventricular Refractory Period = "+ str(VRP_value) + " " + "ms" + "\n")
-        file.close()
-    
+        if clicked7.get() <= (60000/slider.get()):
+            label7.config(text = clicked7.get())
+            VRP_value = clicked7.get()
+            file = open('programmable_parameters.txt',"a")
+            file.write("Ventricular Refractory Period = "+ str(VRP_value) + " " + "ms" + "\n")
+            file.close()  
     
     VRP_label = Label(VVIR_screen, text="Ventricular Refractory Period [ms]:")
     VRP_label.pack()
@@ -1203,15 +1203,20 @@ def VVIR_param():
     
     RF_label = Label(VVIR_screen, text="Response Factor:")
     RF_label.pack()
+    RF_label.place(x=400, y = 25)
     options12 = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
     global clicked12
     clicked12 = IntVar(VVIR_screen)
     clicked12.set(8)
     drop12 = OptionMenu(VVIR_screen, clicked12, *options12 )
     drop12.pack()
-    button = Button(VVIR_screen, text = "Update Parameter", command = show12).pack()
+    drop12.place(x=400, y = 45 )
+    Update = Button(VVIR_screen, text = "Update Parameter", command = show12)
+    Update.pack()
+    Update.place(x = 400,y = 65)    
     label12 = Label(VVIR_screen, text = "")
     label12.pack()
+    label12.place(x=400, y= 95)
     
     def show13():
         label13.config(text = clicked13.get())
@@ -1222,15 +1227,21 @@ def VVIR_param():
     
     RCT_label = Label(VVIR_screen, text="Recovery Time [min]:")
     RCT_label.pack()
+    RCT_label.place(x=400, y = 115)
     options13 = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
     global clicked13
     clicked13 = IntVar(VVIR_screen)
     clicked13.set(5)
     drop13 = OptionMenu(VVIR_screen, clicked13, *options13 )
     drop13.pack()
-    button = Button(VVIR_screen, text = "Update Parameter", command = show13).pack()
+    drop13.place(x=400, y = 135 )
+    Update2 = Button(VVIR_screen, text = "Update Parameter", command = show13)
+    Update2.pack()
+    Update2.place(x = 400,y = 155)     
     label13 = Label(VVIR_screen, text = "")
     label13.pack()
+    label13.place(x =400,y=185)
+    
     
 
 def AAIR_param():
@@ -1358,12 +1369,12 @@ def AAIR_param():
     label6.pack()
     
     def show7():
-        label7.config(text = clicked7.get())
-        ARP_value = clicked7.get()
-        file = open('programmable_parameters.txt',"a")
-        file.write("Atrial Refractory Period = "+ str(ARP_value) + " " + "ms" + "\n")
-        file.close()
-    
+        if clicked7.get() <= (60000/slider.get()):
+            label7.config(text = clicked7.get())
+            ARP_value = clicked7.get()
+            file = open('programmable_parameters.txt',"a")
+            file.write("Atrial Refractory Period = "+ str(ARP_value) + " " + "ms" + "\n")
+            file.close()
     
     ARP_label = Label(AAIR_screen, text="Atrial Refractory Period [ms]:")
     ARP_label.pack()
@@ -1426,15 +1437,21 @@ def AAIR_param():
     
     RF_label = Label(AAIR_screen, text="Reaction Factor:")
     RF_label.pack()
+    RF_label.place(x=400, y = 25)
     options13 = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
     global clicked13
     clicked13 = IntVar(AAIR_screen)
     clicked13.set(8)
     drop13 = OptionMenu(AAIR_screen, clicked13, *options13 )
     drop13.pack()
-    button = Button(AAIR_screen, text = "Update Parameter", command = show13).pack()
+    drop13.place(x=400, y = 45 )
+    Update = Button(AAIR_screen, text = "Update Parameter", command = show13)
+    Update.pack()
+    Update.place(x = 400,y = 65)
     label13 = Label(AAIR_screen, text = "")
     label13.pack()
+    label13.place(x = 400,y = 95)
+    
     
     def show14():
         label14.config(text = clicked14.get())
@@ -1445,15 +1462,20 @@ def AAIR_param():
     
     RCT_label = Label(AAIR_screen, text="Recovery Time [min]:")
     RCT_label.pack()
+    RCT_label.place(x=400, y = 115)
     options14 = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
     global clicked14
     clicked14 = IntVar(AAIR_screen)
     clicked14.set(5)
     drop14 = OptionMenu(AAIR_screen, clicked14, *options14 )
     drop14.pack()
-    button = Button(AAIR_screen, text = "Update Parameter", command = show14).pack()
+    drop14.place(x=400, y = 135 )
+    Update2 = Button(AAIR_screen, text = "Update Parameter", command = show14)
+    Update2.pack()
+    Update2.place(x = 400,y = 155)    
     label14 = Label(AAIR_screen, text = "")
     label14.pack()
+    label14.place(x =400,y=185)
 
 # Implementing event on register button
 def register_user():
