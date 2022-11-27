@@ -108,9 +108,6 @@ def modes():
 
         #ports = list(list_ports.comports())
         ser = serial.Serial('/dev/cu.usbmodem0006210000001', baudrate = 115200, timeout=None) ###figure out how to get right port every time
-    ##    ser.baudrate = 115200 #given in tutorial 3 document
-    ##    ser.port = ports[0].device
-    ##    ser.timeout = None #wait forever/until requested number of bytes are received
     ##    ser.open()
 
         if ser.is_open:
@@ -118,6 +115,7 @@ def modes():
             root.withdraw() #to get rid of empty pop-up window 
             messagebox.showinfo("System Message", "Device connected!")
             print("connected")
+            check_device()
 
         else:
             messagebox.showerror("System Message","Device not connected.") #this doesn't seem to work and idk why
@@ -135,7 +133,6 @@ def modes():
         if(Connect['text']=='Connect Device'):
             Connect['text']='Disconnect Device'
             serialConnect()
-            #check_device()
 
     ###still have some stuff to figure out here (i.e. checking when new device is approached)
     ###also need to add messages when device isn't connected and you press connect button
@@ -143,7 +140,6 @@ def modes():
         elif(Connect['text']=='Disconnect Device'):
             Connect['text']='Connect Device'
             serialDisconnect()
-            #device_disconnected()
                     
     Connect = Button(modes_screen, text = 'Connect Device', command = pacemakerConnect)
     Connect.pack()
@@ -154,7 +150,7 @@ def modes():
         diff_device_screen = Toplevel(modes_screen)
         diff_device_screen.title("System Message")
         diff_device_screen.geometry ("400x100")
-        Label(diff_device_screen, text="Device Connected!\n\nWarning: New pacemaker device detected.", fg="green").pack()
+        Label(diff_device_screen, text="Warning! \n\n New pacemaker device detected.", fg="green").pack()
         Button(diff_device_screen, text="OK", command=delete_diff_device_screen).pack()
 
     #For Assignment 2, we will make adjustments to allow for serial communication between the DCM and the pacemaker
@@ -162,11 +158,9 @@ def modes():
         original_device = 1 #change to properties of pacemakers for assignment 2
         new_device = 2
         
-        if new_device == original_device:
-            device_connected()
+        if new_device != original_device:
+            diff_device() 
             
-        else:
-            diff_device()
 
 # Implementing Programmable Parameters Screens
 def AOO_param():
@@ -1752,24 +1746,6 @@ def username_taken():
     Label(username_taken_screen, text="Username Taken").pack()
     Button(username_taken_screen, text="OK", command=delete_username_taken_screen).pack()
 
-# Designing popup for device connected     
-def device_connected():
-    global device_connected_screen
-    device_connected_screen = Toplevel(modes_screen)
-    device_connected_screen.title("Success")
-    device_connected_screen.geometry("250x100")
-    Label(device_connected_screen, text="Device Connected", fg="green").pack()
-    Button(device_connected_screen, text="OK", command=delete_device_connected_screen).pack()
-
-# Designing popup for device disconnected    
-def device_disconnected():
-    global device_disconnected_screen
-    device_disconnected_screen = Toplevel(modes_screen)
-    device_disconnected_screen.title("Success")
-    device_disconnected_screen.geometry("250x100")
-    Label(device_disconnected_screen, text="Device Disconnected", fg="red").pack()
-    Button(device_disconnected_screen, text="OK", command=delete_device_disconnected_screen).pack()
-    
 # Deleting popups
 def delete_login_success():
     login_success_screen.destroy()
@@ -1796,12 +1772,6 @@ def delete_max_users_screen():
     
 def delete_username_taken_screen():
     username_taken_screen.destroy()
-    
-def delete_device_connected_screen():
-    device_connected_screen.destroy()
-    
-def delete_device_disconnected_screen():
-    device_disconnected_screen.destroy()
 
 def delete_diff_device_screen():
     diff_device_screen.destroy()
