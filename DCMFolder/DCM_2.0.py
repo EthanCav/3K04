@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[74]:
+
+
 #import modules
 from tkinter import *
 import tkinter.messagebox
@@ -110,6 +116,26 @@ def modes():
     VS_value = 2.5
     AS_value = 0.75
     
+    # Store parameters in a text file 
+    file = open('programmable_parameters.txt',"a")
+    file.write("Ventricular Refractory Period = "+ str(VRP_value) + " " + "ms" + "\n")
+    file.write("Ventricular Pulse Width = "+ str(VPW_value) + " " + "ms" + "\n")
+    file.write("LRL = "+ str(LRL_value) + " " + "ppm" + "\n")
+    file.write("URL = "+ str(URL_value) + " " + "ppm" + "\n")
+    file.write("Atrial Refractory Period = "+ str(ARP_value) + " " + "ms" + "\n")
+    file.write("Ventricular Amlitude = "+ str(VA_value) + " " "V" + "\n")
+    file.write("Atrial Amlitude = "+ str(AA_value) + " " "V" + "\n")
+    file.write("Recovery Time = "+ str(RCT_value) + " " + "min"+ "\n")
+    file.write("Response Factor = "+ str(RF_value) + "\n")
+    file.write("Reaction Time = "+ str(RT_value) + " " + "sec"+ "\n")
+    file.write("Activity Threshold = "+ (AT_value)  + "\n")
+    file.write("Atrial Pulse Width = "+ str(APW_value) + " " + "ms" + "\n")
+    file.write("MSR = "+ str(MSR_value) + " " + "ppm" + "\n")
+    file.write("Ventricular Sensitivity = "+ str(VS_value) + " " + "mV" + "\n")
+    file.write("Atrial Sensitivity = "+ str(AS_value) + " " + "mV" + "\n")    
+    file.close()
+    
+    
     
     def logout():
         logout_success()
@@ -194,7 +220,7 @@ def AOO_param():
         if slider.get() < clicked2.get():
             label.config(text = slider.get())
             LRL_value = slider.get()
-            file = open('AOO_values.txt',"a")
+            file = open('programmable_parameters.txt',"a")
             file.write("LRL = "+ str(LRL_value) + " " + "ppm" + "\n")
             file.close()
             
@@ -204,8 +230,6 @@ def AOO_param():
     slider = Scale(AOO_screen, from_=30, to=175, orient=HORIZONTAL)
     slider.pack()
     slider.set(60)
-    LRL_value = int
-    LRL_value = 60
     button = Button(AOO_screen, text = "Update Parameter", command = show).pack()
     label = Label(AOO_screen, text = "")
     label.pack()
@@ -214,7 +238,7 @@ def AOO_param():
         if clicked2.get() > slider.get():
             label2.config(text = clicked2.get())
             URL_value = clicked2.get()
-            file = open('AOO_values.txt',"a")
+            file = open('programmable_parameters.txt',"a")
             file.write("URL = "+ str(URL_value) + " " + "ppm" + "\n")
             file.close()
         
@@ -224,8 +248,6 @@ def AOO_param():
     global clicked2
     clicked2 = IntVar(AOO_screen)
     clicked2.set(120)
-    URL_value = int 
-    URL_value = 120;
     drop2 = OptionMenu(AOO_screen, clicked2, *options2 )
     drop2.pack()
     button = Button(AOO_screen, text = "Update Parameter", command = show2).pack()
@@ -235,7 +257,7 @@ def AOO_param():
     def show3():
         label3.config(text = clicked3.get())
         AA_value = clicked3.get()
-        file = open('AOO_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Atrial Amlitude = "+ str(AA_value) + " " "V" + "\n")
         file.close()
         
@@ -254,7 +276,7 @@ def AOO_param():
     def show4():
         label4.config(text = clicked4.get())
         APW_value = clicked4.get()
-        file = open('AOO_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Atrial Pulse Width = "+ str(APW_value) + " " + "ms" + "\n")
         file.close()
     
@@ -284,7 +306,7 @@ def VOO_param():
         if slider.get() < clicked2.get():
             label.config(text = slider.get())
             LRL_value = slider.get()
-            file = open('VOO_values.txt',"a")
+            file = open('programmable_parameters.txt',"a")
             file.write("LRL = "+ str(LRL_value) + " " + "ppm" + "\n")
             file.close()
 
@@ -293,8 +315,6 @@ def VOO_param():
     slider = Scale(VOO_screen, from_=30, to=175, orient=HORIZONTAL)
     slider.pack()
     slider.set(60)
-    LRL_value = int
-    LRL_value = 60
     button = Button(VOO_screen, text = "Update Parameter", command = show).pack()
     label = Label(VOO_screen, text = "")
     label.pack()
@@ -303,7 +323,7 @@ def VOO_param():
         if clicked2.get() > slider.get():
             label2.config(text = clicked2.get())
             URL_value = clicked2.get()
-            file = open('VOO_values.txt',"a")
+            file = open('programmable_parameters.txt',"a")
             file.write("URL = "+ str(URL_value) + " " + "ppm" + "\n")
             file.close()
         
@@ -313,8 +333,6 @@ def VOO_param():
     global clicked2
     clicked2 = IntVar(VOO_screen)
     clicked2.set(120)
-    URL_value = int 
-    URL_value = 120;
     drop2 = OptionMenu(VOO_screen, clicked2, *options2 )
     drop2.pack()
     button = Button(VOO_screen, text = "Update Parameter", command = show2).pack()
@@ -325,7 +343,7 @@ def VOO_param():
     def show3():
         label3.config(text = clicked3.get())
         VA_value = clicked3.get()
-        file = open('VOO_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Ventricular Amlitude = "+ str(VA_value) + " " "V" + "\n")
         file.close()
     
@@ -345,7 +363,7 @@ def VOO_param():
     def show4():
         label4.config(text = clicked4.get())
         VPW_value = clicked4.get()
-        file = open('VOO_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Ventricular Pulse Width = "+ str(VPW_value) + " " + "ms" + "\n")
         file.close()
     
@@ -374,7 +392,7 @@ def AAI_param():
         if slider.get() < clicked2.get():
             label.config(text = slider.get())
             LRL_value = slider.get()
-            file = open('AAI_values.txt',"a")
+            file = open('programmable_parameters.txt',"a")
             file.write("LRL = "+ str(LRL_value) + " " + "ppm" + "\n")
             file.close()
 
@@ -383,8 +401,6 @@ def AAI_param():
     slider = Scale(AAI_screen, from_=30, to=175, orient=HORIZONTAL)
     slider.pack()
     slider.set(60)
-    LRL_value = int
-    LRL_value = 60
     button = Button(AAI_screen, text = "Update Parameter", command = show).pack()
     label = Label(AAI_screen, text = "")
     label.pack()
@@ -394,7 +410,7 @@ def AAI_param():
         if clicked2.get() > slider.get():
             label2.config(text = clicked2.get())
             URL_value = clicked2.get()
-            file = open('AAI_values.txt',"a")
+            file = open('programmable_parameters.txt',"a")
             file.write("URL = "+ str(URL_value) + " " + "ppm" + "\n")
             file.close()
         
@@ -404,8 +420,6 @@ def AAI_param():
     global clicked2
     clicked2 = IntVar(AAI_screen)
     clicked2.set(120)
-    URL_value = int 
-    URL_value = 120;
     drop2 = OptionMenu(AAI_screen, clicked2, *options2 )
     drop2.pack()
     button = Button(AAI_screen, text = "Update Parameter", command = show2).pack()
@@ -416,7 +430,7 @@ def AAI_param():
     def show3():
         label3.config(text = clicked3.get())
         AA_value = clicked3.get()
-        file = open('AAI_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Atrial Amlitude = "+ str(AA_value) + " " "V" + "\n")
         file.close()
         
@@ -435,7 +449,7 @@ def AAI_param():
     def show4():
         label4.config(text = clicked4.get())
         APW_value = clicked4.get()
-        file = open('AAI_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Atrial Pulse Width = "+ str(APW_value) + " " + "ms" + "\n")
         file.close()
     
@@ -457,7 +471,7 @@ def AAI_param():
         if clicked5.get() <= (60000/slider.get()):
             label5.config(text = clicked5.get())
             ARP_value = clicked5.get()
-            file = open('AAI_values.txt',"a")
+            file = open('programmable_parameters.txt',"a")
             file.write("Atrial Refractory Period = "+ str(ARP_value) + " " + "ms" + "\n")
             file.close()
     
@@ -468,8 +482,6 @@ def AAI_param():
     global clicked5
     clicked5 = IntVar(AAI_screen)
     clicked5.set(250)
-    ARP_value = int
-    ARP_value = 250
     drop5 = OptionMenu(AAI_screen, clicked5, *options5 )
     drop5.pack()
     button = Button(AAI_screen, text = "Update Parameter", command = show5).pack()
@@ -479,7 +491,7 @@ def AAI_param():
     def show6():
             label6.config(text = clicked6.get())
             AS_value = clicked6.get()
-            file = open('AAI_values.txt',"a")
+            file = open('programmable_parameters.txt',"a")
             file.write("Atrial Sensitivity = "+ str(AS_value) + " " + "mV" + "\n")
             file.close()
     
@@ -511,7 +523,7 @@ def VVI_param():
         if slider.get() < clicked2.get():
             label.config(text = slider.get())
             LRL_value = slider.get()
-            file = open('VVI_values.txt',"a")
+            file = open('programmable_parameters.txt',"a")
             file.write("LRL = "+ str(LRL_value) + " " + "ppm" + "\n")
             file.close()
 
@@ -520,8 +532,6 @@ def VVI_param():
     slider = Scale(VVI_screen, from_=30, to=175, orient=HORIZONTAL)
     slider.pack()
     slider.set(60)
-    LRL_value = int
-    LRL_value = 60
     button = Button(VVI_screen, text = "Update Parameter", command = show).pack()
     label = Label(VVI_screen, text = "")
     label.pack()
@@ -531,7 +541,7 @@ def VVI_param():
         if clicked2.get() > slider.get():
             label2.config(text = clicked2.get())
             URL_value = clicked2.get()
-            file = open('VVI_values.txt',"a")
+            file = open('programmable_parameters.txt',"a")
             file.write("URL = "+ str(URL_value) + " " + "ppm" + "\n")
             file.close()
         
@@ -541,8 +551,6 @@ def VVI_param():
     global clicked2
     clicked2 = IntVar(VVI_screen)
     clicked2.set(120)
-    URL_value = int 
-    URL_value = 120;
     drop2 = OptionMenu(VVI_screen, clicked2, *options2 )
     drop2.pack()
     button = Button(VVI_screen, text = "Update Parameter", command = show2).pack()
@@ -553,7 +561,7 @@ def VVI_param():
     def show3():
         label3.config(text = clicked3.get())
         VA_value = clicked3.get()
-        file = open('VVI_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Ventricular Amlitude = "+ str(VA_value) + " " "V" + "\n")
         file.close()
     
@@ -573,7 +581,7 @@ def VVI_param():
     def show4():
         label4.config(text = clicked4.get())
         VPW_value = clicked4.get()
-        file = open('VVI_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Ventricular Pulse Width = "+ str(VPW_value) + " " + "ms" + "\n")
         file.close()
     
@@ -592,7 +600,7 @@ def VVI_param():
     def show5():
         label5.config(text = clicked5.get())
         VRP_value = clicked5.get()
-        file = open('VVI_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Ventricular Refractory Period = "+ str(VRP_value) + " " + "ms" + "\n")
         file.close()
     
@@ -613,7 +621,7 @@ def VVI_param():
     def show6():
         label6.config(text = clicked6.get())
         VS_value = clicked6.get()
-        file = open('VVI_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Ventricular Sensitivity = "+ str(VS_value) + " " + "mV" + "\n")
         file.close()
     
@@ -644,7 +652,7 @@ def VOOR_param():
         if slider.get() < clicked2.get():
             label.config(text = slider.get())
             LRL_value = slider.get()
-            file = open('VOOR_values.txt',"a")
+            file = open('programmable_parameters.txt',"a")
             file.write("LRL = "+ str(LRL_value) + " " + "ppm" + "\n")
             file.close()
 
@@ -653,8 +661,6 @@ def VOOR_param():
     slider = Scale(VOOR_screen, from_=30, to=175, orient=HORIZONTAL)
     slider.pack()
     slider.set(60)
-    LRL_value = int
-    LRL_value = 60
     button = Button(VOOR_screen, text = "Update Parameter", command = show).pack()
     label = Label(VOOR_screen, text = "")
     label.pack()
@@ -664,7 +670,7 @@ def VOOR_param():
         if clicked2.get() > slider.get():
             label2.config(text = clicked2.get())
             URL_value = clicked2.get()
-            file = open('VOOR_values.txt',"a")
+            file = open('programmable_parameters.txt',"a")
             file.write("URL = "+ str(URL_value) + " " + "ppm" + "\n")
             file.close()
         
@@ -674,8 +680,6 @@ def VOOR_param():
     global clicked2
     clicked2 = IntVar(VOOR_screen)
     clicked2.set(120)
-    URL_value = int 
-    URL_value = 120;
     drop2 = OptionMenu(VOOR_screen, clicked2, *options2 )
     drop2.pack()
     button = Button(VOOR_screen, text = "Update Parameter", command = show2).pack()
@@ -686,7 +690,7 @@ def VOOR_param():
     def show3():
         label3.config(text = clicked3.get())
         MSR_value = clicked3.get()
-        file = open('VOOR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("MSR = "+ str(MSR_value) + " " + "ppm" + "\n")
         file.close()
             
@@ -705,7 +709,7 @@ def VOOR_param():
     def show4():
         label4.config(text = clicked4.get())
         VA_value = clicked4.get()
-        file = open('VOOR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Ventricular Amplitude = "+ str(VA_value) + " " "V" + "\n")
         file.close()
     
@@ -724,7 +728,7 @@ def VOOR_param():
     def show5():
         label5.config(text = clicked5.get())
         VPW_value = clicked5.get()
-        file = open('VOOR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Ventricular Pulse Width = "+ str(VPW_value) + " " + "ms" + "\n")
         file.close()
     
@@ -743,7 +747,7 @@ def VOOR_param():
     def show6():
         label6.config(text = clicked6.get())
         AT_value = clicked6.get()
-        file = open('VOOR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Activity Threshold = "+ (AT_value)  + "\n")
         file.close()
     
@@ -762,7 +766,7 @@ def VOOR_param():
     def show7():
         label7.config(text = clicked7.get())
         RT_value = clicked7.get()
-        file = open('VOOR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Reaction Time = "+ str(RT_value) + " " + "sec"+ "\n")
         file.close()
     
@@ -781,7 +785,7 @@ def VOOR_param():
     def show8():
         label8.config(text = clicked8.get())
         RF_value = clicked8.get()
-        file = open('VOOR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Response Factor = "+ str(RF_value) + "\n")
         file.close()
     
@@ -800,7 +804,7 @@ def VOOR_param():
     def show9():
         label9.config(text = clicked9.get())
         RCT_value = clicked9.get()
-        file = open('VOOR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Recovery Time = "+ str(RCT_value) + " " + "min"+ "\n")
         file.close()
     
@@ -831,7 +835,7 @@ def AOOR_param():
         if slider.get() < clicked2.get():
             label.config(text = slider.get())
             LRL_value = slider.get()
-            file = open('AOOR_values.txt',"a")
+            file = open('programmable_parameters.txt',"a")
             file.write("LRL = "+ str(LRL_value) + " " + "ppm" + "\n")
             file.close()
 
@@ -851,7 +855,7 @@ def AOOR_param():
         if clicked2.get() > slider.get():
             label2.config(text = clicked2.get())
             URL_value = clicked2.get()
-            file = open('AOOR_values.txt',"a")
+            file = open('programmable_parameters.txt',"a")
             file.write("URL = "+ str(URL_value) + " " + "ppm" + "\n")
             file.close()
         
@@ -861,8 +865,6 @@ def AOOR_param():
     global clicked2
     clicked2 = IntVar(AOOR_screen)
     clicked2.set(120)
-    URL_value = int 
-    URL_value = 120;
     drop2 = OptionMenu(AOOR_screen, clicked2, *options2 )
     drop2.pack()
     button = Button(AOOR_screen, text = "Update Parameter", command = show2).pack()
@@ -872,7 +874,7 @@ def AOOR_param():
     def show3():
         label3.config(text = clicked3.get())
         MSR_value = clicked3.get()
-        file = open('AOOR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("MSR = "+ str(MSR_value) + " " + "ppm" + "\n")
         file.close()
             
@@ -891,7 +893,7 @@ def AOOR_param():
     def show4():
         label4.config(text = clicked4.get())
         AA_value = clicked4.get()
-        file = open('AOOR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Atrial Amlitude = "+ str(AA_value) + " " "V" + "\n")
         file.close()
     
@@ -910,7 +912,7 @@ def AOOR_param():
     def show5():
         label5.config(text = clicked5.get())
         APW_value = clicked5.get()
-        file = open('AOOR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Atrial Pulse Width = "+ str(APW_value) + " " + "ms" + "\n")
         file.close()
     
@@ -929,7 +931,7 @@ def AOOR_param():
     def show6():
         label6.config(text = clicked6.get())
         AT_value = clicked6.get()
-        file = open('AOOR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Activity Threshold = "+ (AT_value)  + "\n")
         file.close()
     
@@ -948,7 +950,7 @@ def AOOR_param():
     def show7():
         label7.config(text = clicked7.get())
         RT_value = clicked7.get()
-        file = open('AOOR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Reaction Time = "+ str(RT_value) + " " + "sec"+ "\n")
         file.close()
     
@@ -967,7 +969,7 @@ def AOOR_param():
     def show8():
         label8.config(text = clicked8.get())
         RF_value = clicked8.get()
-        file = open('AOOR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Response Factor = "+ str(RF_value) + "\n")
         file.close()
     
@@ -986,7 +988,7 @@ def AOOR_param():
     def show9():
         label9.config(text = clicked9.get())
         RCT_value = clicked9.get()
-        file = open('AOOR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Recovery Time = "+ str(RCT_value) + " " + "min"+ "\n")
         file.close()
     
@@ -1014,7 +1016,7 @@ def VVIR_param():
         if slider.get() < clicked2.get():
             label.config(text = slider.get())
             LRL_value = slider.get()
-            file = open('VVIR_values.txt',"a")
+            file = open('programmable_parameters.txt',"a")
             file.write("LRL = "+ str(LRL_value) + " " + "ppm" + "\n")
             file.close()
 
@@ -1023,8 +1025,6 @@ def VVIR_param():
     slider = Scale(VVIR_screen, from_=30, to=175, orient=HORIZONTAL)
     slider.pack()
     slider.set(60)
-    LRL_value = int
-    LRL_value = 60
     button = Button(VVIR_screen, text = "Update Parameter", command = show).pack()
     label = Label(VVIR_screen, text = "")
     label.pack()
@@ -1034,7 +1034,7 @@ def VVIR_param():
         if clicked2.get() > slider.get():
             label2.config(text = clicked2.get())
             URL_value = clicked2.get()
-            file = open('VVIR_values.txt',"a")
+            file = open('programmable_parameters.txt',"a")
             file.write("URL = "+ str(URL_value) + " " + "ppm" + "\n")
             file.close()
             
@@ -1045,8 +1045,6 @@ def VVIR_param():
     global clicked2
     clicked2 = IntVar(VVIR_screen)
     clicked2.set(120)
-    URL_value = int 
-    URL_value = 120;
     drop2 = OptionMenu(VVIR_screen, clicked2, *options2 )
     drop2.pack()
     button = Button(VVIR_screen, text = "Update Parameter", command = show2).pack()
@@ -1056,7 +1054,7 @@ def VVIR_param():
     def show3():
         label3.config(text = clicked3.get())
         MSR_value = clicked3.get()
-        file = open('VVIR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("MSR = "+ str(MSR_value) + " " + "ppm" + "\n")
         file.close()
             
@@ -1075,7 +1073,7 @@ def VVIR_param():
     def show4():
         label4.config(text = clicked4.get())
         VA_value = clicked4.get()
-        file = open('VVIR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Ventricular Amplitude = "+ str(VA_value) + " " "V" + "\n")
         file.close()
     
@@ -1094,7 +1092,7 @@ def VVIR_param():
     def show5():
         label5.config(text = clicked5.get())
         VPW_value = clicked5.get()
-        file = open('VVIR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Ventricular Pulse Width = "+ str(VPW_value) + " " + "ms" + "\n")
         file.close()
     
@@ -1113,7 +1111,7 @@ def VVIR_param():
     def show6():
         label6.config(text = clicked6.get())
         VS_value = clicked6.get()
-        file = open('VVIR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Ventricular Sensitivity = "+ str(VS_value) + " " + "mV" + "\n")
         file.close()
     
@@ -1133,7 +1131,7 @@ def VVIR_param():
     def show7():
         label7.config(text = clicked7.get())
         VRP_value = clicked7.get()
-        file = open('VVIR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Ventricular Refractory Period = "+ str(VRP_value) + " " + "ms" + "\n")
         file.close()
     
@@ -1154,7 +1152,7 @@ def VVIR_param():
     def show10():
         label10.config(text = clicked10.get())
         AT_value = clicked10.get()
-        file = open('VVIR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Activity Threshold = "+ (AT_value)  + "\n")
         file.close()
     
@@ -1173,7 +1171,7 @@ def VVIR_param():
     def show11():
         label11.config(text = clicked11.get())
         RT_value = clicked11.get()
-        file = open('VVIR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Reaction Time = "+ str(RT_value) + " " + "sec"+ "\n")
         file.close()
     
@@ -1192,11 +1190,11 @@ def VVIR_param():
     def show12():
         label12.config(text = clicked12.get())
         RF_value = clicked12.get()
-        file = open('VVIR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Response Factor = "+ str(RF_value) + "\n")
         file.close()
     
-    RF_label = Label(VVIR_screen, text="Reaction Factor:")
+    RF_label = Label(VVIR_screen, text="Response Factor:")
     RF_label.pack()
     options12 = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
     global clicked12
@@ -1211,7 +1209,7 @@ def VVIR_param():
     def show13():
         label13.config(text = clicked13.get())
         RCT_value = clicked13.get()
-        file = open('VVIR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Recovery Time = "+ str(RCT_value) + " " + "min"+ "\n")
         file.close()
     
@@ -1240,7 +1238,7 @@ def AAIR_param():
         if slider.get() < clicked2.get():
             label.config(text = slider.get())
             LRL_value = slider.get()
-            file = open('AAIR_values.txt',"a")
+            file = open('programmable_parameters.txt',"a")
             file.write("LRL = "+ str(LRL_value) + " " + "ppm" + "\n")
             file.close()
 
@@ -1249,8 +1247,6 @@ def AAIR_param():
     slider = Scale(AAIR_screen, from_=30, to=175, orient=HORIZONTAL)
     slider.pack()
     slider.set(60)
-    LRL_value = int
-    LRL_value = 60
     button = Button(AAIR_screen, text = "Update Parameter", command = show).pack()
     label = Label(AAIR_screen, text = "")
     label.pack()
@@ -1260,7 +1256,7 @@ def AAIR_param():
         if clicked2.get() > slider.get():
             label2.config(text = clicked2.get())
             URL_value = clicked2.get()
-            file = open('AAIR_values.txt',"a")
+            file = open('programmable_parameters.txt',"a")
             file.write("URL = "+ str(URL_value) + " " + "ppm" + "\n")
             file.close()
         
@@ -1270,8 +1266,6 @@ def AAIR_param():
     global clicked2
     clicked2 = IntVar(AAIR_screen)
     clicked2.set(120)
-    URL_value = int 
-    URL_value = 120;
     drop2 = OptionMenu(AAIR_screen, clicked2, *options2 )
     drop2.pack()
     button = Button(AAIR_screen, text = "Update Parameter", command = show2).pack()
@@ -1281,7 +1275,7 @@ def AAIR_param():
     def show3():
         label3.config(text = clicked3.get())
         MSR_value = clicked3.get()
-        file = open('AAIR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("MSR = "+ str(MSR_value) + " " + "ppm" + "\n")
         file.close()
             
@@ -1300,7 +1294,7 @@ def AAIR_param():
     def show4():
         label4.config(text = clicked4.get())
         AA_value = clicked4.get()
-        file = open('AAIR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Atrial Amplitude = "+ str(AA_value) + " " "V" + "\n")
         file.close()
     
@@ -1319,7 +1313,7 @@ def AAIR_param():
     def show5():
         label5.config(text = clicked5.get())
         APW_value = clicked5.get()
-        file = open('AAIR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Atrial Pulse Width = "+ str(APW_value) + " " + "ms" + "\n")
         file.close()
     
@@ -1338,7 +1332,7 @@ def AAIR_param():
     def show6():
         label6.config(text = clicked6.get())
         AS_value = clicked6.get()
-        file = open('AAIR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Atrial Sensitivity = "+ str(AS_value) + " " + "mV" + "\n")
         file.close()
     
@@ -1358,7 +1352,7 @@ def AAIR_param():
     def show7():
         label7.config(text = clicked7.get())
         ARP_value = clicked7.get()
-        file = open('AAIR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Atrial Refractory Period = "+ str(ARP_value) + " " + "ms" + "\n")
         file.close()
     
@@ -1380,7 +1374,7 @@ def AAIR_param():
     def show11():
         label11.config(text = clicked11.get())
         AT_value = clicked11.get()
-        file = open('AAIR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Activity Threshold = "+ (AT_value)  + "\n")
         file.close()
     
@@ -1399,7 +1393,7 @@ def AAIR_param():
     def show12():
         label12.config(text = clicked12.get())
         RT_value = clicked12.get()
-        file = open('AAIR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Reaction Time = "+ str(RT_value) + " " + "sec"+ "\n")
         file.close()
     
@@ -1418,7 +1412,7 @@ def AAIR_param():
     def show13():
         label13.config(text = clicked13.get())
         RF_value = clicked13.get()
-        file = open('AAIR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Response Factor = "+ str(RF_value) + "\n")
         file.close()
     
@@ -1437,7 +1431,7 @@ def AAIR_param():
     def show14():
         label14.config(text = clicked14.get())
         RCT_value = clicked14.get()
-        file = open('AAIR_values.txt',"a")
+        file = open('programmable_parameters.txt',"a")
         file.write("Recovery Time = "+ str(RCT_value) + " " + "min"+ "\n")
         file.close()
     
