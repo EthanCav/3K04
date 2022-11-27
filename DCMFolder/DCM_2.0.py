@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[66]:
+
+
 #import modules
 from tkinter import *
 import tkinter.messagebox
@@ -93,6 +99,26 @@ def modes():
     Button7.pack()
     Button8.pack()
     
+    #Set parameters to nominal values
+    VRP_value = 320
+    VPW_value = 1
+    LRL_value = 60
+    URL_value = 120
+    ARP_value = 250
+    VA_value = 5.0
+    AA_value = 5.0
+    RCT_value = 5
+    RF_value = 8
+    RT_value = 30
+    AT_value = "Med"
+    APW_value = 1
+    MSR_value = 120
+    VS_value = 2.5
+    AS_value = 0.75
+    
+    
+    
+    
     def logout():
         logout_success()
         
@@ -108,6 +134,9 @@ def modes():
 
         #ports = list(list_ports.comports())
         ser = serial.Serial('/dev/cu.usbmodem0006210000001', baudrate = 115200, timeout=None) ###figure out how to get right port every time
+    ##    ser.baudrate = 115200 #given in tutorial 3 document
+    ##    ser.port = ports[0].device
+    ##    ser.timeout = None #wait forever/until requested number of bytes are received
     ##    ser.open()
 
         if ser.is_open:
@@ -115,7 +144,6 @@ def modes():
             root.withdraw() #to get rid of empty pop-up window 
             messagebox.showinfo("System Message", "Device connected!")
             print("connected")
-            check_device()
 
         else:
             messagebox.showerror("System Message","Device not connected.") #this doesn't seem to work and idk why
@@ -133,6 +161,7 @@ def modes():
         if(Connect['text']=='Connect Device'):
             Connect['text']='Disconnect Device'
             serialConnect()
+            #check_device()
 
     ###still have some stuff to figure out here (i.e. checking when new device is approached)
     ###also need to add messages when device isn't connected and you press connect button
@@ -140,6 +169,7 @@ def modes():
         elif(Connect['text']=='Disconnect Device'):
             Connect['text']='Connect Device'
             serialDisconnect()
+            #device_disconnected()
                     
     Connect = Button(modes_screen, text = 'Connect Device', command = pacemakerConnect)
     Connect.pack()
@@ -150,7 +180,7 @@ def modes():
         diff_device_screen = Toplevel(modes_screen)
         diff_device_screen.title("System Message")
         diff_device_screen.geometry ("400x100")
-        Label(diff_device_screen, text="Warning! \n\n New pacemaker device detected.", fg="green").pack()
+        Label(diff_device_screen, text="Device Connected!\n\nWarning: New pacemaker device detected.", fg="green").pack()
         Button(diff_device_screen, text="OK", command=delete_diff_device_screen).pack()
 
     #For Assignment 2, we will make adjustments to allow for serial communication between the DCM and the pacemaker
@@ -158,9 +188,11 @@ def modes():
         original_device = 1 #change to properties of pacemakers for assignment 2
         new_device = 2
         
-        if new_device != original_device:
-            diff_device() 
+        if new_device == original_device:
+            device_connected()
             
+        else:
+            diff_device()
 
 # Implementing Programmable Parameters Screens
 def AOO_param():
@@ -222,10 +254,10 @@ def AOO_param():
         
     AA_label = Label(AOO_screen, text="Atrial Amplitude [V]:")
     AA_label.pack()
-    options3 = [0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0]
+    options3 = [0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.3,3.4,3.5,3.6,3.7,3.8,3.9,4.0,4.1,4.2,4.3,4.4,4.5,4.6,4.7,4.8,4.9,5.0]
     global clicked3
     clicked3 = DoubleVar(AOO_screen)
-    clicked3.set(3.5)
+    clicked3.set(5.0)
     drop3 = OptionMenu(AOO_screen, clicked3, *options3 )
     drop3.pack()
     button = Button(AOO_screen, text = "Update Parameter", command = show3).pack()
@@ -242,10 +274,10 @@ def AOO_param():
     
     APW_label = Label(AOO_screen, text="Atrial Pulse Width [ms]:")
     APW_label.pack()
-    options4 = [0.05, 0.1, 0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9]
+    options4 = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
     global clicked4
-    clicked4 = DoubleVar(AOO_screen)
-    clicked4.set(0.4)
+    clicked4 = IntVar(AOO_screen)
+    clicked4.set(1)
     drop4 = OptionMenu(AOO_screen, clicked4, *options4 )
     drop4.pack()
     button = Button(AOO_screen, text = "Update Parameter", command = show4).pack()
@@ -305,17 +337,17 @@ def VOO_param():
     
     def show3():
         label3.config(text = clicked3.get())
-        AA_value = clicked3.get()
+        VA_value = clicked3.get()
         file = open('VOO_values.txt',"a")
-        file.write("Atrial Amlitude = "+ str(AA_value) + " " "V" + "\n")
+        file.write("Ventricular Amlitude = "+ str(VA_value) + " " "V" + "\n")
         file.close()
     
     VA_label = Label(VOO_screen, text="Ventricular Amplitude [V]:")
     VA_label.pack()
-    options3 = [0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0]
+    options3 = [0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.3,3.4,3.5,3.6,3.7,3.8,3.9,4.0,4.1,4.2,4.3,4.4,4.5,4.6,4.7,4.8,4.9,5.0]
     global clicked3
     clicked3 = DoubleVar(VOO_screen)
-    clicked3.set(3.5)
+    clicked3.set(5.0)
     drop3 = OptionMenu(VOO_screen, clicked3, *options3 )
     drop3.pack()
     button = Button(VOO_screen, text = "Update Parameter", command = show3).pack()
@@ -332,10 +364,10 @@ def VOO_param():
     
     VPW_label = Label(VOO_screen, text="Ventricular Pulse Width [ms]:")
     VPW_label.pack()
-    options4 = [0.05, 0.1, 0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9]
+    options4 = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
     global clicked4
-    clicked4 = DoubleVar(VOO_screen)
-    clicked4.set(0.4)
+    clicked4 = IntVar(VOO_screen)
+    clicked4.set(1)
     drop4 = OptionMenu(VOO_screen, clicked4, *options4 )
     drop4.pack()
     button = Button(VOO_screen, text = "Update Parameter", command = show4).pack()
@@ -403,10 +435,10 @@ def AAI_param():
         
     AA_label = Label(AAI_screen, text="Atrial Amplitude [V]:")
     AA_label.pack()
-    options3 = [0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0]
+    options3 = [0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.3,3.4,3.5,3.6,3.7,3.8,3.9,4.0,4.1,4.2,4.3,4.4,4.5,4.6,4.7,4.8,4.9,5.0]
     global clicked3
     clicked3 = DoubleVar(AAI_screen)
-    clicked3.set(3.5)
+    clicked3.set(5.0)
     drop3 = OptionMenu(AAI_screen, clicked3, *options3 )
     drop3.pack()
     button = Button(AAI_screen, text = "Update Parameter", command = show3).pack()
@@ -423,10 +455,10 @@ def AAI_param():
     
     APW_label = Label(AAI_screen, text="Atrial Pulse Width [ms]:")
     APW_label.pack()
-    options4 = [0.05, 0.1, 0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9]
+    options4 = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
     global clicked4
-    clicked4 = DoubleVar(AAI_screen)
-    clicked4.set(0.4)
+    clicked4 = IntVar(AAI_screen)
+    clicked4.set(1)
     drop4 = OptionMenu(AAI_screen, clicked4, *options4 )
     drop4.pack()
     button = Button(AAI_screen, text = "Update Parameter", command = show4).pack()
@@ -475,65 +507,9 @@ def AAI_param():
     drop6.pack()    
     button = Button(AAI_screen, text = "Update Parameter", command = show6).pack()
     label6 = Label(AAI_screen, text = "")
-    label6.pack() 
+    label6.pack()  
     
-    def show7():
-            label7.config(text = clicked7.get())
-            PVARP_value = clicked7.get()
-            file = open('AAI_values.txt',"a")
-            file.write("PVARP = "+ str(PVARP_value) + " " + "ms" + "\n")
-            file.close()
-    
-    
-    PVARP_label = Label(AAI_screen, text="PVARP [ms]:")
-    PVARP_label.pack()
-    options7 = [150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300,310,320,330,340,350,360,370,380,390,400,410,420,430,440,450,460,470,480,490,500]
-    global clicked7
-    clicked7 = IntVar(AAI_screen)
-    clicked7.set(250)
-    drop7 = OptionMenu(AAI_screen, clicked7, *options7 )
-    drop7.pack()
-    button = Button(AAI_screen, text = "Update Parameter", command = show7).pack()
-    label7 = Label(AAI_screen, text = "")
-    label7.pack() 
-    
-    def show8():
-            label8.config(text = clicked8.get())
-            H_value = clicked8.get()
-            file = open('AAI_values.txt',"a")
-            file.write("Hysteresis Rate Limit = "+ str(H_value) + " " + "ppm" + "\n")
-            file.close()
-    
-    H_label = Label(AAI_screen, text="Hysteresis Rate Limit [ppm]:")
-    H_label.pack()
-    options8 = [0,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140,145,150,155,160,165,170,175]
-    global clicked8
-    clicked8 = IntVar(AAI_screen)
-    clicked8.set(0)
-    drop8 = OptionMenu(AAI_screen, clicked8, *options8 )
-    drop8.pack()
-    button = Button(AAI_screen, text = "Update Parameter", command = show8).pack()
-    label8 = Label(AAI_screen, text = "")
-    label8.pack() 
-    
-    def show9():
-            label9.config(text = clicked9.get())
-            RS_value = clicked9.get()
-            file = open('AAI_values.txt',"a")
-            file.write("Rate Smoothing = "+ str(RS_value) + " " + "%" + "\n")
-            file.close()
-            
-    RS_label = Label(AAI_screen, text="Rate Smoothing [%]:")
-    RS_label.pack()
-    options9 = [0,3,6,9,12,15,18,21,25]
-    global clicked9
-    clicked9 = IntVar(AAI_screen)
-    clicked9.set(0)
-    drop9 = OptionMenu(AAI_screen, clicked9, *options9 )
-    drop9.pack()
-    button = Button(AAI_screen, text = "Update Parameter", command = show9).pack()
-    label9 = Label(AAI_screen, text = "")
-    label9.pack() 
+
     
 
 def VVI_param():
@@ -596,10 +572,10 @@ def VVI_param():
     
     VA_label = Label(VVI_screen, text="Ventricular Amplitude [V]:")
     VA_label.pack()
-    options3 = [0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0]
+    options3 = [0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.3,3.4,3.5,3.6,3.7,3.8,3.9,4.0,4.1,4.2,4.3,4.4,4.5,4.6,4.7,4.8,4.9,5.0]
     global clicked3
     clicked3 = DoubleVar(VVI_screen)
-    clicked3.set(3.5)
+    clicked3.set(5.0)
     drop3 = OptionMenu(VVI_screen, clicked3, *options3 )
     drop3.pack()
     button = Button(VVI_screen, text = "Update Parameter", command = show3).pack()
@@ -616,10 +592,10 @@ def VVI_param():
     
     VPW_label = Label(VVI_screen, text="Ventricular Pulse Width [ms]:")
     VPW_label.pack()
-    options4 = [0.05, 0.1, 0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9]
+    options4 = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
     global clicked4
-    clicked4 = DoubleVar(VVI_screen)
-    clicked4.set(0.4)
+    clicked4 = IntVar(VVI_screen)
+    clicked4.set(1)
     drop4 = OptionMenu(VVI_screen, clicked4, *options4 )
     drop4.pack()
     button = Button(VVI_screen, text = "Update Parameter", command = show4).pack()
@@ -657,7 +633,7 @@ def VVI_param():
 
     VS_label = Label(VVI_screen, text="Ventricular Sensitivity  [mV]:")
     VS_label.pack()
-    options6 = [0.25,0.5,0.75,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0,7.5,8.0,8.5,9.0,9.5,10.0]
+    options6 = [0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.3,3.4,3.5,3.6,3.7,3.8,3.9,4.0,4.1,4.2,4.3,4.4,4.5,4.6,4.7,4.8,4.9,5.0]
     global clicked6
     clicked6 = DoubleVar(VVI_screen)
     clicked6.set(2.5)
@@ -665,47 +641,8 @@ def VVI_param():
     drop6.pack()    
     button = Button(VVI_screen, text = "Update Parameter", command = show6).pack()
     label6 = Label(VVI_screen, text = "")
-    label6.pack() 
-
-    def show7():
-        label7.config(text = clicked7.get())
-        H_value = clicked7.get()
-        file = open('VVI_values.txt',"a")
-        file.write("Hysteresis Rate Limit = "+ str(H_value) + " " + "ppm" + "\n")
-        file.close()
-    
-    H_label = Label(VVI_screen, text="Hysteresis Rate Limit [ppm]:")
-    H_label.pack()
-    options7 = [0,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140,145,150,155,160,165,170,175]
-    global clicked7
-    clicked7 = IntVar(VVI_screen)
-    clicked7.set(0)
-    drop7 = OptionMenu(VVI_screen, clicked7, *options7 )
-    drop7.pack()
-    button = Button(VVI_screen, text = "Update Parameter", command = show7).pack()
-    label7 = Label(VVI_screen, text = "")
-    label7.pack()  
-    
-    def show8():
-            label8.config(text = clicked8.get())
-            RS_value = clicked8.get()
-            file = open('VVI_values.txt',"a")
-            file.write("Rate Smoothing = "+ str(RS_value) + " " + "%" + "\n")
-            file.close()
-            
-    RS_label = Label(VVI_screen, text="Rate Smoothing [%]:")
-    RS_label.pack()
-    options8 = [0,3,6,9,12,15,18,21,25]
-    global clicked8
-    clicked8 = IntVar(VVI_screen)
-    clicked8.set(0)
-    drop8 = OptionMenu(VVI_screen, clicked8, *options8 )
-    drop8.pack()
-    button = Button(VVI_screen, text = "Update Parameter", command = show8).pack()
-    label8 = Label(VVI_screen, text = "")
-    label8.pack()
-    
-    
+    label6.pack()   
+       
 
 
 def VOOR_param():
@@ -787,10 +724,10 @@ def VOOR_param():
     
     VA_label = Label(VOOR_screen, text="Ventricular Amplitude [V]:")
     VA_label.pack()
-    options4 = [0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0]
+    options4 = [0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.3,3.4,3.5,3.6,3.7,3.8,3.9,4.0,4.1,4.2,4.3,4.4,4.5,4.6,4.7,4.8,4.9,5.0]
     global clicked4
     clicked4 = DoubleVar(VOOR_screen)
-    clicked4.set(3.5)
+    clicked4.set(5.0)
     drop4 = OptionMenu(VOOR_screen, clicked4, *options4 )
     drop4.pack()
     button = Button(VOOR_screen, text = "Update Parameter", command = show4).pack()
@@ -806,10 +743,10 @@ def VOOR_param():
     
     VPW_label = Label(VOOR_screen, text="Ventricular Pulse Width [ms]:")
     VPW_label.pack()
-    options5 = [0.05, 0.1, 0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9]
+    options5 = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
     global clicked5
-    clicked5 = DoubleVar(VOOR_screen)
-    clicked5.set(0.4)
+    clicked5 = IntVar(VOOR_screen)
+    clicked5.set(1)
     drop5 = OptionMenu(VOOR_screen, clicked5, *options5 )
     drop5.pack()
     button = Button(VOOR_screen, text = "Update Parameter", command = show5).pack()
@@ -973,10 +910,10 @@ def AOOR_param():
     
     AA_label = Label(AOOR_screen, text="Atrial Amplitude [V]:")
     AA_label.pack()
-    options4 = [0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0]
+    options4 = [0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.3,3.4,3.5,3.6,3.7,3.8,3.9,4.0,4.1,4.2,4.3,4.4,4.5,4.6,4.7,4.8,4.9,5.0]
     global clicked4
     clicked4 = DoubleVar(AOOR_screen)
-    clicked4.set(3.5)
+    clicked4.set(5.0)
     drop4 = OptionMenu(AOOR_screen, clicked4, *options4 )
     drop4.pack()
     button = Button(AOOR_screen, text = "Update Parameter", command = show4).pack()
@@ -992,10 +929,10 @@ def AOOR_param():
     
     APW_label = Label(AOOR_screen, text="Atrial Pulse Width [ms]:")
     APW_label.pack()
-    options5 = [0.05, 0.1, 0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9]
+    options5 = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
     global clicked5
-    clicked5 = DoubleVar(AOOR_screen)
-    clicked5.set(0.4)
+    clicked5 = IntVar(AOOR_screen)
+    clicked5.set(1)
     drop5 = OptionMenu(AOOR_screen, clicked5, *options5 )
     drop5.pack()
     button = Button(AOOR_screen, text = "Update Parameter", command = show5).pack()
@@ -1157,10 +1094,10 @@ def VVIR_param():
     
     VA_label = Label(VVIR_screen, text="Ventricular Amplitude [V]:")
     VA_label.pack()
-    options4 = [0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0]
+    options4 = [0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.3,3.4,3.5,3.6,3.7,3.8,3.9,4.0,4.1,4.2,4.3,4.4,4.5,4.6,4.7,4.8,4.9,5.0]
     global clicked4
     clicked4 = DoubleVar(VVIR_screen)
-    clicked4.set(3.5)
+    clicked4.set(5.0)
     drop4 = OptionMenu(VVIR_screen, clicked4, *options4 )
     drop4.pack()
     button = Button(VVIR_screen, text = "Update Parameter", command = show4).pack()
@@ -1176,10 +1113,10 @@ def VVIR_param():
     
     VPW_label = Label(VVIR_screen, text="Ventricular Pulse Width [ms]:")
     VPW_label.pack()
-    options5 = [0.05, 0.1, 0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9]
+    options5 = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
     global clicked5
-    clicked5 = DoubleVar(VVIR_screen)
-    clicked5.set(0.4)
+    clicked5 = IntVar(VVIR_screen)
+    clicked5.set(1)
     drop5 = OptionMenu(VVIR_screen, clicked5, *options5 )
     drop5.pack()
     button = Button(VVIR_screen, text = "Update Parameter", command = show5).pack()
@@ -1196,7 +1133,7 @@ def VVIR_param():
 
     VS_label = Label(VVIR_screen, text="Ventricular Sensitivity  [mV]:")
     VS_label.pack()
-    options6 = [0.25,0.5,0.75,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0,7.5,8.0,8.5,9.0,9.5,10.0]
+    options6 = [0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.3,3.4,3.5,3.6,3.7,3.8,3.9,4.0,4.1,4.2,4.3,4.4,4.5,4.6,4.7,4.8,4.9,5.0]
     global clicked6
     clicked6 = DoubleVar(VVIR_screen)
     clicked6.set(2.5)
@@ -1225,44 +1162,7 @@ def VVIR_param():
     button = Button(VVIR_screen, text = "Update Parameter", command = show7).pack()
     label7 = Label(VVIR_screen, text = "")
     label7.pack()
-    
-    def show8():
-        label8.config(text = clicked8.get())
-        H_value = clicked8.get()
-        file = open('VVIR_values.txt',"a")
-        file.write("Hysteresis Rate Limit = "+ str(H_value) + " " + "ppm" + "\n")
-        file.close()
-    
-    H_label = Label(VVIR_screen, text="Hysteresis Rate Limit [ppm]:")
-    H_label.pack()
-    options8 = [0,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140,145,150,155,160,165,170,175]
-    global clicked8
-    clicked8 = IntVar(VVIR_screen)
-    clicked8.set(0)
-    drop8 = OptionMenu(VVIR_screen, clicked8, *options8 )
-    drop8.pack()
-    button = Button(VVIR_screen, text = "Update Parameter", command = show8).pack()
-    label8 = Label(VVIR_screen, text = "")
-    label8.pack()  
-    
-    def show9():
-            label9.config(text = clicked9.get())
-            RS_value = clicked9.get()
-            file = open('VVIR_values.txt',"a")
-            file.write("Rate Smoothing = "+ str(RS_value) + " " + "%" + "\n")
-            file.close()
-            
-    RS_label = Label(VVIR_screen, text="Rate Smoothing [%]:")
-    RS_label.pack()
-    options9 = [0,3,6,9,12,15,18,21,25]
-    global clicked9
-    clicked9 = IntVar(VVIR_screen)
-    clicked9.set(0)
-    drop9 = OptionMenu(VVIR_screen, clicked9, *options9 )
-    drop9.pack()
-    button = Button(VVIR_screen, text = "Update Parameter", command = show9).pack()
-    label9 = Label(VVIR_screen, text = "")
-    label9.pack()
+     
     
     def show10():
         label10.config(text = clicked10.get())
@@ -1419,10 +1319,10 @@ def AAIR_param():
     
     AA_label = Label(AAIR_screen, text="Atrial Amplitude [V]:")
     AA_label.pack()
-    options4 = [0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0]
+    options4 = [0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.3,3.4,3.5,3.6,3.7,3.8,3.9,4.0,4.1,4.2,4.3,4.4,4.5,4.6,4.7,4.8,4.9,5.0]
     global clicked4
     clicked4 = DoubleVar(AAIR_screen)
-    clicked4.set(3.5)
+    clicked4.set(5.0)
     drop4 = OptionMenu(AAIR_screen, clicked4, *options4 )
     drop4.pack()
     button = Button(AAIR_screen, text = "Update Parameter", command = show4).pack()
@@ -1438,10 +1338,10 @@ def AAIR_param():
     
     APW_label = Label(AAIR_screen, text="Atrial Pulse Width [ms]:")
     APW_label.pack()
-    options5 = [0.05, 0.1, 0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9]
+    options5 = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
     global clicked5
-    clicked5 = DoubleVar(AAIR_screen)
-    clicked5.set(0.4)
+    clicked5 = IntVar(AAIR_screen)
+    clicked5.set(1)
     drop5 = OptionMenu(AAIR_screen, clicked5, *options5 )
     drop5.pack()
     button = Button(AAIR_screen, text = "Update Parameter", command = show5).pack()
@@ -1458,7 +1358,7 @@ def AAIR_param():
 
     AS_label = Label(AAIR_screen, text="Atrial Sensitivity  [mV]:")
     AS_label.pack()
-    options6 = [0.25,0.5,0.75,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0,7.5,8.0,8.5,9.0,9.5,10.0]
+    options6 = [0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.3,3.4,3.5,3.6,3.7,3.8,3.9,4.0,4.1,4.2,4.3,4.4,4.5,4.6,4.7,4.8,4.9,5.0]
     global clicked6
     clicked6 = DoubleVar(AAIR_screen)
     clicked6.set(0.75)
@@ -1488,63 +1388,7 @@ def AAIR_param():
     label7 = Label(AAIR_screen, text = "")
     label7.pack()
     
-    def show8():
-            label8.config(text = clicked8.get())
-            PVARP_value = clicked8.get()
-            file = open('AAIR_values.txt',"a")
-            file.write("PVARP = "+ str(PVARP_value) + " " + "ms" + "\n")
-            file.close()
-    
-    
-    PVARP_label = Label(AAIR_screen, text="PVARP [ms]:")
-    PVARP_label.pack()
-    options8 = [150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300,310,320,330,340,350,360,370,380,390,400,410,420,430,440,450,460,470,480,490,500]
-    global clicked8
-    clicked8 = IntVar(AAIR_screen)
-    clicked8.set(250)
-    drop8 = OptionMenu(AAIR_screen, clicked8, *options8 )
-    drop8.pack()
-    button = Button(AAIR_screen, text = "Update Parameter", command = show8).pack()
-    label8 = Label(AAIR_screen, text = "")
-    label8.pack() 
-    
-    def show9():
-            label9.config(text = clicked9.get())
-            H_value = clicked9.get()
-            file = open('AAIR_values.txt',"a")
-            file.write("Hysteresis Rate Limit = "+ str(H_value) + " " + "ppm" + "\n")
-            file.close()
-    
-    H_label = Label(AAIR_screen, text="Hysteresis Rate Limit [ppm]:")
-    H_label.pack()
-    options9 = [0,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140,145,150,155,160,165,170,175]
-    global clicked9
-    clicked9 = IntVar(AAIR_screen)
-    clicked9.set(0)
-    drop9 = OptionMenu(AAIR_screen, clicked9, *options9 )
-    drop9.pack()
-    button = Button(AAIR_screen, text = "Update Parameter", command = show9).pack()
-    label9 = Label(AAIR_screen, text = "")
-    label9.pack() 
-    
-    def show10():
-            label10.config(text = clicked10.get())
-            RS_value = clicked10.get()
-            file = open('AAIR_values.txt',"a")
-            file.write("Rate Smoothing = "+ str(RS_value) + " " + "%" + "\n")
-            file.close()
-            
-    RS_label = Label(AAIR_screen, text="Rate Smoothing [%]:", height = "2", width = "300")
-    RS_label.pack()
-    options10 = [0,3,6,9,12,15,18,21,25]
-    global clicked10
-    clicked10 = IntVar(AAIR_screen)
-    clicked10.set(0)
-    drop10 = OptionMenu(AAIR_screen, clicked10, *options10 )
-    drop10.pack()
-    button = Button(AAIR_screen, text = "Update Parameter", command = show10).pack()
-    label10 = Label(AAIR_screen, text = "")
-    label10.pack() 
+
 
     def show11():
         label11.config(text = clicked11.get())
@@ -1746,6 +1590,24 @@ def username_taken():
     Label(username_taken_screen, text="Username Taken").pack()
     Button(username_taken_screen, text="OK", command=delete_username_taken_screen).pack()
 
+# Designing popup for device connected     
+def device_connected():
+    global device_connected_screen
+    device_connected_screen = Toplevel(modes_screen)
+    device_connected_screen.title("Success")
+    device_connected_screen.geometry("250x100")
+    Label(device_connected_screen, text="Device Connected", fg="green").pack()
+    Button(device_connected_screen, text="OK", command=delete_device_connected_screen).pack()
+
+# Designing popup for device disconnected    
+def device_disconnected():
+    global device_disconnected_screen
+    device_disconnected_screen = Toplevel(modes_screen)
+    device_disconnected_screen.title("Success")
+    device_disconnected_screen.geometry("250x100")
+    Label(device_disconnected_screen, text="Device Disconnected", fg="red").pack()
+    Button(device_disconnected_screen, text="OK", command=delete_device_disconnected_screen).pack()
+    
 # Deleting popups
 def delete_login_success():
     login_success_screen.destroy()
@@ -1772,6 +1634,12 @@ def delete_max_users_screen():
     
 def delete_username_taken_screen():
     username_taken_screen.destroy()
+    
+def delete_device_connected_screen():
+    device_connected_screen.destroy()
+    
+def delete_device_disconnected_screen():
+    device_disconnected_screen.destroy()
 
 def delete_diff_device_screen():
     diff_device_screen.destroy()
@@ -1791,3 +1659,10 @@ def main_account_screen():
     main_screen.mainloop()
 
 main_account_screen()
+
+
+# In[ ]:
+
+
+
+
