@@ -8,6 +8,62 @@ from serial.tools import list_ports
 import struct
 import tkinter as tk
 
+global modes_value 
+global VRP_value 
+global VPW_value
+global LRL_value 
+global URL_value
+global ARP_value 
+global VA_value 
+global AA_value
+global RCT_value 
+global RF_value 
+global RT_value 
+global AT_value
+global at_value
+global APW_value 
+global MSR_value
+global VS_value
+global AS_value
+
+#Initial values
+mode_value = 0
+VRP_value = 320
+VPW_value = 1
+LRL_value = 60
+URL_value = 120
+ARP_value = 250
+VA_value = 4.0
+AA_value = 4.0
+RCT_value = 5
+RF_value = 8
+RT_value = 30
+AT_value = "Med"
+at_value = 28
+APW_value = 1
+MSR_value = 120
+VS_value = 2.5
+AS_value = 0.75
+
+def AT_Converter():
+    global at_value
+    if AT_value == "V-Low":
+        at_value = 7
+    elif AT_value == "Low":
+        at_value = 14
+    elif AT_value == "Med-Low":
+        at_value = 21
+    elif AT_value == "Med":
+        at_value = 28
+    elif AT_value == "Med-High":
+        at_value = 35
+    elif AT_value == "High":
+        at_value = 42
+    elif AT_value == "V-High":
+        at_value = 49
+    return at_value
+    print(at_value)
+
 # Designing window for registration
 def register():
     global register_screen
@@ -92,24 +148,24 @@ def modes():
     Button6.pack()
     Button7.pack()
     Button8.pack()
-    
+    '''
     #Set parameters to nominal values
     VRP_value = 320
     VPW_value = 1
     LRL_value = 60
     URL_value = 120
     ARP_value = 250
-    VA_value = 5.0
-    AA_value = 5.0
+    VA_value = 4.0
+    AA_value = 4.0
     RCT_value = 5
     RF_value = 8
     RT_value = 30
-    AT_value = "Med"
+    AT_value = 28 #"Med"
     APW_value = 1
     MSR_value = 120
     VS_value = 2.5
     AS_value = 0.75
-    
+    '''
     # Store parameters in a text file 
     file = open('programmable_parameters.txt',"a")
     file.write("Ventricular Refractory Period = "+ str(VRP_value) + " " + "ms" + "\n")
@@ -180,6 +236,8 @@ def modes():
     def pacemakerConnect():
         if(Connect['text']=='Connect Device'):
             Connect['text']='Disconnect Device'
+            print(at_value)
+            print(AT_value)
             serialConnect()
 
     ###still have some stuff to figure out here (i.e. checking when new device is approached)
@@ -218,12 +276,6 @@ def AOO_param():
     AOO_screen.title("AOO Programmable Parameters")
     AOO_screen.geometry("400x450")
     Label(AOO_screen, text="Review/modify pacing mode paramaters.", bg="pink").pack()
-
-    global mode_value
-    global LRL_value
-    global URL_value
-    global AA_value
-    global APW_value
 
     mode_value = 3
     
@@ -781,9 +833,12 @@ def VOOR_param():
     
     def show6():
         label6.config(text = clicked6.get())
+        global AT_value
         AT_value = clicked6.get()
+        AT_Converter()
+        at_value = AT_Converter()
         file = open('programmable_parameters.txt',"a")
-        file.write("Activity Threshold = "+ (AT_value)  + "\n")
+        file.write("Activity Threshold = "+ str(at_value)  + "\n")
         file.close()
     
     AT_label = Label(VOOR_screen, text="Activity Threshold:")
@@ -972,7 +1027,7 @@ def AOOR_param():
         label6.config(text = clicked6.get())
         AT_value = clicked6.get()
         file = open('programmable_parameters.txt',"a")
-        file.write("Activity Threshold = "+ (AT_value)  + "\n")
+        file.write("Activity Threshold = "+ str(AT_value)  + "\n")
         file.close()
     
     AT_label = Label(AOOR_screen, text="Activity Threshold:")
@@ -1202,7 +1257,7 @@ def VVIR_param():
         label10.config(text = clicked10.get())
         AT_value = clicked10.get()
         file = open('programmable_parameters.txt',"a")
-        file.write("Activity Threshold = "+ (AT_value)  + "\n")
+        file.write("Activity Threshold = "+ str(AT_value)  + "\n")
         file.close()
     
     AT_label = Label(VVIR_screen, text="Activity Threshold:")
@@ -1441,7 +1496,7 @@ def AAIR_param():
         label11.config(text = clicked11.get())
         AT_value = clicked11.get()
         file = open('programmable_parameters.txt',"a")
-        file.write("Activity Threshold = "+ (AT_value)  + "\n")
+        file.write("Activity Threshold = "+ str(AT_value)  + "\n")
         file.close()
     
     AT_label = Label(AAIR_screen, text="Activity Threshold:")
