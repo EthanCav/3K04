@@ -1677,12 +1677,12 @@ def AAIR_param():
     
 def serialCommunication():
 
-        ports = list(serial.tools.list_ports.comports())
-        K64F_HWID = "1366:1015"
-        for i in ports:
-            if K64F_HWID in i.hwid:
-                    port = i.device
-        print("port: ", port)
+    ports = list(serial.tools.list_ports.comports())
+    K64F_HWID = "1366:1015"
+    for i in ports:
+        if K64F_HWID in i.hwid:
+                port = i.device
+    print("port: ", port)
 
     Start = b'\x16'
     SYNC = b'\x33' 
