@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[9]:
+# In[2]:
 
 
 #import modules
@@ -113,8 +113,8 @@ def modes():
     AT_value = "Med"
     APW_value = 1
     MSR_value = 120
-    VS_value = 2.5
-    AS_value = 0.75
+    VS_value = 3.5
+    AS_value = 3.5
     
     # Store parameters in a text file 
     file = open('programmable_parameters.txt',"a")
@@ -131,8 +131,8 @@ def modes():
     file.write("Activity Threshold = "+ (AT_value)  + "\n")
     file.write("Atrial Pulse Width = "+ str(APW_value) + " " + "ms" + "\n")
     file.write("MSR = "+ str(MSR_value) + " " + "ppm" + "\n")
-    file.write("Ventricular Sensitivity = "+ str(VS_value) + " " + "mV" + "\n")
-    file.write("Atrial Sensitivity = "+ str(AS_value) + " " + "mV" + "\n")    
+    file.write("Ventricular Sensitivity = "+ str(VS_value) + " " + "V" + "\n")
+    file.write("Atrial Sensitivity = "+ str(AS_value) + " " + "V" + "\n")    
     file.close()
     
     
@@ -522,16 +522,16 @@ def AAI_param():
             label6.config(text = clicked6.get())
             AS_value = clicked6.get()
             file = open('programmable_parameters.txt',"a")
-            file.write("Atrial Sensitivity = "+ str(AS_value) + " " + "mV" + "\n")
+            file.write("Atrial Sensitivity = "+ str(AS_value) + " " + "V" + "\n")
             file.close()
     
 
-    AS_label = Label(AAI_screen, text="Atrial Sensitivity  [mV]:")
+    AS_label = Label(AAI_screen, text="Atrial Sensitivity  [V]:")
     AS_label.pack()
-    options6 = [0.25,0.5,0.75,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0,7.5,8.0,8.5,9.0,9.5,10.0]
+    options6 = [0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.3,3.4,3.5,3.6,3.7,3.8,3.9,4.0,4.1,4.2,4.3,4.4,4.5,4.6,4.7,4.8,4.9,5.0]
     global clicked6
     clicked6 = DoubleVar(AAI_screen)
-    clicked6.set(0.5)
+    clicked6.set(3.5)
     drop6 = OptionMenu(AAI_screen, clicked6, *options6 )
     drop6.pack()    
     button = Button(AAI_screen, text = "Update Parameter", command = show6).pack()
@@ -658,16 +658,16 @@ def VVI_param():
         label6.config(text = clicked6.get())
         VS_value = clicked6.get()
         file = open('programmable_parameters.txt',"a")
-        file.write("Ventricular Sensitivity = "+ str(VS_value) + " " + "mV" + "\n")
+        file.write("Ventricular Sensitivity = "+ str(VS_value) + " " + "V" + "\n")
         file.close()
     
 
-    VS_label = Label(VVI_screen, text="Ventricular Sensitivity  [mV]:")
+    VS_label = Label(VVI_screen, text="Ventricular Sensitivity  [V]:")
     VS_label.pack()
     options6 = [0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.3,3.4,3.5,3.6,3.7,3.8,3.9,4.0,4.1,4.2,4.3,4.4,4.5,4.6,4.7,4.8,4.9,5.0]
     global clicked6
     clicked6 = DoubleVar(VVI_screen)
-    clicked6.set(2.5)
+    clicked6.set(3.5)
     drop6 = OptionMenu(VVI_screen, clicked6, *options6 )
     drop6.pack()    
     button = Button(VVI_screen, text = "Update Parameter", command = show6).pack()
@@ -1166,16 +1166,16 @@ def VVIR_param():
         label6.config(text = clicked6.get())
         VS_value = clicked6.get()
         file = open('programmable_parameters.txt',"a")
-        file.write("Ventricular Sensitivity = "+ str(VS_value) + " " + "mV" + "\n")
+        file.write("Ventricular Sensitivity = "+ str(VS_value) + " " + "V" + "\n")
         file.close()
     
 
-    VS_label = Label(VVIR_screen, text="Ventricular Sensitivity  [mV]:")
+    VS_label = Label(VVIR_screen, text="Ventricular Sensitivity  [V]:")
     VS_label.pack()
     options6 = [0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.3,3.4,3.5,3.6,3.7,3.8,3.9,4.0,4.1,4.2,4.3,4.4,4.5,4.6,4.7,4.8,4.9,5.0]
     global clicked6
     clicked6 = DoubleVar(VVIR_screen)
-    clicked6.set(2.5)
+    clicked6.set(3.5)
     drop6 = OptionMenu(VVIR_screen, clicked6, *options6 )
     drop6.pack()    
     button = Button(VVIR_screen, text = "Update Parameter", command = show6).pack()
@@ -1405,16 +1405,16 @@ def AAIR_param():
         label6.config(text = clicked6.get())
         AS_value = clicked6.get()
         file = open('programmable_parameters.txt',"a")
-        file.write("Atrial Sensitivity = "+ str(AS_value) + " " + "mV" + "\n")
+        file.write("Atrial Sensitivity = "+ str(AS_value) + " " + "V" + "\n")
         file.close()
     
 
-    AS_label = Label(AAIR_screen, text="Atrial Sensitivity  [mV]:")
+    AS_label = Label(AAIR_screen, text="Atrial Sensitivity  [V]:")
     AS_label.pack()
     options6 = [0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.3,3.4,3.5,3.6,3.7,3.8,3.9,4.0,4.1,4.2,4.3,4.4,4.5,4.6,4.7,4.8,4.9,5.0]
     global clicked6
     clicked6 = DoubleVar(AAIR_screen)
-    clicked6.set(0.75)
+    clicked6.set(3.5)
     drop6 = OptionMenu(AAIR_screen, clicked6, *options6 )
     drop6.pack()    
     button = Button(AAIR_screen, text = "Update Parameter", command = show6).pack()
@@ -1783,12 +1783,6 @@ def main_account_screen():
     main_screen.mainloop()
 
 main_account_screen()
-
-
-# In[ ]:
-
-
-
 
 
 # In[ ]:
