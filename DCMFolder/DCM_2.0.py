@@ -207,8 +207,6 @@ def modes():
         ports = list(serial.tools.list_ports.comports())
         K64F_HWID = "1366:1015"
         for i in ports:
-            print(i.hwid)
-
             if K64F_HWID in i.hwid:
                     port = i.device
         print("port: ", port)
@@ -262,13 +260,20 @@ def modes():
 
 ###Check for a different device
     def check_device():
+            ports = list(serial.tools.list_ports.comports())
+            K64F_HWID = "1366:1015"
+            for i in ports:
+                if K64F_HWID in i.hwid:
+                        port = i.device
+            print("port: ", port)
+
             Start = b'\x16'
             SYNC = b'\x33' 
             Param_set = b'\x22'
             ECG = b'\x44'
 
             VRP_en = struct.pack("d", VRP_value)
-            VentWidth_en = struct.pack("h", VWP_value) 
+            VentWidth_en = struct.pack("h", VPW_value) 
             URL_en = struct.pack("d", URL_value)
             LRL_en = struct.pack("d", LRL_value)
             ARP_en = struct.pack("d", ARP_value)
@@ -278,7 +283,7 @@ def modes():
             RecoveryTime_en = struct.pack("d", RCT_value)
             ResponseFactor_en = struct.pack("d", RF_value)
             ReactionTime_en = struct.pack("d", RT_value)
-            ActivityThreshold_en = struct.pack("d", AT_value)
+            ActivityThreshold_en = struct.pack("d", at_value)
             AtrWidth_en = struct.pack("h", APW_value)
             MSR_en = struct.pack("d", MSR_value)
             VentSensitivity_en = struct.pack("d", VS_value)
@@ -308,10 +313,10 @@ def modes():
                 VentSensitivity_rev = struct.unpack("d", data[94:102])[0]
                 AtrSensitivity_rev = struct.unpack("d", data[102:110])[0]
 
-               condition = VRP_rev == VRP_en and VentWidth_rev == VentWidth_en and URL_rev == URL_en and LRL_rev == LRL_en and ARP_rev == ARP_en and mode_rev == mode_en and Vamplitude_rev == Vamplitude_en and AAmplitude_rev == AAmplitude_en and RecoveryTime_rev == RecoveryTime_en and ResponseFactor_rev == ResponseFactor_en and ReactionTime_rev == ReactionTime_en and ActivityThreshold_rev == ActivityThreshold_en and AtrWidth_rev == AtrWidth_en and MSR_rev == MSR_en and VentSensitivity_rev == VentSensitivity_en and AtrSensitivity_rev == AtrSensitivity_en
+                condition = VRP_rev == VRP_en and VentWidth_rev == VentWidth_en and URL_rev == URL_en and LRL_rev == LRL_en and ARP_rev == ARP_en and mode_rev == mode_en and Vamplitude_rev == Vamplitude_en and AAmplitude_rev == AAmplitude_en and RecoveryTime_rev == RecoveryTime_en and ResponseFactor_rev == ResponseFactor_en and ReactionTime_rev == ReactionTime_en and ActivityThreshold_rev == ActivityThreshold_en and AtrWidth_rev == AtrWidth_en and MSR_rev == MSR_en and VentSensitivity_rev == VentSensitivity_en and AtrSensitivity_rev == AtrSensitivity_en
 
-               if condition != True:
-                       diff_device()
+            if condition != True:
+                diff_device()
 
 ############################################################################################       
 
