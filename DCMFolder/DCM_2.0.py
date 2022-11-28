@@ -219,7 +219,7 @@ def modes():
 # Implementing Programmable Parameters Screens
 def AOO_param():
     global AOO_screen
-    mode = 3
+    mode_value = 3
     AOO_screen = Toplevel(modes_screen)
     AOO_screen.title("AOO Programmable Parameters")
     AOO_screen.geometry("400x450")
@@ -310,7 +310,7 @@ def AOO_param():
 
 def VOO_param():
     global VOO_screen
-    mode = 1
+    mode_value = 1
     VOO_screen = Toplevel(modes_screen)
     VOO_screen.title("VOO Programmable Parameters")
     VOO_screen.geometry("400x450")
@@ -399,7 +399,7 @@ def VOO_param():
 
 def AAI_param():
     global AAI_screen
-    mode = 4
+    mode_value = 4
     AAI_screen = Toplevel(modes_screen)
     AAI_screen.title("AAI Programmable Parameters")
     AAI_screen.geometry("400x520")
@@ -526,7 +526,7 @@ def AAI_param():
     label6 = Label(AAI_screen, text = "")
     label6.pack() 
     
-    Push = Button(AAI_screen, text = "Push to Pacemaker") #command =  serial() call serial communcation code
+    Push = Button(AAI_screen, text = "Push to Pacemaker") #command =  serial() call serial communication code
     Push.pack()
     
 
@@ -534,7 +534,7 @@ def AAI_param():
 
 def VVI_param():
     global VVI_screen
-    mode = 2
+    mode_value = 2
     VVI_screen = Toplevel(modes_screen)
     VVI_screen.title("VVI Programmable Parameters")
     VVI_screen.geometry("400x520")
@@ -668,7 +668,7 @@ def VVI_param():
 
 def VOOR_param():
     global VOOR_screen
-    mode = 5
+    mode_value = 5
     VOOR_screen = Toplevel(modes_screen)
     VOOR_screen.title("VOOR Programmable Parameters")
     VOOR_screen.geometry("400x450")
@@ -856,7 +856,7 @@ def VOOR_param():
 
 def AOOR_param():
     global AOOR_screen
-    mode = 7
+    mode_value = 7
     AOOR_screen = Toplevel(modes_screen)
     AOOR_screen.title("AOOR Programmable Parameters")
     AOOR_screen.geometry("400x450")
@@ -1042,7 +1042,7 @@ def AOOR_param():
 
 def VVIR_param():
     global VVIR_screen
-    mode = 6
+    mode_value = 6
     VVIR_screen = Toplevel(modes_screen)
     VVIR_screen.title("VVIR Programmable Parameters")
     VVIR_screen.geometry("400x450")
@@ -1280,7 +1280,7 @@ def VVIR_param():
 
 def AAIR_param():
     global AAIR_screen
-    mode = 8
+    mode_value = 8
     AAIR_screen = Toplevel(modes_screen)
     AAIR_screen.title("AAIR Programmable Parameters")
     AAIR_screen.geometry("400x450")
