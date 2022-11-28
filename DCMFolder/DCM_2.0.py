@@ -263,7 +263,7 @@ def modes():
     #For Assignment 2, we will make adjustments to allow for serial communication between the DCM and the pacemaker
     def check_device():
         original_device = 1 #change to properties of pacemakers for assignment 2
-        new_device = 1
+        new_device = 2
         
         if new_device != original_device:
             diff_device()
@@ -279,15 +279,12 @@ def AOO_param():
     Label(AOO_screen, text="Review/modify pacing mode paramaters.", bg="pink").pack()
 
     global mode_value
-    global LRL_value
-    global URL_value
-    global AA_value
-    global APW_value
 
     mode_value = 3
     
 #drop down menus and sliders for value selection for programmable parameters
     def show():
+        global LRL_value
         if slider.get() < clicked2.get():
             label.config(text = slider.get())
             LRL_value = slider.get()
@@ -306,6 +303,7 @@ def AOO_param():
     label.pack()
     
     def show2():
+        global URL_value
         if clicked2.get() > slider.get():
             label2.config(text = clicked2.get())
             URL_value = clicked2.get()
@@ -326,6 +324,7 @@ def AOO_param():
     label2.pack()
 
     def show3():
+        global AA_value
         label3.config(text = clicked3.get())
         AA_value = clicked3.get()
         file = open('programmable_parameters.txt',"a")
@@ -345,6 +344,7 @@ def AOO_param():
     label3.pack()
 
     def show4():
+        global APW_value
         label4.config(text = clicked4.get())
         APW_value = clicked4.get()
         file = open('programmable_parameters.txt',"a")
@@ -377,15 +377,12 @@ def VOO_param():
     Label(VOO_screen, text="Review/modify pacing mode paramaters.", bg="pink").pack()
 
     global mode_value
-    global LRL_value
-    global URL_value
-    global VA_value
-    global VPW_value
     
     mode_value = 1
 
     #drop down menus and sliders for value selection for programmable parameters
     def show():
+        global LRL_value
         if slider.get() < clicked2.get():
             label.config(text = slider.get())
             LRL_value = slider.get()
@@ -403,6 +400,7 @@ def VOO_param():
     label.pack()
     
     def show2():
+        global URL_value
         if clicked2.get() > slider.get():
             label2.config(text = clicked2.get())
             URL_value = clicked2.get()
@@ -424,6 +422,7 @@ def VOO_param():
 
     
     def show3():
+        global VA_value
         label3.config(text = clicked3.get())
         VA_value = clicked3.get()
         file = open('programmable_parameters.txt',"a")
@@ -444,6 +443,7 @@ def VOO_param():
 
 
     def show4():
+        global VPW_value
         label4.config(text = clicked4.get())
         VPW_value = clicked4.get()
         file = open('programmable_parameters.txt',"a")
@@ -475,17 +475,12 @@ def AAI_param():
     Label(AAI_screen, text="Review/modify pacing mode paramaters.", bg="pink").pack()
 
     global mode_value
-    global LRL_value
-    global URL_value
-    global AA_value
-    global APW_value
-    global ARP_value
-    global AS_value
-    
+
     mode_value = 4
     
     #drop down menus and sliders for value selection for programmable parameters
     def show():
+        global LRL_value
         if slider.get() < clicked2.get():
             label.config(text = slider.get())
             LRL_value = slider.get()
@@ -504,6 +499,7 @@ def AAI_param():
 
     
     def show2():
+        global URL_value
         if clicked2.get() > slider.get():
             label2.config(text = clicked2.get())
             URL_value = clicked2.get()
@@ -525,6 +521,7 @@ def AAI_param():
 
     
     def show3():
+        global AA_value
         label3.config(text = clicked3.get())
         AA_value = clicked3.get()
         file = open('programmable_parameters.txt',"a")
@@ -544,6 +541,7 @@ def AAI_param():
     label3.pack()
 
     def show4():
+        global APW_value
         label4.config(text = clicked4.get())
         APW_value = clicked4.get()
         file = open('programmable_parameters.txt',"a")
@@ -565,6 +563,7 @@ def AAI_param():
 
 
     def show5():
+        global ARP_value
         if clicked5.get() <= (60000/slider.get()):
             label5.config(text = clicked5.get())
             ARP_value = clicked5.get()
@@ -586,6 +585,7 @@ def AAI_param():
     label5.pack()
     
     def show6():
+            global AS_value
             label6.config(text = clicked6.get())
             AS_value = clicked6.get()
             file = open('programmable_parameters.txt',"a")
@@ -618,16 +618,12 @@ def VVI_param():
     Label(VVI_screen, text="Review/modify pacing mode paramaters.", bg="pink").pack()
 
     global mode_value
-    global LRL_value
-    global URL_value
-    global VA_value
-    global VPW_value
-    global VS_value
 
     mode_value = 2
 
     #drop down menus and sliders for value selection for programmable parameters
     def show():
+        global LRL_value
         if slider.get() < clicked2.get():
             label.config(text = slider.get())
             LRL_value = slider.get()
@@ -646,6 +642,7 @@ def VVI_param():
 
     
     def show2():
+        global URL_value
         if clicked2.get() > slider.get():
             label2.config(text = clicked2.get())
             URL_value = clicked2.get()
@@ -667,6 +664,7 @@ def VVI_param():
 
     
     def show3():
+        global VA_value
         label3.config(text = clicked3.get())
         VA_value = clicked3.get()
         file = open('programmable_parameters.txt',"a")
@@ -687,6 +685,7 @@ def VVI_param():
 
 
     def show4():
+        global VPW_value
         label4.config(text = clicked4.get())
         VPW_value = clicked4.get()
         file = open('programmable_parameters.txt',"a")
@@ -707,6 +706,7 @@ def VVI_param():
 
         
     def show5():
+        global VRP_value
         if clicked5.get() <= (60000/slider.get()):
             label5.config(text = clicked5.get())
             VRP_value = clicked5.get()
@@ -729,6 +729,7 @@ def VVI_param():
     
     
     def show6():
+        global VS_value
         label6.config(text = clicked6.get())
         VS_value = clicked6.get()
         file = open('programmable_parameters.txt',"a")
@@ -761,19 +762,12 @@ def VOOR_param():
     Label(VOOR_screen, text="Review/modify pacing mode paramaters.", bg="pink").pack()
 
     global mode_value
-    global LRL_value
-    global URL_value
-    global MSR_value
-    global VA_value
-    global VPW_value
-    global RCT_value
-    global RF_value
-    global RT_value
 
     mode_value = 5
 
     #drop down menus and sliders for value selection for programmable parameters
     def show():
+        global LRL_value
         if slider.get() < clicked2.get():
             label.config(text = slider.get())
             LRL_value = slider.get()
@@ -792,6 +786,7 @@ def VOOR_param():
 
     
     def show2():
+        global URL_value
         if clicked2.get() > slider.get():
             label2.config(text = clicked2.get())
             URL_value = clicked2.get()
@@ -813,6 +808,7 @@ def VOOR_param():
     
     
     def show3():
+        global MSR_value
         label3.config(text = clicked3.get())
         MSR_value = clicked3.get()
         file = open('programmable_parameters.txt',"a")
@@ -832,6 +828,7 @@ def VOOR_param():
     label3.pack()
     
     def show4():
+        global VA_value
         label4.config(text = clicked4.get())
         VA_value = clicked4.get()
         file = open('programmable_parameters.txt',"a")
@@ -851,6 +848,7 @@ def VOOR_param():
     label4.pack()
     
     def show5():
+        global VPW_value
         label5.config(text = clicked5.get())
         VPW_value = clicked5.get()
         file = open('programmable_parameters.txt',"a")
@@ -892,6 +890,7 @@ def VOOR_param():
     label6.pack()
      
     def show7():
+        global RT_value
         label7.config(text = clicked7.get())
         RT_value = clicked7.get()
         file = open('programmable_parameters.txt',"a")
@@ -911,6 +910,7 @@ def VOOR_param():
     label7.pack()
     
     def show8():
+        global RF_value
         label8.config(text = clicked8.get())
         RF_value = clicked8.get()
         file = open('programmable_parameters.txt',"a")
@@ -930,6 +930,7 @@ def VOOR_param():
     label8.pack()
     
     def show9():
+        global RCT_value
         label9.config(text = clicked9.get())
         RCT_value = clicked9.get()
         file = open('programmable_parameters.txt',"a")
@@ -1164,22 +1165,12 @@ def VVIR_param():
     Label(VVIR_screen, text="Review/modify pacing mode paramaters.", bg="pink").pack()
 
     global mode_value
-    global LRL_value
-    global URL_value
-    global MSR_value
-    global VA_value
-    global VPW_value
-    global VS_value
-    global VRP_value
-    global AT_value
-    global RCT_value
-    global RF_value
-    global RT_value 
 
     mode_value = 6
 
     #drop down menus and sliders for value selection for programmable parameters
     def show():
+        global LRL_value
         if slider.get() < clicked2.get():
             label.config(text = slider.get())
             LRL_value = slider.get()
@@ -1198,6 +1189,7 @@ def VVIR_param():
 
     
     def show2():
+        global URL_value
         if clicked2.get() > slider.get():
             label2.config(text = clicked2.get())
             URL_value = clicked2.get()
@@ -1219,6 +1211,7 @@ def VVIR_param():
     label2.pack()
     
     def show3():
+        global MSR_value
         label3.config(text = clicked3.get())
         MSR_value = clicked3.get()
         file = open('programmable_parameters.txt',"a")
@@ -1238,6 +1231,7 @@ def VVIR_param():
     label3.pack()
     
     def show4():
+        global VA_value
         label4.config(text = clicked4.get())
         VA_value = clicked4.get()
         file = open('programmable_parameters.txt',"a")
@@ -1257,6 +1251,7 @@ def VVIR_param():
     label4.pack()
     
     def show5():
+        global VPW_value
         label5.config(text = clicked5.get())
         VPW_value = clicked5.get()
         file = open('programmable_parameters.txt',"a")
@@ -1276,6 +1271,7 @@ def VVIR_param():
     label5.pack()
     
     def show6():
+        global VS_value
         label6.config(text = clicked6.get())
         VS_value = clicked6.get()
         file = open('programmable_parameters.txt',"a")
@@ -1296,6 +1292,7 @@ def VVIR_param():
     label6.pack()
     
     def show7():
+        global VRP_value
         if clicked7.get() <= (60000/slider.get()):
             label7.config(text = clicked7.get())
             VRP_value = clicked7.get()
@@ -1340,6 +1337,7 @@ def VVIR_param():
     label10.pack()
      
     def show11():
+        global RT_value
         label11.config(text = clicked11.get())
         RT_value = clicked11.get()
         file = open('programmable_parameters.txt',"a")
@@ -1359,6 +1357,7 @@ def VVIR_param():
     label11.pack()
     
     def show12():
+        global RF_value
         label12.config(text = clicked12.get())
         RF_value = clicked12.get()
         file = open('programmable_parameters.txt',"a")
@@ -1383,6 +1382,7 @@ def VVIR_param():
     label12.place(x=400, y= 95)
     
     def show13():
+        global RCT_value
         label13.config(text = clicked13.get())
         RCT_value = clicked13.get()
         file = open('programmable_parameters.txt',"a")
@@ -1420,15 +1420,11 @@ def AAIR_param():
     Label(AAIR_screen, text="Review/modify pacing mode paramaters.", bg="pink").pack()
 
     global mode_value
-    global LRL_value
-    global URL_value
-    global MSR_value
-    global AA_value
-    global APW_value
-    global AS_value
-    global ARP_value
-    global AT_value
-    global RCT_value
+    
+
+    
+    
+
     global RF_value
     global RT_value 
 
@@ -1436,6 +1432,7 @@ def AAIR_param():
 
     #drop down menus and sliders for value selection for programmable parameters
     def show():
+        global LRL_value
         if slider.get() < clicked2.get():
             label.config(text = slider.get())
             LRL_value = slider.get()
@@ -1454,6 +1451,7 @@ def AAIR_param():
 
     
     def show2():
+        global URL_value
         if clicked2.get() > slider.get():
             label2.config(text = clicked2.get())
             URL_value = clicked2.get()
@@ -1474,6 +1472,7 @@ def AAIR_param():
     label2.pack()
     
     def show3():
+        global MSR_value
         label3.config(text = clicked3.get())
         MSR_value = clicked3.get()
         file = open('programmable_parameters.txt',"a")
@@ -1493,6 +1492,7 @@ def AAIR_param():
     label3.pack()
     
     def show4():
+        global AA_value
         label4.config(text = clicked4.get())
         AA_value = clicked4.get()
         file = open('programmable_parameters.txt',"a")
@@ -1512,6 +1512,7 @@ def AAIR_param():
     label4.pack()
     
     def show5():
+        global APW_value
         label5.config(text = clicked5.get())
         APW_value = clicked5.get()
         file = open('programmable_parameters.txt',"a")
@@ -1531,6 +1532,7 @@ def AAIR_param():
     label5.pack()
     
     def show6():
+        global AS_value
         label6.config(text = clicked6.get())
         AS_value = clicked6.get()
         file = open('programmable_parameters.txt',"a")
@@ -1551,6 +1553,7 @@ def AAIR_param():
     label6.pack()
     
     def show7():
+        global ARP_value
         if clicked7.get() <= (60000/slider.get()):
             label7.config(text = clicked7.get())
             ARP_value = clicked7.get()
@@ -1595,6 +1598,7 @@ def AAIR_param():
     label11.pack()
      
     def show12():
+        global RT_value
         label12.config(text = clicked12.get())
         RT_value = clicked12.get()
         file = open('programmable_parameters.txt',"a")
@@ -1614,6 +1618,7 @@ def AAIR_param():
     label12.pack()
     
     def show13():
+        global RF_value
         label13.config(text = clicked13.get())
         RF_value = clicked13.get()
         file = open('programmable_parameters.txt',"a")
@@ -1638,6 +1643,7 @@ def AAIR_param():
     label13.place(x = 400,y = 95)
     
     def show14():
+        global RCT_value
         label14.config(text = clicked14.get())
         RCT_value = clicked14.get()
         file = open('programmable_parameters.txt',"a")
@@ -1670,6 +1676,14 @@ def AAIR_param():
     #Set, store, transmit, and verify programmable parameter data is stored correctly on Pacemaker
     
 def serialCommunication():
+
+        ports = list(serial.tools.list_ports.comports())
+        K64F_HWID = "1366:1015"
+        for i in ports:
+            if K64F_HWID in i.hwid:
+                    port = i.device
+        print("port: ", port)
+
     Start = b'\x16'
     SYNC = b'\x33' 
     Param_set = b'\x22'
@@ -1678,7 +1692,7 @@ def serialCommunication():
     mode_reset = struct.pack("h", 0)
 
     VRP_en = struct.pack("d", VRP_value)
-    VentWidth_en = struct.pack("h", VWP_value) 
+    VentWidth_en = struct.pack("h", VPW_value) 
     URL_en = struct.pack("d", URL_value)
     LRL_en = struct.pack("d", LRL_value)
     ARP_en = struct.pack("d", ARP_value)
@@ -1688,7 +1702,7 @@ def serialCommunication():
     RecoveryTime_en = struct.pack("d", RCT_value)
     ResponseFactor_en = struct.pack("d", RF_value)
     ReactionTime_en = struct.pack("d", RT_value)
-    ActivityThreshold_en = struct.pack("d", AT_value)
+    ActivityThreshold_en = struct.pack("d", at_value)
     AtrWidth_en = struct.pack("h", APW_value)
     MSR_en = struct.pack("d", MSR_value)
     VentSensitivity_en = struct.pack("d", VS_value)
@@ -1697,7 +1711,7 @@ def serialCommunication():
     Signal_reset = Start + Param_set + VRP_en + VentWidth_en + URL_en + LRL_en + ARP_en + mode_reset + VAmplitude_en + AAmplitude_en + RecoveryTime_en + ResponseFactor_en + ReactionTime_en + ActivityThreshold_en + AtrWidth_en  + MSR_en + VentSensitivity_en + AtrSensitivity_en
     Signal_echo_reset = Start + SYNC + VRP_en + VentWidth_en + URL_en + LRL_en + ARP_en + mode_reset + VAmplitude_en + AAmplitude_en + RecoveryTime_en + ResponseFactor_en + ReactionTime_en + ActivityThreshold_en + AtrWidth_en  + MSR_en + VentSensitivity_en + AtrSensitivity_en
 
-   with serial.Serial(port, 115200) as pacemaker:
+    with serial.Serial(port, 115200) as pacemaker:
         pacemaker.write(Signal_reset)
 
     with serial.Serial(port, 115200) as pacemaker:
@@ -1753,7 +1767,7 @@ def serialCommunication():
         AtrSensitivity_rev = struct.unpack("d", data[102:110])[0]
 
 
-    print("From the board:")
+    print("\nFrom the board:")
     print("VRP_rev = ",VRP_rev)
     print("VentWidth_rev = ", VentWidth_rev)
     print("URL_rev = ", URL_rev)
