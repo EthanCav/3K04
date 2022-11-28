@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[8]:
-
-
 #import modules
 from tkinter import *
 import tkinter.messagebox
@@ -136,7 +130,6 @@ def modes():
     file.close()
     
     
-    
     def logout():
         logout_success()
         
@@ -214,7 +207,8 @@ def modes():
         
         if new_device != original_device:
             diff_device()
-            
+
+############################################################################################       
 
 # Implementing Programmable Parameters Screens
 def AOO_param():
@@ -224,6 +218,12 @@ def AOO_param():
     AOO_screen.title("AOO Programmable Parameters")
     AOO_screen.geometry("400x450")
     Label(AOO_screen, text="Review/modify pacing mode paramaters.", bg="pink").pack()
+
+    global mode_value
+    global LRL_value
+    global URL_value
+    global AA_value
+    global APW_value
     
 #drop down menus and sliders for value selection for programmable parameters
     def show():
@@ -306,7 +306,7 @@ def AOO_param():
     Push = Button(AOO_screen, text = "Push to Pacemaker") #command =  serial() call serial communcation code
     Push.pack()
     
-
+############################################################################################
 
 def VOO_param():
     global VOO_screen
@@ -315,6 +315,12 @@ def VOO_param():
     VOO_screen.title("VOO Programmable Parameters")
     VOO_screen.geometry("400x450")
     Label(VOO_screen, text="Review/modify pacing mode paramaters.", bg="pink").pack()
+
+    global mode_value
+    global LRL_value
+    global URL_value
+    global VA_value
+    global VPW_value
 
     #drop down menus and sliders for value selection for programmable parameters
     def show():
@@ -396,7 +402,9 @@ def VOO_param():
 
     Push = Button(VOO_screen, text = "Push to Pacemaker") #command =  serial() call serial communcation code
     Push.pack()
-
+    
+############################################################################################
+    
 def AAI_param():
     global AAI_screen
     mode_value = 4
@@ -404,6 +412,15 @@ def AAI_param():
     AAI_screen.title("AAI Programmable Parameters")
     AAI_screen.geometry("400x520")
     Label(AAI_screen, text="Review/modify pacing mode paramaters.", bg="pink").pack()
+
+    global mode_value
+    global LRL_value
+    global URL_value
+    global AA_value
+    global APW_value
+    global ARP_value
+    global AS_value
+
     
     #drop down menus and sliders for value selection for programmable parameters
     def show():
@@ -529,8 +546,7 @@ def AAI_param():
     Push = Button(AAI_screen, text = "Push to Pacemaker") #command =  serial() call serial communication code
     Push.pack()
     
-
-    
+############################################################################################    
 
 def VVI_param():
     global VVI_screen
@@ -539,6 +555,13 @@ def VVI_param():
     VVI_screen.title("VVI Programmable Parameters")
     VVI_screen.geometry("400x520")
     Label(VVI_screen, text="Review/modify pacing mode paramaters.", bg="pink").pack()
+
+    global mode_value
+    global LRL_value
+    global URL_value
+    global VA_value
+    global VPW_value
+    global VS_value
 
     #drop down menus and sliders for value selection for programmable parameters
     def show():
@@ -665,6 +688,7 @@ def VVI_param():
     Push = Button(VVI_screen, text = "Push to Pacemaker") #command =  serial() call serial communcation code
     Push.pack()
 
+############################################################################################
 
 def VOOR_param():
     global VOOR_screen
@@ -673,6 +697,17 @@ def VOOR_param():
     VOOR_screen.title("VOOR Programmable Parameters")
     VOOR_screen.geometry("400x450")
     Label(VOOR_screen, text="Review/modify pacing mode paramaters.", bg="pink").pack()
+
+    global mode_value
+    global LRL_value
+    global URL_value
+    global MSR_value
+    global VA_value
+    global VPW_value
+    global AT_value
+    global RCT_value
+    global RF_value
+    global RT_value
 
     #drop down menus and sliders for value selection for programmable parameters
     def show():
@@ -851,8 +886,7 @@ def VOOR_param():
     Push.pack()
     Push.place(x = 400, y =5)
     
-
-
+############################################################################################
 
 def AOOR_param():
     global AOOR_screen
@@ -861,6 +895,17 @@ def AOOR_param():
     AOOR_screen.title("AOOR Programmable Parameters")
     AOOR_screen.geometry("400x450")
     Label(AOOR_screen, text="Review/modify pacing mode paramaters.", bg="pink").pack()
+
+    global mode_value
+    global LRL_value
+    global URL_value
+    global MSR_value
+    global AA_value
+    global APW_value
+    global AT_value
+    global RCT_value
+    global RF_value
+    global RT_value
 
     #drop down menus and sliders for value selection for programmable parameters
     def show():
@@ -1040,6 +1085,8 @@ def AOOR_param():
     Push.pack()
     Push.place(x = 400, y =5)
 
+############################################################################################
+
 def VVIR_param():
     global VVIR_screen
     mode_value = 6
@@ -1047,6 +1094,19 @@ def VVIR_param():
     VVIR_screen.title("VVIR Programmable Parameters")
     VVIR_screen.geometry("400x450")
     Label(VVIR_screen, text="Review/modify pacing mode paramaters.", bg="pink").pack()
+
+    global mode_value
+    global LRL_value
+    global URL_value
+    global MSR_value
+    global VA_value
+    global VPW_value
+    global VS_value
+    global VRP_value
+    global AT_value
+    global RCT_value
+    global RF_value
+    global RT_value   
 
     #drop down menus and sliders for value selection for programmable parameters
     def show():
@@ -1276,7 +1336,8 @@ def VVIR_param():
     Push = Button(VVIR_screen, text = "Push to Pacemaker") #command =  serial() call serial communcation code
     Push.pack()
     Push.place(x = 400, y =210)
-    
+
+############################################################################################
 
 def AAIR_param():
     global AAIR_screen
@@ -1285,6 +1346,19 @@ def AAIR_param():
     AAIR_screen.title("AAIR Programmable Parameters")
     AAIR_screen.geometry("400x450")
     Label(AAIR_screen, text="Review/modify pacing mode paramaters.", bg="pink").pack()
+
+    global mode_value
+    global LRL_value
+    global URL_value
+    global MSR_value
+    global AA_value
+    global APW_value
+    global AS_value
+    global ARP_value
+    global AT_value
+    global RCT_value
+    global RF_value
+    global RT_value   
 
     #drop down menus and sliders for value selection for programmable parameters
     def show():
@@ -1424,7 +1498,6 @@ def AAIR_param():
     label7.pack()
     
 
-
     def show11():
         label11.config(text = clicked11.get())
         AT_value = clicked11.get()
@@ -1515,6 +1588,8 @@ def AAIR_param():
     Push.pack()
     Push.place(x = 400, y =210)
 
+############################################################################################
+
 # Implementing event on register button
 def register_user():
 
@@ -1583,6 +1658,7 @@ def login_verify():
         else:
             invalid_login()
 
+############################################################################################
 
 # Designing popup for login success
 def login_sucess():
@@ -1638,7 +1714,9 @@ def username_taken():
     username_taken_screen.geometry("250x100")
     Label(username_taken_screen, text="Username Taken").pack()
     Button(username_taken_screen, text="OK", command=delete_username_taken_screen).pack()
-    
+
+############################################################################################
+
 # Deleting popups
 def delete_login_success():
     login_success_screen.destroy()
@@ -1669,6 +1747,8 @@ def delete_username_taken_screen():
 def delete_diff_device_screen():
     diff_device_screen.destroy()
 
+############################################################################################
+
 # Designing Main(first) window
 def main_account_screen():
     global main_screen
@@ -1684,16 +1764,3 @@ def main_account_screen():
     main_screen.mainloop()
 
 main_account_screen()
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
