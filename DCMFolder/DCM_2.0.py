@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[2]:
-
-
 #import modules
 from tkinter import *
 import tkinter.messagebox
@@ -13,6 +7,7 @@ import serial
 from serial.tools import list_ports
 import struct
 import tkinter as tk
+import time
 
 global modes_value 
 global VRP_value 
@@ -32,7 +27,7 @@ global MSR_value
 global VS_value
 global AS_value
 
-#Initial values
+#Set parameters to nominal values
 mode_value = 0
 VRP_value = 320
 VPW_value = 1
@@ -41,15 +36,15 @@ URL_value = 120
 ARP_value = 250
 VA_value = 4.0
 AA_value = 4.0
-RCT_value = 5
+RCT_value = 300
 RF_value = 8
 RT_value = 30
 AT_value = "Med"
 at_value = 28
 APW_value = 1
 MSR_value = 120
-VS_value = 2.5
-AS_value = 0.75
+VS_value = 3.5
+AS_value = 3.5
 
 def AT_Converter():
     global at_value
@@ -68,7 +63,6 @@ def AT_Converter():
     elif AT_value == "V-High":
         at_value = 49
     return at_value
-    print(at_value)
 
 # Designing window for registration
 def register():
@@ -154,6 +148,7 @@ def modes():
     Button6.pack()
     Button7.pack()
     Button8.pack()
+    
     '''
     #Set parameters to nominal values
     VRP_value = 320
@@ -166,11 +161,13 @@ def modes():
     RCT_value = 300
     RF_value = 8
     RT_value = 30
-    AT_value = 28 #"Med"
+    AT_value = "Med"
+    at_value = 28
     APW_value = 1
     MSR_value = 120
     VS_value = 3.5
     AS_value = 3.5
+    '''
     
     # Store parameters in a text file 
     file = open('programmable_parameters.txt',"a")
@@ -184,7 +181,7 @@ def modes():
     file.write("Recovery Time = "+ str(RCT_value) + " " + "sec"+ "\n")
     file.write("Response Factor = "+ str(RF_value) + "\n")
     file.write("Reaction Time = "+ str(RT_value) + " " + "sec"+ "\n")
-    file.write("Activity Threshold = "+ (AT_value)  + "\n")
+    file.write("Activity Threshold = "+ str(at_value)  + "\n")
     file.write("Atrial Pulse Width = "+ str(APW_value) + " " + "ms" + "\n")
     file.write("MSR = "+ str(MSR_value) + " " + "ppm" + "\n")
     file.write("Ventricular Sensitivity = "+ str(VS_value) + " " + "V" + "\n")
@@ -242,8 +239,6 @@ def modes():
     def pacemakerConnect():
         if(Connect['text']=='Connect Device'):
             Connect['text']='Disconnect Device'
-            print(at_value)
-            print(AT_value)
             serialConnect()
 
     ###still have some stuff to figure out here (i.e. checking when new device is approached)
@@ -282,6 +277,12 @@ def AOO_param():
     AOO_screen.title("AOO Programmable Parameters")
     AOO_screen.geometry("400x450")
     Label(AOO_screen, text="Review/modify pacing mode paramaters.", bg="pink").pack()
+
+    global mode_value
+    global LRL_value
+    global URL_value
+    global AA_value
+    global APW_value
 
     mode_value = 3
     
@@ -363,7 +364,7 @@ def AOO_param():
     label4 = Label(AOO_screen, text = "")
     label4.pack()
     
-    Push = Button(AOO_screen, text = "Push to Pacemaker") #command =  serial() call serial communcation code
+    Push = Button(AOO_screen, text = "Push to Pacemaker", command = serialCommunication) #command =  serial() call serial communcation code
     Push.pack()
     
 ############################################################################################
@@ -375,6 +376,12 @@ def VOO_param():
     VOO_screen.geometry("400x450")
     Label(VOO_screen, text="Review/modify pacing mode paramaters.", bg="pink").pack()
 
+    global mode_value
+    global LRL_value
+    global URL_value
+    global VA_value
+    global VPW_value
+    
     mode_value = 1
 
     #drop down menus and sliders for value selection for programmable parameters
@@ -455,7 +462,7 @@ def VOO_param():
     label4 = Label(VOO_screen, text = "")
     label4.pack()
 
-    Push = Button(VOO_screen, text = "Push to Pacemaker") #command =  serial() call serial communcation code
+    Push = Button(VOO_screen, text = "Push to Pacemaker", command = serialCommunication) #command =  serial() call serial communcation code
     Push.pack()
     
 ############################################################################################
@@ -467,6 +474,14 @@ def AAI_param():
     AAI_screen.geometry("400x520")
     Label(AAI_screen, text="Review/modify pacing mode paramaters.", bg="pink").pack()
 
+    global mode_value
+    global LRL_value
+    global URL_value
+    global AA_value
+    global APW_value
+    global ARP_value
+    global AS_value
+    
     mode_value = 4
     
     #drop down menus and sliders for value selection for programmable parameters
@@ -590,7 +605,7 @@ def AAI_param():
     label6 = Label(AAI_screen, text = "")
     label6.pack() 
     
-    Push = Button(AAI_screen, text = "Push to Pacemaker") #command =  serial() call serial communication code
+    Push = Button(AAI_screen, text = "Push to Pacemaker", command = serialCommunication) #command =  serial() call serial communication code
     Push.pack()
     
 ############################################################################################    
@@ -601,6 +616,13 @@ def VVI_param():
     VVI_screen.title("VVI Programmable Parameters")
     VVI_screen.geometry("400x520")
     Label(VVI_screen, text="Review/modify pacing mode paramaters.", bg="pink").pack()
+
+    global mode_value
+    global LRL_value
+    global URL_value
+    global VA_value
+    global VPW_value
+    global VS_value
 
     mode_value = 2
 
@@ -726,7 +748,7 @@ def VVI_param():
     label6 = Label(VVI_screen, text = "")
     label6.pack()   
        
-    Push = Button(VVI_screen, text = "Push to Pacemaker") #command =  serial() call serial communcation code
+    Push = Button(VVI_screen, text = "Push to Pacemaker", command = serialCommunication) #command =  serial() call serial communcation code
     Push.pack()
 
 ############################################################################################
@@ -737,6 +759,16 @@ def VOOR_param():
     VOOR_screen.title("VOOR Programmable Parameters")
     VOOR_screen.geometry("400x450")
     Label(VOOR_screen, text="Review/modify pacing mode paramaters.", bg="pink").pack()
+
+    global mode_value
+    global LRL_value
+    global URL_value
+    global MSR_value
+    global VA_value
+    global VPW_value
+    global RCT_value
+    global RF_value
+    global RT_value
 
     mode_value = 5
 
@@ -838,8 +870,8 @@ def VOOR_param():
     label5.pack()
     
     def show6():
-        label6.config(text = clicked6.get())
         global AT_value
+        label6.config(text = clicked6.get())
         AT_value = clicked6.get()
         AT_Converter()
         at_value = AT_Converter()
@@ -916,7 +948,7 @@ def VOOR_param():
     label9 = Label(VOOR_screen, text = "")
     label9.pack()
     
-    Push = Button(VOOR_screen, text = "Push to Pacemaker") #command =  serial() call serial communcation code
+    Push = Button(VOOR_screen, text = "Push to Pacemaker", command = serialCommunication) #command =  serial() call serial communcation code
     Push.pack()
     Push.place(x = 400, y =5)
     
@@ -929,10 +961,13 @@ def AOOR_param():
     AOOR_screen.geometry("400x450")
     Label(AOOR_screen, text="Review/modify pacing mode paramaters.", bg="pink").pack()
 
+    global mode_value
+
     mode_value = 7
 
     #drop down menus and sliders for value selection for programmable parameters
     def show():
+        global LRL_value
         if slider.get() < clicked2.get():
             label.config(text = slider.get())
             LRL_value = slider.get()
@@ -953,6 +988,7 @@ def AOOR_param():
 
     
     def show2():
+        global URL_value
         if clicked2.get() > slider.get():
             label2.config(text = clicked2.get())
             URL_value = clicked2.get()
@@ -973,6 +1009,7 @@ def AOOR_param():
     label2.pack()
 
     def show3():
+        global MSR_value
         label3.config(text = clicked3.get())
         MSR_value = clicked3.get()
         file = open('programmable_parameters.txt',"a")
@@ -992,6 +1029,7 @@ def AOOR_param():
     label3.pack()
     
     def show4():
+        global AA_value
         label4.config(text = clicked4.get())
         AA_value = clicked4.get()
         file = open('programmable_parameters.txt',"a")
@@ -1011,6 +1049,7 @@ def AOOR_param():
     label4.pack()
     
     def show5():
+        global APW_value
         label5.config(text = clicked5.get())
         APW_value = clicked5.get()
         file = open('programmable_parameters.txt',"a")
@@ -1030,10 +1069,13 @@ def AOOR_param():
     label5.pack()
 
     def show6():
+        global AT_value
         label6.config(text = clicked6.get())
         AT_value = clicked6.get()
+        AT_Converter()
+        at_value = AT_Converter()
         file = open('programmable_parameters.txt',"a")
-        file.write("Activity Threshold = "+ str(AT_value)  + "\n")
+        file.write("Activity Threshold = "+ str(at_value)  + "\n")
         file.close()
     
     AT_label = Label(AOOR_screen, text="Activity Threshold:")
@@ -1049,6 +1091,7 @@ def AOOR_param():
     label6.pack()
      
     def show7():
+        global RT_value
         label7.config(text = clicked7.get())
         RT_value = clicked7.get()
         file = open('programmable_parameters.txt',"a")
@@ -1068,6 +1111,7 @@ def AOOR_param():
     label7.pack()
     
     def show8():
+        global RF_value
         label8.config(text = clicked8.get())
         RF_value = clicked8.get()
         file = open('programmable_parameters.txt',"a")
@@ -1087,6 +1131,7 @@ def AOOR_param():
     label8.pack()
     
     def show9():
+        global RCT_value
         label9.config(text = clicked9.get())
         RCT_value = clicked9.get()
         file = open('programmable_parameters.txt',"a")
@@ -1105,7 +1150,7 @@ def AOOR_param():
     label9 = Label(AOOR_screen, text = "")
     label9.pack()   
     
-    Push = Button(AOOR_screen, text = "Push to Pacemaker") #command =  serial() call serial communcation code
+    Push = Button(AOOR_screen, text = "Push to Pacemaker", command = serialCommunication) #command =  serial() call serial communcation code
     Push.pack()
     Push.place(x = 400, y =5)
 
@@ -1117,6 +1162,19 @@ def VVIR_param():
     VVIR_screen.title("VVIR Programmable Parameters")
     VVIR_screen.geometry("400x450")
     Label(VVIR_screen, text="Review/modify pacing mode paramaters.", bg="pink").pack()
+
+    global mode_value
+    global LRL_value
+    global URL_value
+    global MSR_value
+    global VA_value
+    global VPW_value
+    global VS_value
+    global VRP_value
+    global AT_value
+    global RCT_value
+    global RF_value
+    global RT_value 
 
     mode_value = 6
 
@@ -1260,10 +1318,13 @@ def VVIR_param():
      
     
     def show10():
+        global AT_value
         label10.config(text = clicked10.get())
         AT_value = clicked10.get()
+        AT_Converter()
+        at_value = AT_Converter()
         file = open('programmable_parameters.txt',"a")
-        file.write("Activity Threshold = "+ str(AT_value)  + "\n")
+        file.write("Activity Threshold = "+ str(at_value)  + "\n")
         file.close()
     
     AT_label = Label(VVIR_screen, text="Activity Threshold:")
@@ -1345,7 +1406,7 @@ def VVIR_param():
     label13.pack()
     label13.place(x =400,y=185)
     
-    Push = Button(VVIR_screen, text = "Push to Pacemaker") #command =  serial() call serial communcation code
+    Push = Button(VVIR_screen, text = "Push to Pacemaker", command = serialCommunication) #command =  serial() call serial communcation code
     Push.pack()
     Push.place(x = 400, y =210)
 
@@ -1357,6 +1418,19 @@ def AAIR_param():
     AAIR_screen.title("AAIR Programmable Parameters")
     AAIR_screen.geometry("400x450")
     Label(AAIR_screen, text="Review/modify pacing mode paramaters.", bg="pink").pack()
+
+    global mode_value
+    global LRL_value
+    global URL_value
+    global MSR_value
+    global AA_value
+    global APW_value
+    global AS_value
+    global ARP_value
+    global AT_value
+    global RCT_value
+    global RF_value
+    global RT_value 
 
     mode_value = 8
 
@@ -1499,10 +1573,13 @@ def AAIR_param():
     
 
     def show11():
+        global AT_value
         label11.config(text = clicked11.get())
         AT_value = clicked11.get()
+        AT_Converter()
+        at_value = AT_Converter()
         file = open('programmable_parameters.txt',"a")
-        file.write("Activity Threshold = "+ str(AT_value)  + "\n")
+        file.write("Activity Threshold = "+ str(at_value)  + "\n")
         file.close()
     
     AT_label = Label(AAIR_screen, text="Activity Threshold:")
@@ -1584,7 +1661,7 @@ def AAIR_param():
     label14.pack()
     label14.place(x =400,y=185)
     
-    Push = Button(AAIR_screen, text = "Push to Pacemaker") #command =  serial() call serial communcation code
+    Push = Button(AAIR_screen, text = "Push to Pacemaker", command =  serialCommunication) #command =  serial() call serial communcation code
     Push.pack()
     Push.place(x = 400, y =210)
 
@@ -1597,6 +1674,8 @@ def serialCommunication():
     SYNC = b'\x33' 
     Param_set = b'\x22'
     ECG = b'\x44'
+
+    mode_reset = struct.pack("h", 0)
 
     VRP_en = struct.pack("d", VRP_value)
     VentWidth_en = struct.pack("h", VWP_value) 
@@ -1614,6 +1693,36 @@ def serialCommunication():
     MSR_en = struct.pack("d", MSR_value)
     VentSensitivity_en = struct.pack("d", VS_value)
     AtrSensitivity_en = struct.pack("d", AS_value)
+
+    Signal_reset = Start + Param_set + VRP_en + VentWidth_en + URL_en + LRL_en + ARP_en + mode_reset + VAmplitude_en + AAmplitude_en + RecoveryTime_en + ResponseFactor_en + ReactionTime_en + ActivityThreshold_en + AtrWidth_en  + MSR_en + VentSensitivity_en + AtrSensitivity_en
+    Signal_echo_reset = Start + SYNC + VRP_en + VentWidth_en + URL_en + LRL_en + ARP_en + mode_reset + VAmplitude_en + AAmplitude_en + RecoveryTime_en + ResponseFactor_en + ReactionTime_en + ActivityThreshold_en + AtrWidth_en  + MSR_en + VentSensitivity_en + AtrSensitivity_en
+
+   with serial.Serial(port, 115200) as pacemaker:
+        pacemaker.write(Signal_reset)
+
+    with serial.Serial(port, 115200) as pacemaker:
+        pacemaker.write(Signal_echo_reset)
+        data = pacemaker.read(110)
+
+        VRP_rev = struct.unpack("d", data[0:8])[0]
+        VentWidth_rev = struct.unpack("h", data[8:10])[0]
+        URL_rev = struct.unpack("d", data[10:18])[0]
+        LRL_rev = struct.unpack("d", data[18:26])[0]
+        ARP_rev = struct.unpack("d", data[26:34])[0]
+        mode_rev = struct.unpack("h", data[34:36])[0]
+        VAmplitude_rev = struct.unpack("d", data[36:44])[0]
+        AAmplitude_rev = struct.unpack("d", data[44:52])[0]
+        RecoveryTime_rev = struct.unpack("d", data[52:60])[0]
+        ResponseFactor_rev = struct.unpack("d", data[60:68])[0]
+        ReactionTime_rev = struct.unpack("d", data[68:76])[0]
+        ActivityThreshold_rev = struct.unpack("d", data[76:84])[0]
+        AtrWidth_rev = struct.unpack("h", data[84:86])[0]
+        MSR_rev = struct.unpack("d", data[86:94])[0]
+        VentSensitivity_rev = struct.unpack("d", data[94:102])[0]
+        AtrSensitivity_rev = struct.unpack("d", data[102:110])[0]
+
+        time.sleep(1)
+
 
     Signal_set = Start + Param_set + VRP_en + VentWidth_en + URL_en + LRL_en + ARP_en + mode_en + VAmplitude_en + AAmplitude_en + RecoveryTime_en + ResponseFactor_en + ReactionTime_en + ActivityThreshold_en + AtrWidth_en  + MSR_en + VentSensitivity_en + AtrSensitivity_en
     Signal_echo = Start + SYNC + VRP_en + VentWidth_en + URL_en + LRL_en + ARP_en + mode_en + VAmplitude_en + AAmplitude_en + RecoveryTime_en + ResponseFactor_en + ReactionTime_en + ActivityThreshold_en + AtrWidth_en  + MSR_en + VentSensitivity_en + AtrSensitivity_en
@@ -1841,7 +1950,6 @@ main_account_screen()
 
 
 # In[ ]:
-
 
 
 
