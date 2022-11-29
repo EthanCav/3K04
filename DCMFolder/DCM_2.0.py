@@ -207,8 +207,6 @@ def modes():
         ports = list(serial.tools.list_ports.comports())
         K64F_HWID = "1366:1015"
         for i in ports:
-            print(i.hwid)
-
             if K64F_HWID in i.hwid:
                     port = i.device
         print("port: ", port)
@@ -235,14 +233,10 @@ def modes():
         messagebox.showerror("System Message","Device disconnected.")
 
     #Button to visually indicate when DCM and pacemaker are connected/disconnected 
-    #For Assignment 2, we will make adjustments to allow for serial communication between the DCM and the pacemaker
     def pacemakerConnect():
         if(Connect['text']=='Connect Device'):
             Connect['text']='Disconnect Device'
             serialConnect()
-
-    ###still have some stuff to figure out here (i.e. checking when new device is approached)
-    ###also need to add messages when device isn't connected and you press connect button
             
         elif(Connect['text']=='Disconnect Device'):
             Connect['text']='Connect Device'
@@ -260,13 +254,12 @@ def modes():
         Label(diff_device_screen, text="Device Connected!\n\nWarning: New pacemaker device detected.", fg="green").pack()
         Button(diff_device_screen, text="OK", command=delete_diff_device_screen).pack()
 
-    #For Assignment 2, we will make adjustments to allow for serial communication between the DCM and the pacemaker
+    #Check for a different device
     def check_device():
-        original_device = 1 #change to properties of pacemakers for assignment 2
-        new_device = 2
-        
-        if new_device != original_device:
-            diff_device()
+            condition = serialCommunication()
+
+            if condition != True:
+                diff_device()
 
 ############################################################################################       
 
@@ -1406,7 +1399,7 @@ def VVIR_param():
     label13.pack()
     label13.place(x =400,y=185)
     
-    Push = Button(VVIR_screen, text = "Push to Pacemaker", command = serialCommunication) #command =  serial() call serial communcation code
+    Push = Button(VVIR_screen, text = "Push to Pacemaker", command = serialCommunication(False)) #command =  serial() call serial communcation code
     Push.pack()
     Push.place(x = 400, y =210)
 
@@ -1675,7 +1668,7 @@ def AAIR_param():
     #Transmit and receive information to/from Pacemaker
     #Set, store, transmit, and verify programmable parameter data is stored correctly on Pacemaker
     
-def serialCommunication():
+def serialCommunication(echo_only):
 
     ports = list(serial.tools.list_ports.comports())
     K64F_HWID = "1366:1015"
@@ -1684,106 +1677,157 @@ def serialCommunication():
                 port = i.device
     print("port: ", port)
 
-    Start = b'\x16'
-    SYNC = b'\x33' 
-    Param_set = b'\x22'
-    ECG = b'\x44'
+    if echo_only == True:
+        Start = b'\x16'
+        SYNC = b'\x33' 
+        Param_set = b'\x22'
+        ECG = b'\x44'
 
-    mode_reset = struct.pack("h", 0)
+        mode_reset = struct.pack("h", 0)
 
-    VRP_en = struct.pack("d", VRP_value)
-    VentWidth_en = struct.pack("h", VPW_value) 
-    URL_en = struct.pack("d", URL_value)
-    LRL_en = struct.pack("d", LRL_value)
-    ARP_en = struct.pack("d", ARP_value)
-    mode_en = struct.pack("h", mode_value) 
-    VAmplitude_en = struct.pack("d", VA_value)
-    AAmplitude_en = struct.pack("d", AA_value)
-    RecoveryTime_en = struct.pack("d", RCT_value)
-    ResponseFactor_en = struct.pack("d", RF_value)
-    ReactionTime_en = struct.pack("d", RT_value)
-    ActivityThreshold_en = struct.pack("d", at_value)
-    AtrWidth_en = struct.pack("h", APW_value)
-    MSR_en = struct.pack("d", MSR_value)
-    VentSensitivity_en = struct.pack("d", VS_value)
-    AtrSensitivity_en = struct.pack("d", AS_value)
+        VRP_en = struct.pack("d", VRP_value)
+        VentWidth_en = struct.pack("h", VPW_value) 
+        URL_en = struct.pack("d", URL_value)
+        LRL_en = struct.pack("d", LRL_value)
+        ARP_en = struct.pack("d", ARP_value)
+        mode_en = struct.pack("h", mode_value) 
+        VAmplitude_en = struct.pack("d", VA_value)
+        AAmplitude_en = struct.pack("d", AA_value)
+        RecoveryTime_en = struct.pack("d", RCT_value)
+        ResponseFactor_en = struct.pack("d", RF_value)
+        ReactionTime_en = struct.pack("d", RT_value)
+        ActivityThreshold_en = struct.pack("d", at_value)
+        AtrWidth_en = struct.pack("h", APW_value)
+        MSR_en = struct.pack("d", MSR_value)
+        VentSensitivity_en = struct.pack("d", VS_value)
+        AtrSensitivity_en = struct.pack("d", AS_value)
 
-    Signal_reset = Start + Param_set + VRP_en + VentWidth_en + URL_en + LRL_en + ARP_en + mode_reset + VAmplitude_en + AAmplitude_en + RecoveryTime_en + ResponseFactor_en + ReactionTime_en + ActivityThreshold_en + AtrWidth_en  + MSR_en + VentSensitivity_en + AtrSensitivity_en
-    Signal_echo_reset = Start + SYNC + VRP_en + VentWidth_en + URL_en + LRL_en + ARP_en + mode_reset + VAmplitude_en + AAmplitude_en + RecoveryTime_en + ResponseFactor_en + ReactionTime_en + ActivityThreshold_en + AtrWidth_en  + MSR_en + VentSensitivity_en + AtrSensitivity_en
+        Signal_reset = Start + Param_set + VRP_en + VentWidth_en + URL_en + LRL_en + ARP_en + mode_reset + VAmplitude_en + AAmplitude_en + RecoveryTime_en + ResponseFactor_en + ReactionTime_en + ActivityThreshold_en + AtrWidth_en  + MSR_en + VentSensitivity_en + AtrSensitivity_en
+        Signal_echo_reset = Start + SYNC + VRP_en + VentWidth_en + URL_en + LRL_en + ARP_en + mode_reset + VAmplitude_en + AAmplitude_en + RecoveryTime_en + ResponseFactor_en + ReactionTime_en + ActivityThreshold_en + AtrWidth_en  + MSR_en + VentSensitivity_en + AtrSensitivity_en
 
-    with serial.Serial(port, 115200) as pacemaker:
-        pacemaker.write(Signal_reset)
+        with serial.Serial(port, 115200) as pacemaker:
+            pacemaker.write(Signal_reset)
 
-    with serial.Serial(port, 115200) as pacemaker:
-        pacemaker.write(Signal_echo_reset)
-        data = pacemaker.read(110)
+        with serial.Serial(port, 115200) as pacemaker:
+            pacemaker.write(Signal_echo_reset)
+            data = pacemaker.read(110)
 
-        VRP_rev = struct.unpack("d", data[0:8])[0]
-        VentWidth_rev = struct.unpack("h", data[8:10])[0]
-        URL_rev = struct.unpack("d", data[10:18])[0]
-        LRL_rev = struct.unpack("d", data[18:26])[0]
-        ARP_rev = struct.unpack("d", data[26:34])[0]
-        mode_rev = struct.unpack("h", data[34:36])[0]
-        VAmplitude_rev = struct.unpack("d", data[36:44])[0]
-        AAmplitude_rev = struct.unpack("d", data[44:52])[0]
-        RecoveryTime_rev = struct.unpack("d", data[52:60])[0]
-        ResponseFactor_rev = struct.unpack("d", data[60:68])[0]
-        ReactionTime_rev = struct.unpack("d", data[68:76])[0]
-        ActivityThreshold_rev = struct.unpack("d", data[76:84])[0]
-        AtrWidth_rev = struct.unpack("h", data[84:86])[0]
-        MSR_rev = struct.unpack("d", data[86:94])[0]
-        VentSensitivity_rev = struct.unpack("d", data[94:102])[0]
-        AtrSensitivity_rev = struct.unpack("d", data[102:110])[0]
+            VRP_rev = struct.unpack("d", data[0:8])[0]
+            VentWidth_rev = struct.unpack("h", data[8:10])[0]
+            URL_rev = struct.unpack("d", data[10:18])[0]
+            LRL_rev = struct.unpack("d", data[18:26])[0]
+            ARP_rev = struct.unpack("d", data[26:34])[0]
+            mode_rev = struct.unpack("h", data[34:36])[0]
+            VAmplitude_rev = struct.unpack("d", data[36:44])[0]
+            AAmplitude_rev = struct.unpack("d", data[44:52])[0]
+            RecoveryTime_rev = struct.unpack("d", data[52:60])[0]
+            ResponseFactor_rev = struct.unpack("d", data[60:68])[0]
+            ReactionTime_rev = struct.unpack("d", data[68:76])[0]
+            ActivityThreshold_rev = struct.unpack("d", data[76:84])[0]
+            AtrWidth_rev = struct.unpack("h", data[84:86])[0]
+            MSR_rev = struct.unpack("d", data[86:94])[0]
+            VentSensitivity_rev = struct.unpack("d", data[94:102])[0]
+            AtrSensitivity_rev = struct.unpack("d", data[102:110])[0]
 
-        time.sleep(1)
-
-
-    Signal_set = Start + Param_set + VRP_en + VentWidth_en + URL_en + LRL_en + ARP_en + mode_en + VAmplitude_en + AAmplitude_en + RecoveryTime_en + ResponseFactor_en + ReactionTime_en + ActivityThreshold_en + AtrWidth_en  + MSR_en + VentSensitivity_en + AtrSensitivity_en
-    Signal_echo = Start + SYNC + VRP_en + VentWidth_en + URL_en + LRL_en + ARP_en + mode_en + VAmplitude_en + AAmplitude_en + RecoveryTime_en + ResponseFactor_en + ReactionTime_en + ActivityThreshold_en + AtrWidth_en  + MSR_en + VentSensitivity_en + AtrSensitivity_en
-    ECG_set = Start + ECG + VRP_en + VentWidth_en + URL_en + LRL_en + ARP_en + mode_en + VAmplitude_en + AAmplitude_en + RecoveryTime_en + ResponseFactor_en + ReactionTime_en + ActivityThreshold_en + AtrWidth_en  + MSR_en + VentSensitivity_en + AtrSensitivity_en
-
-    with serial.Serial(port, 115200) as pacemaker:
-        pacemaker.write(Signal_set)
-
-    with serial.Serial(port, 115200) as pacemaker:
-        pacemaker.write(Signal_echo)
-        data = pacemaker.read(110)
-
-        VRP_rev = struct.unpack("d", data[0:8])[0]
-        VentWidth_rev = struct.unpack("h", data[8:10])[0]
-        URL_rev = struct.unpack("d", data[10:18])[0]
-        LRL_rev = struct.unpack("d", data[18:26])[0]
-        ARP_rev = struct.unpack("d", data[26:34])[0]
-        mode_rev = struct.unpack("h", data[34:36])[0]
-        VAmplitude_rev = struct.unpack("d", data[36:44])[0]
-        AAmplitude_rev = struct.unpack("d", data[44:52])[0]
-        RecoveryTime_rev = struct.unpack("d", data[52:60])[0]
-        ResponseFactor_rev = struct.unpack("d", data[60:68])[0]
-        ReactionTime_rev = struct.unpack("d", data[68:76])[0]
-        ActivityThreshold_rev = struct.unpack("d", data[76:84])[0]
-        AtrWidth_rev = struct.unpack("h", data[84:86])[0]
-        MSR_rev = struct.unpack("d", data[86:94])[0]
-        VentSensitivity_rev = struct.unpack("d", data[94:102])[0]
-        AtrSensitivity_rev = struct.unpack("d", data[102:110])[0]
+            time.sleep(1)
 
 
-    print("\nFrom the board:")
-    print("VRP_rev = ",VRP_rev)
-    print("VentWidth_rev = ", VentWidth_rev)
-    print("URL_rev = ", URL_rev)
-    print("LRL_rev = ",  LRL_rev)
-    print("ARP_rev = ",  ARP_rev)
-    print("mode_rev = ", mode_rev)
-    print("VAmplitude_rev = ", VAmplitude_rev)
-    print("AAmplitude_rev = ", AAmplitude_rev)
-    print("RecoveryTime_rev = ", RecoveryTime_rev)
-    print("ResponseFactor_rev = ", ResponseFactor_rev)
-    print("ReactionTime_rev = ", ReactionTime_rev)
-    print("ActivityThreshold_rev = ", ActivityThreshold_rev)
-    print("AtrWidth_rev = ", AtrWidth_rev)
-    print("MSR_rev = ", MSR_rev)
-    print("VentSensitivity_rev = ", VentSensitivity_rev)
-    print("AtrSensitivity_rev = ", AtrSensitivity_rev)
+        Signal_set = Start + Param_set + VRP_en + VentWidth_en + URL_en + LRL_en + ARP_en + mode_en + VAmplitude_en + AAmplitude_en + RecoveryTime_en + ResponseFactor_en + ReactionTime_en + ActivityThreshold_en + AtrWidth_en  + MSR_en + VentSensitivity_en + AtrSensitivity_en
+        Signal_echo = Start + SYNC + VRP_en + VentWidth_en + URL_en + LRL_en + ARP_en + mode_en + VAmplitude_en + AAmplitude_en + RecoveryTime_en + ResponseFactor_en + ReactionTime_en + ActivityThreshold_en + AtrWidth_en  + MSR_en + VentSensitivity_en + AtrSensitivity_en
+        ECG_set = Start + ECG + VRP_en + VentWidth_en + URL_en + LRL_en + ARP_en + mode_en + VAmplitude_en + AAmplitude_en + RecoveryTime_en + ResponseFactor_en + ReactionTime_en + ActivityThreshold_en + AtrWidth_en  + MSR_en + VentSensitivity_en + AtrSensitivity_en
+
+        with serial.Serial(port, 115200) as pacemaker:
+            pacemaker.write(Signal_set)
+
+        with serial.Serial(port, 115200) as pacemaker:
+            pacemaker.write(Signal_echo)
+            data = pacemaker.read(110)
+
+            VRP_rev = struct.unpack("d", data[0:8])[0]
+            VentWidth_rev = struct.unpack("h", data[8:10])[0]
+            URL_rev = struct.unpack("d", data[10:18])[0]
+            LRL_rev = struct.unpack("d", data[18:26])[0]
+            ARP_rev = struct.unpack("d", data[26:34])[0]
+            mode_rev = struct.unpack("h", data[34:36])[0]
+            VAmplitude_rev = struct.unpack("d", data[36:44])[0]
+            AAmplitude_rev = struct.unpack("d", data[44:52])[0]
+            RecoveryTime_rev = struct.unpack("d", data[52:60])[0]
+            ResponseFactor_rev = struct.unpack("d", data[60:68])[0]
+            ReactionTime_rev = struct.unpack("d", data[68:76])[0]
+            ActivityThreshold_rev = struct.unpack("d", data[76:84])[0]
+            AtrWidth_rev = struct.unpack("h", data[84:86])[0]
+            MSR_rev = struct.unpack("d", data[86:94])[0]
+            VentSensitivity_rev = struct.unpack("d", data[94:102])[0]
+            AtrSensitivity_rev = struct.unpack("d", data[102:110])[0]
+
+
+        print("\nFrom the board:")
+        print("VRP_rev = ",VRP_rev)
+        print("VentWidth_rev = ", VentWidth_rev)
+        print("URL_rev = ", URL_rev)
+        print("LRL_rev = ",  LRL_rev)
+        print("ARP_rev = ",  ARP_rev)
+        print("mode_rev = ", mode_rev)
+        print("VAmplitude_rev = ", VAmplitude_rev)
+        print("AAmplitude_rev = ", AAmplitude_rev)
+        print("RecoveryTime_rev = ", RecoveryTime_rev)
+        print("ResponseFactor_rev = ", ResponseFactor_rev)
+        print("ReactionTime_rev = ", ReactionTime_rev)
+        print("ActivityThreshold_rev = ", ActivityThreshold_rev)
+        print("AtrWidth_rev = ", AtrWidth_rev)
+        print("MSR_rev = ", MSR_rev)
+        print("VentSensitivity_rev = ", VentSensitivity_rev)
+        print("AtrSensitivity_rev = ", AtrSensitivity_rev)
+        
+    elif echo_only == False:
+        Start = b'\x16'
+            SYNC = b'\x33' 
+            Param_set = b'\x22'
+            ECG = b'\x44'
+
+            VRP_en = struct.pack("d", VRP_value)
+            VentWidth_en = struct.pack("h", VPW_value) 
+            URL_en = struct.pack("d", URL_value)
+            LRL_en = struct.pack("d", LRL_value)
+            ARP_en = struct.pack("d", ARP_value)
+            mode_en = struct.pack("h", mode_value) 
+            VAmplitude_en = struct.pack("d", VA_value)
+            AAmplitude_en = struct.pack("d", AA_value)
+            RecoveryTime_en = struct.pack("d", RCT_value)
+            ResponseFactor_en = struct.pack("d", RF_value)
+            ReactionTime_en = struct.pack("d", RT_value)
+            ActivityThreshold_en = struct.pack("d", at_value)
+            AtrWidth_en = struct.pack("h", APW_value)
+            MSR_en = struct.pack("d", MSR_value)
+            VentSensitivity_en = struct.pack("d", VS_value)
+            AtrSensitivity_en = struct.pack("d", AS_value)
+
+            Signal_echo = Start + SYNC + VRP_en + VentWidth_en + URL_en + LRL_en + ARP_en + mode_en + VAmplitude_en + AAmplitude_en + RecoveryTime_en + ResponseFactor_en + ReactionTime_en + ActivityThreshold_en + AtrWidth_en  + MSR_en + VentSensitivity_en + AtrSensitivity_en
+
+
+            with serial.Serial(port, 115200) as pacemaker:
+                pacemaker.write(Signal_echo)
+                data = pacemaker.read(110)
+
+                VRP_rev = struct.unpack("d", data[0:8])[0]
+                VentWidth_rev = struct.unpack("h", data[8:10])[0]
+                URL_rev = struct.unpack("d", data[10:18])[0]
+                LRL_rev = struct.unpack("d", data[18:26])[0]
+                ARP_rev = struct.unpack("d", data[26:34])[0]
+                mode_rev = struct.unpack("h", data[34:36])[0]
+                VAmplitude_rev = struct.unpack("d", data[36:44])[0]
+                AAmplitude_rev = struct.unpack("d", data[44:52])[0]
+                RecoveryTime_rev = struct.unpack("d", data[52:60])[0]
+                ResponseFactor_rev = struct.unpack("d", data[60:68])[0]
+                ReactionTime_rev = struct.unpack("d", data[68:76])[0]
+                ActivityThreshold_rev = struct.unpack("d", data[76:84])[0]
+                AtrWidth_rev = struct.unpack("h", data[84:86])[0]
+                MSR_rev = struct.unpack("d", data[86:94])[0]
+                VentSensitivity_rev = struct.unpack("d", data[94:102])[0]
+                AtrSensitivity_rev = struct.unpack("d", data[102:110])[0]
+
+                condition = VRP_rev == VRP_en and VentWidth_rev == VentWidth_en and URL_rev == URL_en and LRL_rev == LRL_en and ARP_rev == ARP_en and mode_rev == mode_en and Vamplitude_rev == Vamplitude_en and AAmplitude_rev == AAmplitude_en and RecoveryTime_rev == RecoveryTime_en and ResponseFactor_rev == ResponseFactor_en and ReactionTime_rev == ReactionTime_en and ActivityThreshold_rev == ActivityThreshold_en and AtrWidth_rev == AtrWidth_en and MSR_rev == MSR_en and VentSensitivity_rev == VentSensitivity_en and AtrSensitivity_rev == AtrSensitivity_en
+
 
 ############################################################################################
 
