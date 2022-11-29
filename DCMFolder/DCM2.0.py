@@ -148,6 +148,43 @@ def modes():
     Button6.pack()
     Button7.pack()
     Button8.pack()
+
+    ECG = Button(modes_screen, text = 'ECG Plotter'), command = sendECG)
+    ECG.pack()
+    ECG.place(x=50, y = 5)
+
+    def sendECG():
+        global ser
+        
+            Start = b'\x16'
+            SYNC = b'\x33' 
+            Param_set = b'\x22'
+            ECG = b'\x44'
+
+            VRP_en = struct.pack("d", VRP_value)
+            VentWidth_en = struct.pack("h", VPW_value) 
+            URL_en = struct.pack("d", URL_value)
+            LRL_en = struct.pack("d", LRL_value)
+            ARP_en = struct.pack("d", ARP_value)
+            mode_en = struct.pack("h", mode_value) 
+            VAmplitude_en = struct.pack("d", VA_value)
+            AAmplitude_en = struct.pack("d", AA_value)
+            RecoveryTime_en = struct.pack("d", RCT_value)
+            ResponseFactor_en = struct.pack("d", RF_value)
+            ReactionTime_en = struct.pack("d", RT_value)
+            ActivityThreshold_en = struct.pack("d", at_value)
+            AtrWidth_en = struct.pack("h", APW_value)
+            MSR_en = struct.pack("d", MSR_value)
+            VentSensitivity_en = struct.pack("d", VS_value)
+            AtrSensitivity_en = struct.pack("d", AS_value)
+
+            ECG_request = Start + ECG + VRP_en + VentWidth_en + URL_en + LRL_en + ARP_en + mode_en + VAmplitude_en + AAmplitude_en + RecoveryTime_en + ResponseFactor_en + ReactionTime_en + ActivityThreshold_en + AtrWidth_en  + MSR_en + VentSensitivity_en + AtrSensitivity_en
+            
+
+            ser.write(ECG_request)
+            data = ser.read(160)
+
+            first8 = struct.unpack("d", data[0:8])[0]
     
     '''
     #Set parameters to nominal values
@@ -307,7 +344,6 @@ def modes():
             VentSensitivity_rev = struct.unpack("d", data[94:102])[0]
             AtrSensitivity_rev = struct.unpack("d", data[102:110])[0]
 
-            #condition = VRP_rev == VRP_en and VentWidth_rev == VentWidth_en and URL_rev == URL_en and LRL_rev == LRL_en and ARP_rev == ARP_en and mode_rev == mode_en and Vamplitude_rev == Vamplitude_en and AAmplitude_rev == AAmplitude_en and RecoveryTime_rev == RecoveryTime_en and ResponseFactor_rev == ResponseFactor_en and ReactionTime_rev == ReactionTime_en and ActivityThreshold_rev == ActivityThreshold_en and AtrWidth_rev == AtrWidth_en and MSR_rev == MSR_en and VentSensitivity_rev == VentSensitivity_en and AtrSensitivity_rev == AtrSensitivity_en
             sum1 = VRP_rev + VentWidth_rev + URL_rev + LRL_rev + ARP_rev + mode_rev + VAmplitude_rev + AAmplitude_rev + RecoveryTime_rev + ResponseFactor_rev + ReactionTime_rev + ActivityThreshold_rev + AtrWidth_rev + MSR_rev + VentSensitivity_rev + AtrSensitivity_rev
             sum2 = VRP_value + VPW_value + URL_value + LRL_value + ARP_value + mode_value + VA_value + AA_value + RCT_value + RF_value + RT_value + at_value + APW_value + MSR_value + VS_value + AS_value
             print(sum1-sum2)
