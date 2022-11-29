@@ -1,0 +1,4 @@
+i2c_api.o
+MW_I2C.o
+mw_sdk_interface.o
+accel.o
