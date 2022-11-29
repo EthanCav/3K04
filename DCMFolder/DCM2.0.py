@@ -149,42 +149,8 @@ def modes():
     Button7.pack()
     Button8.pack()
 
-    ECG = Button(modes_screen, text = 'ECG Plotter'), command = sendECG)
-    ECG.pack()
-    ECG.place(x=50, y = 5)
+    
 
-    def sendECG():
-        global ser
-        
-            Start = b'\x16'
-            SYNC = b'\x33' 
-            Param_set = b'\x22'
-            ECG = b'\x44'
-
-            VRP_en = struct.pack("d", VRP_value)
-            VentWidth_en = struct.pack("h", VPW_value) 
-            URL_en = struct.pack("d", URL_value)
-            LRL_en = struct.pack("d", LRL_value)
-            ARP_en = struct.pack("d", ARP_value)
-            mode_en = struct.pack("h", mode_value) 
-            VAmplitude_en = struct.pack("d", VA_value)
-            AAmplitude_en = struct.pack("d", AA_value)
-            RecoveryTime_en = struct.pack("d", RCT_value)
-            ResponseFactor_en = struct.pack("d", RF_value)
-            ReactionTime_en = struct.pack("d", RT_value)
-            ActivityThreshold_en = struct.pack("d", at_value)
-            AtrWidth_en = struct.pack("h", APW_value)
-            MSR_en = struct.pack("d", MSR_value)
-            VentSensitivity_en = struct.pack("d", VS_value)
-            AtrSensitivity_en = struct.pack("d", AS_value)
-
-            ECG_request = Start + ECG + VRP_en + VentWidth_en + URL_en + LRL_en + ARP_en + mode_en + VAmplitude_en + AAmplitude_en + RecoveryTime_en + ResponseFactor_en + ReactionTime_en + ActivityThreshold_en + AtrWidth_en  + MSR_en + VentSensitivity_en + AtrSensitivity_en
-            
-
-            ser.write(ECG_request)
-            data = ser.read(160)
-
-            first8 = struct.unpack("d", data[0:8])[0]
     
     '''
     #Set parameters to nominal values
@@ -346,9 +312,78 @@ def modes():
 
             sum1 = VRP_rev + VentWidth_rev + URL_rev + LRL_rev + ARP_rev + mode_rev + VAmplitude_rev + AAmplitude_rev + RecoveryTime_rev + ResponseFactor_rev + ReactionTime_rev + ActivityThreshold_rev + AtrWidth_rev + MSR_rev + VentSensitivity_rev + AtrSensitivity_rev
             sum2 = VRP_value + VPW_value + URL_value + LRL_value + ARP_value + mode_value + VA_value + AA_value + RCT_value + RF_value + RT_value + at_value + APW_value + MSR_value + VS_value + AS_value
-            print(sum1-sum2)
             if not(sum1 == sum2):
                 diff_device()
+
+    def sendECG():
+        global ser
+        #check to get the right port every time
+        ports = list(serial.tools.list_ports.comports())
+        K64F_HWID = "1366:1015"
+        for i in ports:
+            if K64F_HWID in i.hwid:
+                    port = i.device
+        ser = serial.Serial(port, baudrate = 115200, timeout=None)  
+
+        Start = b'\x16'
+        SYNC = b'\x33' 
+        Param_set = b'\x22'
+        ECG = b'\x44'
+
+        VRP_en = struct.pack("d", VRP_value)
+        VentWidth_en = struct.pack("h", VPW_value) 
+        URL_en = struct.pack("d", URL_value)
+        LRL_en = struct.pack("d", LRL_value)
+        ARP_en = struct.pack("d", ARP_value)
+        mode_en = struct.pack("h", mode_value) 
+        VAmplitude_en = struct.pack("d", VA_value)
+        AAmplitude_en = struct.pack("d", AA_value)
+        RecoveryTime_en = struct.pack("d", RCT_value)
+        ResponseFactor_en = struct.pack("d", RF_value)
+        ReactionTime_en = struct.pack("d", RT_value)
+        ActivityThreshold_en = struct.pack("d", at_value)
+        AtrWidth_en = struct.pack("h", APW_value)
+        MSR_en = struct.pack("d", MSR_value)
+        VentSensitivity_en = struct.pack("d", VS_value)
+        AtrSensitivity_en = struct.pack("d", AS_value)
+
+        ECG_request = Start + ECG + VRP_en + VentWidth_en + URL_en + LRL_en + ARP_en + mode_en + VAmplitude_en + AAmplitude_en + RecoveryTime_en + ResponseFactor_en + ReactionTime_en + ActivityThreshold_en + AtrWidth_en  + MSR_en + VentSensitivity_en + AtrSensitivity_en
+
+        atr_signal = []
+        vent_signal = []
+        for i in range(30):
+            ser.write(ECG_request)
+            data = ser.read(160)
+
+            atr_signal.append(struct.unpack("d", data[0:8])[0])
+            atr_signal.append(struct.unpack("d", data[8:16])[0])
+            atr_signal.append(struct.unpack("d", data[16:24])[0])
+            atr_signal.append(struct.unpack("d", data[24:32])[0])
+            atr_signal.append(struct.unpack("d", data[32:40])[0])
+            atr_signal.append(struct.unpack("d", data[40:48])[0])
+            atr_signal.append(struct.unpack("d", data[48:56])[0])
+            atr_signal.append(struct.unpack("d", data[56:64])[0])
+            atr_signal.append(struct.unpack("d", data[64:72])[0])
+            atr_signal.append(struct.unpack("d", data[72:80])[0])
+
+            vent_signal.append(struct.unpack("d", data[80:88])[0])
+            vent_signal.append(struct.unpack("d", data[88:96])[0])
+            vent_signal.append(struct.unpack("d", data[96:104])[0])
+            vent_signal.append(struct.unpack("d", data[104:112])[0])
+            vent_signal.append(struct.unpack("d", data[112:120])[0])
+            vent_signal.append(struct.unpack("d", data[120:128])[0])
+            vent_signal.append(struct.unpack("d", data[128:136])[0])
+            vent_signal.append(struct.unpack("d", data[136:144])[0])
+            vent_signal.append(struct.unpack("d", data[144:152])[0])
+            vent_signal.append(struct.unpack("d", data[152:160])[0])
+            
+
+        ser.close()
+
+    ECG = Button(modes_screen, text = 'ECG Plotter', command = sendECG)
+    ECG.pack()
+    ECG.place(x=50, y = 5)
+
 
 ############################################################################################       
 
