@@ -8,6 +8,12 @@ from serial.tools import list_ports
 import struct
 import tkinter as tk
 import time
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+from matplotlib import style
+from struct import *
+import time,threading
+
 
 global modes_value 
 global VRP_value 
@@ -316,70 +322,301 @@ def modes():
                 diff_device()
 
     def sendECG():
-        global ser
-        #check to get the right port every time
-        ports = list(serial.tools.list_ports.comports())
-        K64F_HWID = "1366:1015"
-        for i in ports:
-            if K64F_HWID in i.hwid:
-                    port = i.device
-        ser = serial.Serial(port, baudrate = 115200, timeout=None)  
 
-        Start = b'\x16'
-        SYNC = b'\x33' 
-        Param_set = b'\x22'
-        ECG = b'\x44'
+        global ECG_screen
+        ECG_screen = Toplevel(modes_screen)
+        ECG_screen.title("ECG Selections")
+        ECG_screen.geometry("400x200")
+        Label(ECG_screen, text="Select heart chamber(s)", bg="pink").pack()
 
-        VRP_en = struct.pack("d", VRP_value)
-        VentWidth_en = struct.pack("h", VPW_value) 
-        URL_en = struct.pack("d", URL_value)
-        LRL_en = struct.pack("d", LRL_value)
-        ARP_en = struct.pack("d", ARP_value)
-        mode_en = struct.pack("h", mode_value) 
-        VAmplitude_en = struct.pack("d", VA_value)
-        AAmplitude_en = struct.pack("d", AA_value)
-        RecoveryTime_en = struct.pack("d", RCT_value)
-        ResponseFactor_en = struct.pack("d", RF_value)
-        ReactionTime_en = struct.pack("d", RT_value)
-        ActivityThreshold_en = struct.pack("d", at_value)
-        AtrWidth_en = struct.pack("h", APW_value)
-        MSR_en = struct.pack("d", MSR_value)
-        VentSensitivity_en = struct.pack("d", VS_value)
-        AtrSensitivity_en = struct.pack("d", AS_value)
-
-        ECG_request = Start + ECG + VRP_en + VentWidth_en + URL_en + LRL_en + ARP_en + mode_en + VAmplitude_en + AAmplitude_en + RecoveryTime_en + ResponseFactor_en + ReactionTime_en + ActivityThreshold_en + AtrWidth_en  + MSR_en + VentSensitivity_en + AtrSensitivity_en
-
-        atr_signal = []
-        vent_signal = []
-        for i in range(30):
-            ser.write(ECG_request)
-            data = ser.read(160)
-
-            atr_signal.append(struct.unpack("d", data[0:8])[0])
-            atr_signal.append(struct.unpack("d", data[8:16])[0])
-            atr_signal.append(struct.unpack("d", data[16:24])[0])
-            atr_signal.append(struct.unpack("d", data[24:32])[0])
-            atr_signal.append(struct.unpack("d", data[32:40])[0])
-            atr_signal.append(struct.unpack("d", data[40:48])[0])
-            atr_signal.append(struct.unpack("d", data[48:56])[0])
-            atr_signal.append(struct.unpack("d", data[56:64])[0])
-            atr_signal.append(struct.unpack("d", data[64:72])[0])
-            atr_signal.append(struct.unpack("d", data[72:80])[0])
-
-            vent_signal.append(struct.unpack("d", data[80:88])[0])
-            vent_signal.append(struct.unpack("d", data[88:96])[0])
-            vent_signal.append(struct.unpack("d", data[96:104])[0])
-            vent_signal.append(struct.unpack("d", data[104:112])[0])
-            vent_signal.append(struct.unpack("d", data[112:120])[0])
-            vent_signal.append(struct.unpack("d", data[120:128])[0])
-            vent_signal.append(struct.unpack("d", data[128:136])[0])
-            vent_signal.append(struct.unpack("d", data[136:144])[0])
-            vent_signal.append(struct.unpack("d", data[144:152])[0])
-            vent_signal.append(struct.unpack("d", data[152:160])[0])
+        def delete_ECG_screen():
+            ECG_screen.destroy()
             
+        def atriumWindowDelete():
+            atrium_screen.destroy()
+            
+        def atriumWindow():
+            delete_ECG_screen()
+            global atrium_screen
+            global xtime
+            xtime = 0
+            atrium_screen = Toplevel(modes_screen)
+            atrium_screen.title("Press to exit")
+            atrium_screen.geometry("400x200")
+            atrium_exit = Button(atrium_screen, text = 'Exit', command = atriumWindowDelete)
+            atrium_exit.pack()
 
-        ser.close()
+            atr_signal = []
+            xs = []
+            # Create figure for plotting
+            fig = plt.figure()
+            ax = fig.add_subplot(1, 1, 1)
 
+
+            def atriumECG(atr_signal,xs):
+                    global xtime
+                    global ser
+                    #check to get the right port every time
+                    ports = list(serial.tools.list_ports.comports())
+                    K64F_HWID = "1366:1015"
+                    for i in ports:
+                        if K64F_HWID in i.hwid:
+                                port = i.device
+                    ser = serial.Serial(port, baudrate = 115200, timeout=None)  
+
+                    Start = b'\x16'
+                    SYNC = b'\x33' 
+                    Param_set = b'\x22'
+                    ECG = b'\x44'
+
+                    VRP_en = struct.pack("d", VRP_value)
+                    VentWidth_en = struct.pack("h", VPW_value) 
+                    URL_en = struct.pack("d", URL_value)
+                    LRL_en = struct.pack("d", LRL_value)
+                    ARP_en = struct.pack("d", ARP_value)
+                    mode_en = struct.pack("h", mode_value) 
+                    VAmplitude_en = struct.pack("d", VA_value)
+                    AAmplitude_en = struct.pack("d", AA_value)
+                    RecoveryTime_en = struct.pack("d", RCT_value)
+                    ResponseFactor_en = struct.pack("d", RF_value)
+                    ReactionTime_en = struct.pack("d", RT_value)
+                    ActivityThreshold_en = struct.pack("d", at_value)
+                    AtrWidth_en = struct.pack("h", APW_value)
+                    MSR_en = struct.pack("d", MSR_value)
+                    VentSensitivity_en = struct.pack("d", VS_value)
+                    AtrSensitivity_en = struct.pack("d", AS_value)
+
+                    ECG_request = Start + ECG + VRP_en + VentWidth_en + URL_en + LRL_en + ARP_en + mode_en + VAmplitude_en + AAmplitude_en + RecoveryTime_en + ResponseFactor_en + ReactionTime_en + ActivityThreshold_en + AtrWidth_en  + MSR_en + VentSensitivity_en + AtrSensitivity_en
+
+                    ser.write(ECG_request)
+                    data = ser.read(160)
+
+                    atr_signal.append(struct.unpack("d", data[0:8])[0])
+                    atr_signal.append(struct.unpack("d", data[8:16])[0])
+                    atr_signal.append(struct.unpack("d", data[16:24])[0])
+                    atr_signal.append(struct.unpack("d", data[24:32])[0])
+                    atr_signal.append(struct.unpack("d", data[32:40])[0])
+                    atr_signal.append(struct.unpack("d", data[40:48])[0])
+                    atr_signal.append(struct.unpack("d", data[48:56])[0])
+                    atr_signal.append(struct.unpack("d", data[56:64])[0])
+                    atr_signal.append(struct.unpack("d", data[64:72])[0])
+                    atr_signal.append(struct.unpack("d", data[72:80])[0])
+                    
+                    for i in range(8):
+                        xtime = xtime + 1
+                        xs.append(xtime)
+                    ax.clear()
+                    ax.plot(xs,atr_signal,label='Atrium activity (V)')
+
+                    #format plot
+                    plt.xticks(rotation=45, ha='right')
+                    plt.subplots_adjust(bottom=0.30)
+                    plt.title('Atrium ECG')
+                    plt.ylabel('Atrium Activity (V)')
+                    plt.legend()
+                    plt.axis([1, None, 0, 1.1]) #Use for arbitrary number of trials
+                    ser.close()
+
+            ecg = animation.FuncAnimation(fig,atriumECG,fargs=(atr_signal, xs), interval = 1000)
+            plt.show()
+                            
+        def ventricleWindowDelete():
+            ventricle_screen.destroy()
+
+        
+        def ventricleWindow():
+            delete_ECG_screen()
+            global ventricle_screen
+            global xtime
+            xtime = 0
+            ventricle_screen = Toplevel(modes_screen)
+            ventricle_screen.title("Press to exit")
+            ventricle_screen.geometry("400x200")
+            ventricle_exit = Button(ventricle_screen, text = 'Exit', command = ventricleWindowDelete)
+            ventricle_exit.pack()
+
+            vent_signal = []
+            xs = []
+            # Create figure for plotting
+            fig = plt.figure()
+            ax = fig.add_subplot(1, 1, 1)
+            def ventricleECG(vent_signal,xs):
+                    global xtime
+                    global ser
+                    #check to get the right port every time
+                    ports = list(serial.tools.list_ports.comports())
+                    K64F_HWID = "1366:1015"
+                    for i in ports:
+                        if K64F_HWID in i.hwid:
+                                port = i.device
+                    ser = serial.Serial(port, baudrate = 115200, timeout=None)  
+
+                    Start = b'\x16'
+                    SYNC = b'\x33' 
+                    Param_set = b'\x22'
+                    ECG = b'\x44'
+
+                    VRP_en = struct.pack("d", VRP_value)
+                    VentWidth_en = struct.pack("h", VPW_value) 
+                    URL_en = struct.pack("d", URL_value)
+                    LRL_en = struct.pack("d", LRL_value)
+                    ARP_en = struct.pack("d", ARP_value)
+                    mode_en = struct.pack("h", mode_value) 
+                    VAmplitude_en = struct.pack("d", VA_value)
+                    AAmplitude_en = struct.pack("d", AA_value)
+                    RecoveryTime_en = struct.pack("d", RCT_value)
+                    ResponseFactor_en = struct.pack("d", RF_value)
+                    ReactionTime_en = struct.pack("d", RT_value)
+                    ActivityThreshold_en = struct.pack("d", at_value)
+                    AtrWidth_en = struct.pack("h", APW_value)
+                    MSR_en = struct.pack("d", MSR_value)
+                    VentSensitivity_en = struct.pack("d", VS_value)
+                    AtrSensitivity_en = struct.pack("d", AS_value)
+
+                    ECG_request = Start + ECG + VRP_en + VentWidth_en + URL_en + LRL_en + ARP_en + mode_en + VAmplitude_en + AAmplitude_en + RecoveryTime_en + ResponseFactor_en + ReactionTime_en + ActivityThreshold_en + AtrWidth_en  + MSR_en + VentSensitivity_en + AtrSensitivity_en
+
+                    ser.write(ECG_request)
+                    data = ser.read(160)
+
+                    vent_signal.append(struct.unpack("d", data[80:88])[0])
+                    vent_signal.append(struct.unpack("d", data[88:96])[0])
+                    vent_signal.append(struct.unpack("d", data[96:104])[0])
+                    vent_signal.append(struct.unpack("d", data[104:112])[0])
+                    vent_signal.append(struct.unpack("d", data[112:120])[0])
+                    vent_signal.append(struct.unpack("d", data[120:128])[0])
+                    vent_signal.append(struct.unpack("d", data[128:136])[0])
+                    vent_signal.append(struct.unpack("d", data[136:144])[0])
+                    vent_signal.append(struct.unpack("d", data[144:152])[0])
+                    vent_signal.append(struct.unpack("d", data[152:160])[0])
+                    
+                    for i in range(8):
+                        xtime = xtime + 1
+                        xs.append(xtime)
+                    ax.clear()
+                    ax.plot(xs,vent_signal,label='Ventricle activity (V)')
+
+                    #format plot
+                    plt.xticks(rotation=45, ha='right')
+                    plt.subplots_adjust(bottom=0.30)
+                    plt.title('Ventricle ECG')
+                    plt.ylabel('Ventricle Activity (V)')
+                    plt.legend()
+                    plt.axis([1, None, 0, 1.1]) #Use for arbitrary number of trials
+                    ser.close()
+
+            ecg = animation.FuncAnimation(fig,ventricleECG,fargs=(vent_signal, xs), interval = 1000)
+            plt.show()
+
+        def bothWindowDelete():
+            both_screen.destroy()
+            
+        def bothWindow():
+            delete_ECG_screen()
+            global both_screen
+            global xtime
+            xtime = 0
+            both_screen = Toplevel(modes_screen)
+            both_screen.title("Press to exit")
+            both_screen.geometry("400x200")
+            both_exit = Button(both_screen, text = 'Exit', command = bothWindowDelete)
+            both_exit.pack()
+
+            atr_signal = []
+            vent_signal = []
+            xs = []
+            # Create figure for plotting
+            fig = plt.figure()
+            ax = fig.add_subplot(1, 1, 1)
+            def bothECG(atr_signal,vent_signal, xs):
+                    global xtime
+                    global ser
+                    #check to get the right port every time
+                    ports = list(serial.tools.list_ports.comports())
+                    K64F_HWID = "1366:1015"
+                    for i in ports:
+                        if K64F_HWID in i.hwid:
+                                port = i.device
+                    ser = serial.Serial(port, baudrate = 115200, timeout=None)  
+
+                    Start = b'\x16'
+                    SYNC = b'\x33' 
+                    Param_set = b'\x22'
+                    ECG = b'\x44'
+
+                    VRP_en = struct.pack("d", VRP_value)
+                    VentWidth_en = struct.pack("h", VPW_value) 
+                    URL_en = struct.pack("d", URL_value)
+                    LRL_en = struct.pack("d", LRL_value)
+                    ARP_en = struct.pack("d", ARP_value)
+                    mode_en = struct.pack("h", mode_value) 
+                    VAmplitude_en = struct.pack("d", VA_value)
+                    AAmplitude_en = struct.pack("d", AA_value)
+                    RecoveryTime_en = struct.pack("d", RCT_value)
+                    ResponseFactor_en = struct.pack("d", RF_value)
+                    ReactionTime_en = struct.pack("d", RT_value)
+                    ActivityThreshold_en = struct.pack("d", at_value)
+                    AtrWidth_en = struct.pack("h", APW_value)
+                    MSR_en = struct.pack("d", MSR_value)
+                    VentSensitivity_en = struct.pack("d", VS_value)
+                    AtrSensitivity_en = struct.pack("d", AS_value)
+
+                    ECG_request = Start + ECG + VRP_en + VentWidth_en + URL_en + LRL_en + ARP_en + mode_en + VAmplitude_en + AAmplitude_en + RecoveryTime_en + ResponseFactor_en + ReactionTime_en + ActivityThreshold_en + AtrWidth_en  + MSR_en + VentSensitivity_en + AtrSensitivity_en
+
+                    ser.write(ECG_request)
+                    data = ser.read(160)
+
+                    atr_signal.append(struct.unpack("d", data[0:8])[0])
+                    atr_signal.append(struct.unpack("d", data[8:16])[0])
+                    atr_signal.append(struct.unpack("d", data[16:24])[0])
+                    atr_signal.append(struct.unpack("d", data[24:32])[0])
+                    atr_signal.append(struct.unpack("d", data[32:40])[0])
+                    atr_signal.append(struct.unpack("d", data[40:48])[0])
+                    atr_signal.append(struct.unpack("d", data[48:56])[0])
+                    atr_signal.append(struct.unpack("d", data[56:64])[0])
+                    atr_signal.append(struct.unpack("d", data[64:72])[0])
+                    atr_signal.append(struct.unpack("d", data[72:80])[0])
+
+                    vent_signal.append(struct.unpack("d", data[80:88])[0])
+                    vent_signal.append(struct.unpack("d", data[88:96])[0])
+                    vent_signal.append(struct.unpack("d", data[96:104])[0])
+                    vent_signal.append(struct.unpack("d", data[104:112])[0])
+                    vent_signal.append(struct.unpack("d", data[112:120])[0])
+                    vent_signal.append(struct.unpack("d", data[120:128])[0])
+                    vent_signal.append(struct.unpack("d", data[128:136])[0])
+                    vent_signal.append(struct.unpack("d", data[136:144])[0])
+                    vent_signal.append(struct.unpack("d", data[144:152])[0])
+                    vent_signal.append(struct.unpack("d", data[152:160])[0])
+                    
+                    for i in range(8):
+                        xtime = xtime + 1
+                        xs.append(xtime)
+                    ax.clear()
+                    ax.plot(xs,atr_signal,label='Atrium activity (V)')
+                    ax.plot(xs,vent_signal,label='Ventricle activity (V)')
+
+                    #format plot
+                    plt.xticks(rotation=45, ha='right')
+                    plt.subplots_adjust(bottom=0.30)
+                    plt.title('Both ECG')
+                    plt.ylabel('Heart Chamber Activity (V)')
+                    plt.legend()
+                    plt.axis([1, None, 0, 1.1]) #Use for arbitrary number of trials
+                    ser.close()
+
+            ecg = animation.FuncAnimation(fig,bothECG,fargs=(atr_signal,vent_signal, xs), interval = 1000)
+            plt.show()
+
+        atrium = Button(ECG_screen, text = 'Atrium', command = atriumWindow)
+        atrium.pack()
+        
+        ventricle = Button(ECG_screen, text = 'Ventricle', command = ventricleWindow)
+        ventricle.pack()
+        
+        bothChambers = Button(ECG_screen, text = 'Both Atrium and Ventricle', command = bothWindow)
+        bothChambers.pack()
+
+        
+        
     ECG = Button(modes_screen, text = 'ECG Plotter', command = sendECG)
     ECG.pack()
     ECG.place(x=50, y = 5)
